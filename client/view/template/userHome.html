@@ -1,0 +1,45 @@
+<template name="userHome">
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>  
+  <div class="brand"> ilendbooks </div>
+  <div class="address-bar"> University of Washington </div>
+  <div class="address-bar"> Hey {{getFirstName}}! </div>
+  <head>
+    
+  </head>
+   <body>
+
+   <div id="mySidenav" class="sidenav">
+     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+     <a href="{{pathFor route='home'}}">Home</a>
+     <a href="#">My shelf</a>
+     <a href="#">My borrows</a>
+     <a href="{{pathFor route='books'}}">Books</a>
+     <a href="{{pathFor route='aboutUs'}}">About Us</a>
+     <a href="#">Help</a>
+     <a href="#">Contact us</a>
+     <a class="logout" href="#">Logout</a>
+   </div>
+
+   <div id="main">
+   <div class="box">
+        
+     <h2>Search for your book! </h2>
+     <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+     {{> keywordSearch}}
+   </div>
+   </div>
+
+   <script>
+   function openNav() {
+       document.getElementById("mySidenav").style.width = "250px";
+       document.getElementById("main").style.marginLeft = "250px";
+   }
+
+   function closeNav() {
+       document.getElementById("mySidenav").style.width = "0";
+       document.getElementById("main").style.marginLeft= "0";
+   }
+   </script>
+        
+   </body>
+</template>

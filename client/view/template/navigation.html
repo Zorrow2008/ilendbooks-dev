@@ -1,0 +1,47 @@
+<template name="navigation">
+   <body id="page-top">
+      <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+               <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+               </button>
+               <a class="navbar-brand page-scroll" href="{{pathFor route='home'}}">&nbsp;&nbsp;ilendbooks</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+               <ul class="nav navbar-nav navbar-right">
+                  {{#if currentUser.emails.[0].verified}}                  
+                  <li>
+                     <a class="page-scroll hello">Hello {{getFirstName}}!</a>
+                  </li>
+                  {{/if}}
+                  <li>
+                     <a href="{{pathFor route='home'}}" class="page-scroll home">Home</a>
+                  </li>
+                  {{#if currentUser.emails.[0].verified}}
+                  <li>
+                     <a class="page-scroll logout" href="#"> Logout</a>
+                  </li>
+                  {{/if}}
+                  {{#if currentUser}}
+                  {{else}}
+                  <li>
+                     <a class="page-scroll login" href="{{pathFor route='login'}}" >Sign up/Login</a> 
+                  </li>
+                  {{/if}}
+                  <li>
+                     <a class="page-scroll bookSearch" href="{{pathFor route='bookSearch'}}">Search for books</a>
+                  </li>
+                  <li>
+                     <a class="page-scroll books" href="{{pathFor route='books'}}">Books</a>
+                  </li>
+                  <li>
+                     <a class="page-scroll aboutUs" href="{{pathFor route='aboutUs'}}">About Us</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+   </body>
+</template>
+

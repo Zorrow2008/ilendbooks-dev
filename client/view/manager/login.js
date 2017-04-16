@@ -1,0 +1,30 @@
+Template.login.events({
+   'submit form': function(event){
+      event.preventDefault();
+      var email = $('[name=emailAddress]').val();
+      var password = $('[name=password]').val();
+      Meteor.loginWithPassword(email, password, function(){
+         if (Meteor.user()) {
+            console.log("You initiated login process.");
+            Router.go('/userHome')
+         }else{
+            Bert.alert( 'Invalid credentials.', 'danger' );
+         }
+      });
+   },
+   
+   'click .resend-verification-link' ( event, template ) {
+      Meteor.call( 'sendVerificationLink', ( error, response ) => {
+         if ( error ) {
+            Bert.alert( error.reason, 'danger' );
+         } else {
+            let email = Meteor.user().emails[ 0 ].address;
+            Bert.alert( `Verification sent to ${ email }!`, 'success' );
+         }
+      });
+   },
+   
+   'click .sendResetPasswordEmail': function() {
+      Router.go('forgotPassword');
+   }
+})
