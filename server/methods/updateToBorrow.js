@@ -58,6 +58,7 @@ Meteor.methods({
             }
       }
    // Meteor.call('setMatch', appUUID, borrowerInfoBook, currentBorrowerInfo);
+      Meteor.call('updateUserBorrowShelf', appUUID, currentBorrowerInfo)
    }
 
 })

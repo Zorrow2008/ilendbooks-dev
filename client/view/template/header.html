@@ -1,0 +1,69 @@
+<template name="header">  
+    <nav class="navbar navbar-default" role="navigation">
+
+     <div class="container">
+
+         <!-- Brand and toggle get grouped for better mobile display -->
+         <div class="navbar-header">
+             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                 <span class="sr-only">Toggle navigation</span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+             </button>
+             <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+            <a class="navbar-brand" href="{{pathFor route='home'}}">ilendbooks</a>
+         </div>
+         <!-- Collect the nav links, forms, and other content for toggling -->
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+             <ul class="nav navbar-nav">
+                 <li>
+                     <a href="{{pathFor route='home'}}">Home</a>
+                 </li>
+<!--                  <li>
+                     <a href="{{pathFor route='bookSearch'}}">Search Books</a>
+                 </li> -->
+                 {{#if currentUser}} 
+                 <li>
+                    <a href="{{pathFor route='#'}}" class="logout"> Log Out </a> 
+                 </li>
+                 {{else}}
+                 <li>
+                     <a href="{{pathFor route='login'}}">Log in</a>
+                 </li>
+                 {{/if}}
+                 <li>
+                     <a href="{{pathFor route='aboutUs'}}">About Us</a>
+                 </li>
+                 <li>
+                    <a href="#" onclick="openNav()">My Account</a>
+                 </li>
+             </ul>
+         </div>
+         <!-- /.navbar-collapse -->
+     </div>
+     <!-- /.container -->
+   </nav>
+    <div id="mySidenav" class="sidenav">
+         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+         
+         <a href="#">My shelf</a>
+         <a href="{{pathFor route='myBorrows'}}">My borrows</a>
+         
+         <!--<a href="{{pathFor route='aboutUs'}}">About Us</a>-->
+         <!--<a href="#">Help</a> -->
+         <!--<a href="#">Contact us</a> -->
+         <a class="logout" href="#">Logout</a>
+   </div>
+    <script>
+       function openNav() {
+           document.getElementById("mySidenav").style.width = "250px";
+           document.getElementById("main").style.marginLeft = "250px";
+       }
+
+       function closeNav() {
+           document.getElementById("mySidenav").style.width = "0";
+           document.getElementById("main").style.marginLeft= "0";
+       }
+   </script>
+ </template>  

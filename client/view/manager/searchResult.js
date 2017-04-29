@@ -115,7 +115,9 @@ Template.searchResult.helpers({
 Template.searchResult.events({
    'submit form': function(event) {
       var title = this.ItemAttributes[0].Title[0];
+     // var ilendbooksId = this.ilendbooksId;
       console.log(title);
+      //console.log(ilendbooksId);
       event.preventDefault();
       var condition = event.target.bookCondition.value;
       var description = event.target.bookDescription.value;
@@ -128,7 +130,7 @@ Template.searchResult.events({
       for(key in currentLender) {
          console.log(key + currentLender[key]);
       }
-      var title = this.ItemAttributes[0].Title[0];
+      //var title = this.ItemAttributes[0].Title[0];
       var appUUID = Session.get('appUUID');
       console.log("title" + title);
       var element = {};
@@ -186,9 +188,9 @@ Template.searchResult.events({
       element.currentBorrowerId = Meteor.userId();
       element.ilendbooksId = this.ilendbooksId
       console.log("element" + element);
-      Meteor.call('updateToBorrow', appUUID, element);
+      //Meteor.call('updateToBorrow', appUUID, element);
       //Meteor.call('setMatch', element);
-      console.log("upsert finished")
+     // console.log("upsert finished")
       Session.setAuth('specificBookTitle', element.title);
       Session.setAuth('ilendbooksId' , element.ilendbooksId);
       //Session.setAuth('specificBookImage', this.LargeImage[0].URL[0]);

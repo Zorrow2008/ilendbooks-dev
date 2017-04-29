@@ -1,23 +1,5 @@
 <template name="searchResult">
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
-   <div class="brand"> ilendbooks </div>
-   <div class="address-bar"> University of Washington </div>
-   <div class="address-bar"> Hey {{getFirstName}}! </div>
-   <!-- <link href="css/simple-sidebar.css" rel="stylesheet"> -->
   <body>
-    <div id="mySidenav" class="sidenav">
-     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-     <a href="{{pathFor route='home'}}">Home</a>
-     <a href="#">My shelf</a>
-     <a href="#">My borrows</a>
-     <a href="{{pathFor route='books'}}">Books</a>
-     <a href="{{pathFor route='aboutUs'}}">About Us</a>
-     <a href="#">Help</a>
-     <a href="#">Contact us</a>
-     <a href="#">Logout</a>
-   </div>
-
-
    <div id="main">
    <div class=".container-fluid">
          <div class="row">
@@ -53,7 +35,7 @@
                         {{#if hasClickedLend}} 
                         <a class="btn btn-warning btn-xs lend" href="{{pathFor 'lend'}}" data-toggle="modal" data-target="#notNewLender"  role="button">Lend</a>&nbsp;
                         {{else}}
-                        <a class="btn btn-warning btn-xs lend" href="{{pathFor 'lend'}}" data-toggle="modal" data-target="#clickedLend"  role="button">Lend</a>&nbsp;
+                        <a class="btn btn-warning btn-xs lend"  data-toggle="modal" data-target="#clickedLend"  role="button">Lend</a>&nbsp;
                         {{/if}}
                         <a class="btn btn-primary btn-xs toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a>
                         {{else}}
@@ -175,21 +157,7 @@
                      </div>
                   </div>
                </div>
-               <div class="row">
-                  <div >
-                     <span>&nbsp;</span>
-                  </div>
-               </div>
-               <div class="row">
-                  <div >
-                     <hr>
-                  </div>
-               </div>
-               <div class="row">
-                  <div >
-                     <span>&nbsp;</span>
-                  </div>
-               </div>
+
                {{/each}}
             </div>
          </div>

@@ -1,157 +1,101 @@
 <template name="specificBookPage">
-<!-- {{getTitle}}
-<br>
-<img src="{{getImage}}" alt="">
-<br>
-<div class="container-fluid">
-<h1> Lenders available </h1>
-
-	<div id="page-content-wrapper">
-       <div class="row">
-       {{#each getLenders}} 
-          <div class="col-md-9">
-                      <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4><a href="#">{{getLenderFirstName userId}}</a>
-                                </h4>
-                                 <a class="btn btn-info btn-xs borrow" role="button">Request a lend!</a>&nbsp;
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">15 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-          </div>
-          {{/each}}
-       </div>
-    </div>
-	<br>
-
-</div> -->
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Shop Homepage - Start Bootstrap Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/shop-homepage.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-
-    <!-- Page Content -->
-    <div class="container">
-
-        <div class="row">
-
+   <body>
+      <!-- Page Content -->
+      <div class="container">
+         <div class="row">
             <div class="col-md-9">
-
-              
-
-                    <div class="col-md-12">
-                    <img src="{{getImage}}" alt="">
-                    </div>
-
-                
-              
-                <div class="row">
-                	{{#each getLenders}} 
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-
-                                <h4>{{getLenderFirstName userId}}
-                                </h4>
-                                {{#if isEmail userId}}
-                                <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#email" role="button">Request a lend!</a>&nbsp;
-                                {{else}}
-                                <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#sms" role="button">Request a lend!</a>&nbsp;
-                                {{/if}}
-                            </div>
-                            <div class="ratings">
-                                <p class="pull-right">15 reviews</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                   <div class="modal fade" id="email" role="dialog">
-                      <div class="modal-dialog">
-                         <!-- Modal content-->
-                         <div class="modal-content">
-                            <div class="modal-header">
-                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                               <h4 class="modal-title">Thank you!</h4>
-                            </div>
-                            <div class="modal-body">
-                               <p>An email has been sent to the lender. Thank you!</p>
-                            </div>
-                            <div class="modal-footer">
-                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-                  <div class="modal fade" id="sms" role="dialog">
-                      <div class="modal-dialog">
-                         <!-- Modal content-->
-                         <div class="modal-content">
-                            <div class="modal-header">
-                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                               <h4 class="modal-title">Thank you!</h4>
-                            </div>
-                            <div class="modal-body">
-                               <p>An SMS has been sent to the lender. Thank you!</p>
-                            </div>
-                            <div class="modal-footer">
-                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-                    {{/each}}
-
-                </div>
-
+               <h3 class=" text-center">
+                  {{getTitle}}
+               </h3>
+               <img src="{{getImage}}" class="pull-left" alt="">
             </div>
+         </div>
 
-        </div>
-
-    </div>
-    <!-- /.container -->
-    <!-- /.container -->
-
-</body>
-
+         <div class="row">
+            {{#each getLenders}} 
+            <div class="col-sm-4 col-lg-4 col-md-4">
+               <div class="thumbnail">
+                  <img src="http://placehold.it/320x150" alt="">
+                  <div class="caption">
+                     <h4>{{getLenderFirstName userId}}
+                     </h4>
+                     {{#if hasClickedBorrow}}
+                     <a class="btn btn-info btn-xs" data-toggle="modal" data-target="#notNewBorrower" role="button">Request a lend!</a>&nbsp;
+                     {{else}}
+                     {{#if isEmail userId}}
+                     <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#email" role="button">Request a lend!</a>&nbsp;
+                     {{else}}
+                     <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#sms" role="button">Request a lend!</a>&nbsp;
+                     {{/if}}
+                     {{/if}}
+                  </div>
+                  <div class="ratings">
+                     <p class="pull-right">15 reviews</p>
+                     <p>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div class="modal fade" id="email" role="dialog">
+               <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Thank you!</h4>
+                     </div>
+                     <div class="modal-body">
+                        <p>An email has been sent to the lender. Thank you!</p>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="modal fade" id="sms" role="dialog">
+               <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Thank you!</h4>
+                     </div>
+                     <div class="modal-body">
+                        <p>An SMS has been sent to the lender. Thank you!</p>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="modal fade" id="notNewBorrower" role="dialog">
+               <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Dont worry!</h4>
+                     </div>
+                     <div class="modal-body">
+                        <p>We're still trying to find a lender.</p>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {{/each}}
+         </div>
+      </div>
+      <!-- /.container -->
+      <!-- /.container -->
+   </body>
 </template>

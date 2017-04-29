@@ -43,6 +43,18 @@ Template.specificBookPage.helpers({
       console.log("ilendbooks.public.contactPreference.EMAIL:" + ilendbooks.public.contactPreference.EMAIL);
       console.log("is email: "+ (contactMethod  == ilendbooks.public.contactPreference.EMAIL)); 
       return contactMethod  == ilendbooks.public.contactPreference.EMAIL;
+   },
+
+   hasClickedBorrow: function() {
+      var title = Session.get('specificBookTitle');
+      console.log("title" + title);
+      var currentBook = ToBorrow.findOne({title: title});
+      for(key in currentBook.borrower) {
+         if(currentBook.borrower[key].userId == Meteor.userId()) {
+            return true;
+         }
+      }
+      return false;
    }
 })
 
@@ -53,6 +65,16 @@ Template.specificBookPage.events({
        // console.log(thisKey + ":" + this[thisKey]);
       }
       var appUUID = Session.get('appUUID');
+      var bookTitle = Session.get('specificBookTitle');
+      var borrowerInfo = {};
+      borrowerInfo.title = bookTitle;
+      borrowerInfo.currentBorrowerId = Meteor.userId();
+      borrowerInfo.ilendbooksId = Session.get('ilendbooksId');
+      for(borrowerKey in borrowerInfo) {
+        console.log(borrowerKey + "; " + borrowerInfo[borrowerKey]);
+      }
+      Meteor.call('updateToBorrow', appUUID, borrowerInfo);
+      console.log("upsert finished")
       var contactParameters = {
         lenderUserId:this.userId,
         borrowerUserId: Meteor.userId(),
