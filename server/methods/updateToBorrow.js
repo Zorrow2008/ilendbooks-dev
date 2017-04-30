@@ -1,5 +1,8 @@
 Meteor.methods({
    updateToBorrow(appUUID, borrowerInfoBook) {  
+      for ( var borrowerInfoBookKey in borrowerInfoBook ){
+        console.log( appUUID + ":updateToBorrow:borrowerInfoBook." + borrowerInfoBookKey +"=" + borrowerInfoBook[borrowerInfoBookKey]);
+      }
 
       var currentdate = new Date();
       var dateTime = currentdate.getDate() + "/"
@@ -11,6 +14,7 @@ Meteor.methods({
 
       var currentBookFromToBorrowDB = ToBorrow.findOne({title: borrowerInfoBook.title, ilendbooksId: borrowerInfoBook.ilendbooksId});
       var currentBorrowerInfo = {
+          ilendbooksId: borrowerInfoBook.ilendbooksId,
           userId : Meteor.userId(),
           dateTime: dateTime,
           hasMatched : false

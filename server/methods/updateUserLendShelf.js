@@ -15,9 +15,9 @@ Meteor.methods({
 			console.log(appUUID + ":currentUserFromUserLendShelfDBKey=" + currentUserFromUserLendShelfDBKey +":value=" + currentUserFromUserLendShelfDB[currentUserFromUserLendShelfDBKey])
 		}
 	    var bookInfo = {
-	        ilendbooksId: currentlenderBookInfo.ilendbooksId,
+	        ilendbooksId:currentlenderBookInfo.ilendbooksId,
 	        dateTime:dateTime,
-	        hasLended :false
+	        status:ilendbooks.public.status.AVAILABLE
 	    };
 		if(currentUserFromUserLendShelfDB==null) {
 		    UserLendShelf.upsert(
@@ -55,7 +55,7 @@ Meteor.methods({
             if(isBookInUserLendShelf) {
               console.log(appUUID + ":updateUserLendShelf:current book is already in the user lend shelf: userId=" + Meteor.userId() + ";ilendbooksId=" + currentlenderBookInfo.ilendbooksId);
             } else {
-            	console.log("trying to upsert");
+            	console.log(appUUID + ":updateUserLendShelf:user exist, trying to upsert the book");
 			    UserLendShelf.upsert(
 			   		{
 						userId: Meteor.userId()

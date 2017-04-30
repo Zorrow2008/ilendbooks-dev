@@ -5,6 +5,26 @@ Template.specificBookPage.helpers({
       return title;
    },
 
+   getAuthor: function() {
+      return Session.get('author');
+   },
+
+   getPublisher: function() {
+      return Session.get('publisher');
+   },
+
+   getEdition: function() {
+      return Session.get('edition');
+   },
+
+   getISBN: function() {
+      return Session.get('ISBN');
+   },
+
+   getPublicationDate: function() {
+      return Session.get('publication date');
+   },
+
    getImage: function() {
     // console.log("i reached getImage");
      var ilendbooksId = Session.get('ilendbooksId').valueOf();
@@ -12,7 +32,7 @@ Template.specificBookPage.helpers({
      var currentBook = Books.findOne({"_id": ilendbooksId});
     // console.log("currentbook:"+currentBook);
    //  var currentbook = Books.findOne({Session.get('ilendbooksId')});
-     return currentBook.LargeImage[0].URL[0];
+     return currentBook.MediumImage[0].URL[0];
 
      // return Session.get('specificBookImage');
    },

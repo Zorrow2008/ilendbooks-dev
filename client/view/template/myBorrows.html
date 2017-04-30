@@ -8,11 +8,25 @@
 		</div>
 		<div class="row">
 			<div class="box">
-<!-- 				{{#each getBooks}}			
-					<h2>{{title}} </h2>
-					<h2> {{ilendbooksId}}</h2>
-					{{getImage getCompleteInformation ilendbooksId}}
-				{{/each}} -->
+				{{#each getBorrowedBooks}}	
+				<h2> {{getTitle}} </h2>	
+				<h3> {{ilendbooksId}} </h3>
+				{{storeInSession ilendbooksId}}
+				<div class="col-sm-2">
+					<img class="img-responsive img-border img-left" src="{{getImage}}" alt="">
+				</div>
+				<div class="col-sm-2">
+					<p> Author: {{getAuthor}} </p>					
+					<p> Publisher: {{getPublisher}} </p>
+					<p> ISBN: {{getISBN}} </p>
+					<p> Edition: {{getEdition}}</p>
+					<p> Publication Date: {{getPublicationDate}} </p>
+					<br>
+	<!-- 					<h2>{{title}} </h2>
+						<h2> {{ilendbooksId}}</h2>
+						{{getImage getCompleteInformation ilendbooksId}} -->
+				</div>
+				{{/each}}
 			</div>
 		</div>
 	</div>

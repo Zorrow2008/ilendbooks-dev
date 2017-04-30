@@ -35,9 +35,15 @@
                  <li>
                      <a href="{{pathFor route='aboutUs'}}">About Us</a>
                  </li>
+                 {{#if currentUser.emails.[0].verified}}
                  <li>
                     <a href="#" onclick="openNav()">My Account</a>
                  </li>
+                 {{else}}
+                  <li>
+                    <a href="#">My Account</a>
+                 </li> 
+                 {{/if}}               
              </ul>
          </div>
          <!-- /.navbar-collapse -->
@@ -47,7 +53,7 @@
     <div id="mySidenav" class="sidenav">
          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
          
-         <a href="#">My shelf</a>
+         <a href="{{pathFor route='myShelf'}}">My shelf</a>
          <a href="{{pathFor route='myBorrows'}}">My borrows</a>
          
          <!--<a href="{{pathFor route='aboutUs'}}">About Us</a>-->

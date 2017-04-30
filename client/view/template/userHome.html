@@ -1,16 +1,39 @@
 <template name="userHome">
-
-
    <div id="main">
-   <div class="box">
-        
-     <h2>Search for your book! </h2>
-     <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
-     {{> keywordSearch}}
+   	<!-- 	<div class="row">
+	      <div class="box">
+		       <div class="col-lg-12">
+		         <h1 class="intro-text text-center"> <strong> Search for a book! </strong> </h1>
+		          <div class="col-md-4 col-md-offset-4">
+			         {{> keywordSearch}}
+		         </div>
+		      </div>
+	      </div>
+        </div> -->
+    <div id="wrap">
+   <div class="row">
+      <div class="box">
+         <div class="col-lg-12">
+
+            <h2 class="intro-text text-center">
+               <strong>Search for a book!</strong>
+            </h2>
+
+         </div>
+         <div class="col-md-4 col-md-offset-4">
+         {{> keywordSearch}}
+         </div>
+         <div class="clearfix"></div>
+      </div>
    </div>
+   <!--    <style>
+      form { 
+         margin: 0 auto; 
+         width:250px;
+         text-align: center;
+      }
+      </style>
+      -->
+</div>
    </div>
-
-
-        
-
 </template>

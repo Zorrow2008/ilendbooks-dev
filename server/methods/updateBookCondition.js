@@ -1,22 +1,24 @@
 Meteor.methods({
-	updateBookCondition(currentLender) {
-	console.log("updateBookCondition called");
-	console.log("title: " + currentLender.title);
-	console.log("condition: " + currentLender.condition);
-	console.log("description: " + currentLender.description);
-	var lendDoc = ToLend.findOne({title: currentLender.title});
+	updateBookCondition(appUUID, bookConditionInfo) {
+	console.log(appUUID + ":executing updateBookCondition ...");
+	for( var bookConditionInfoKey in  bookConditionInfo) {
+		console.log(appUUID + ":" + bookConditionInfoKey + "=" + bookConditionInfo[bookConditionInfoKey] );
+	}
+
+	var lendDoc = ToLend.findOne({title: bookConditionInfo.title});
 	for(var lenderKey in lendDoc.lender) {
 		if(lendDoc.lender[lenderKey].userId = Meteor.userId()) {
 			var userKey = lenderKey;
 			break;
 		}
 	}
+	
 	var finalLender = {
 		userId : Meteor.userId(),
 		dateTime : lendDoc.lender[userKey].dateTime,
 		hasMatched : lendDoc.lender[userKey].hasMatched,
-		bookCondition : currentLender.condition,
-		bookDescription: currentLender.description
+		bookCondition : bookConditionInfo.condition,
+		bookDescription: bookConditionInfo.description
 	}
 
 	for(var key in finalLender) {
@@ -24,7 +26,7 @@ Meteor.methods({
 	}
 
 	ToLend.update(
-	    { "title": currentLender.title,
+	    { "title": bookConditionInfo.title,
 		  "lender.userId": Meteor.userId() },
 	    { "$set": { "lender.$.bookCondition": finalLender.bookCondition,
 	     			"lender.$.bookDescription": finalLender.bookDescription
@@ -34,7 +36,7 @@ Meteor.methods({
 	)
 
     // ToLend.upsert({
-    //       title: currentLender.title,
+    //       title: bookConditionInfo.title,
     //    }, {
     //       $set: {
     //     	lender: finalLender
@@ -43,7 +45,7 @@ Meteor.methods({
     // );
 
     // ToLend.update({
-    // 	title: currentLender.title
+    // 	title: bookConditionInfo.title
     // }, {
     // 	$pull: {
     // 		lender: {

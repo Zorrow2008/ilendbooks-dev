@@ -1,5 +1,10 @@
 Meteor.methods({
-updateToLend(appUUID, currentlenderBookInfo) {       
+updateToLend(appUUID, currentlenderBookInfo) {   
+
+      for ( var currentlenderBookInfoKey in currentlenderBookInfo ){
+        console.log( appUUID + ":updateToLend:currentlenderBookInfo." + currentlenderBookInfoKey +"=" + currentlenderBookInfo[currentlenderBookInfoKey]);
+      }
+
       var currentdate = new Date();
       var dateTime = currentdate.getDate() + "/"
                 + (currentdate.getMonth()+1)  + "/" 
@@ -11,9 +16,9 @@ updateToLend(appUUID, currentlenderBookInfo) {
       var lenderInfo = {
             userId:Meteor.userId(),
             dateTime:dateTime,
-            hasMatched :false,
-            bookCondition: null,
-            bookDescription: null
+            status : ilendbooks.public.status.AVAILABLE,
+            bookCondition: currentlenderBookInfo.condition,
+            bookDescription: currentlenderBookInfo.description
       };
       if(currentBookFromToLendDB == null) {
             ToLend.upsert({

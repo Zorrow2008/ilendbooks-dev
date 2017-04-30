@@ -1,45 +1,34 @@
 <template name="login">
-<div id="wrap">
-   <div class="row">
-      <div class="box">
-         <div class="col-lg-12">
-
-            <h2 class="intro-text text-center">
-               <strong>Log in</strong>
-            </h2>
-
+   <div id="wrap">
+      <div class="row">
+         <div class="box">
+            <div class="col-lg-12">
+               <h2 class="intro-text text-center">
+                  <strong>Log in</strong>
+               </h2>
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+               <form id="login" class="login">
+                  <div class="form-group">
+                     <label for="emailAddress">Email Address</label>
+                     <input type="email" name="emailAddress" class="form-control" placeholder="Email Address" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="password">Password</label>
+                     <input type="password" name="password" class="form-control" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                     <input type="submit" class="btn btn-success center-block" value="Login">
+                  </div>
+               </form>
+               <p class='small-font'>Don't have an account? <a href="{{pathFor route='signup'}}">signup</a> </p>
+               <p class='small-font'> Forgot password? <a href="{{pathFor route='forgotPassword'}}" class="sendResetPasswordEmail"> reset password </a> </p>
+            </div>
+            <div class="clearfix"></div>
          </div>
-         <!--           <div class="col-md-6">
-            <img class="img-responsive img-border-left" src="../img/slide-2.jpg" alt="">
-            </div> -->
-         <div class="col-md-4 col-md-offset-4">
-            <form id="login" class="login">
-               <div class="form-group">
-                  <label for="emailAddress">Email Address</label>
-                  <input type="email" name="emailAddress" class="form-control" placeholder="Email Address" required>
-               </div>
-               <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" name="password" class="form-control" placeholder="Password">
-               </div>
-               <div class="form-group">
-                  <input type="submit" class="btn btn-success center-block" value="Login">
-               </div>
-            </form>
-            <p class='small-font'>Don't have an account? <a href="{{pathFor route='signup'}}">signup</a> </p>
-            <p class='small-font'> Already signed up, need a new verification email?  <a href="#" class="resend-verification-link">resend verification link</a> </p>
-            <p class='small-font'> Forgot password? <a href="{{pathFor route='forgotPassword'}}" class="sendResetPasswordEmail"> reset password </a> </p>
-         </div>
-         <div class="clearfix"></div>
       </div>
    </div>
-   <!--    <style>
-      form { 
-         margin: 0 auto; 
-         width:250px;
-         text-align: center;
-      }
-      </style>
-      -->
-</div>
 </template>
+
+<!-- Comments:
+-removed resend verification link -->

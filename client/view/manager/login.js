@@ -6,7 +6,7 @@ Template.login.events({
       Meteor.loginWithPassword(email, password, function(){
          if (Meteor.user()) {
             console.log("You initiated login process.");
-            Router.go('/userHome')
+            Router.go('/')
          }else{
             Bert.alert( 'Invalid credentials.', 'danger' );
          }

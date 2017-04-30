@@ -114,33 +114,32 @@ Template.searchResult.helpers({
 
 Template.searchResult.events({
    'submit form': function(event) {
-      var title = this.ItemAttributes[0].Title[0];
-     // var ilendbooksId = this.ilendbooksId;
-      console.log(title);
-      //console.log(ilendbooksId);
       event.preventDefault();
       var condition = event.target.bookCondition.value;
       var description = event.target.bookDescription.value;
-      var currentLender = {
+      var bookInfo = event.target.bookInfo.value;
+      console.log("searchResults::submit:bookInfo=" + bookInfo);
+      var parameters = bookInfo.split('--');
+      var ilendbooksId = parameters[0];
+      var title = parameters[1];
+      console.log("searchResults::submit:title" + title);
+      console.log("searchResults::submit:ilendbooksId" + ilendbooksId);
+
+      var currentlenderBookInfo = {
          title: title,
+         ilendbooksId: ilendbooksId,
          condition: condition,
          description: description
       }
 
-      for(key in currentLender) {
-         console.log(key + currentLender[key]);
-      }
-      //var title = this.ItemAttributes[0].Title[0];
       var appUUID = Session.get('appUUID');
-      console.log("title" + title);
-      var element = {};
-      element.title = title;
-      element.users = [];
-      element.ilendbooksId = this.ilendbooksId;
-      console.log("element" + element);
-      Meteor.call('updateToLend', appUUID, element);
-      console.log("upsert finished")
-      Meteor.call('updateBookCondition', currentLender);
+      // var element = {
+      //    title : title,
+      //    lendbooksId: ilendbooksId 
+      // };
+      Meteor.call('updateToLend', appUUID, currentlenderBookInfo);
+      // console.log("upsert finished")
+      // Meteor.call('updateBookCondition', currentLender);
       Router.go("myShelf");
 
    },
