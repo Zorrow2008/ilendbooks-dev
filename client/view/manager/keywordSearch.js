@@ -8,6 +8,6 @@ Template.keywordSearch.events({
           keywords : keywords,
        }
        Meteor.call( 'itemSearch', appUUID, searchParameters);
-       Router.go('searchResult');
+       Router.go('searchResults');
 	}	
 })

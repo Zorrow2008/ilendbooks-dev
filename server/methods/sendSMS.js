@@ -11,9 +11,9 @@ Meteor.methods({
   // smsParameters.message - SMS message
   'sendSMS': function (appUUID, smsParameters) {
     var smsResult = {};
-    for (var optsKey in smsParameters)
+    for (var smsParametersKey in smsParameters)
     {
-      console.log(appUUID + ":sendSMS:" + optsKey + "=" + smsParameters[optsKey]);
+      console.log(appUUID + ":sendSMS:" + smsParametersKey + "=" + smsParameters[smsParametersKey]);
     }
     // for (twilioClientKey in twilioClient)
     // {

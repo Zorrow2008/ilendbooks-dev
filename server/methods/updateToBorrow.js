@@ -17,7 +17,7 @@ Meteor.methods({
           ilendbooksId: borrowerInfoBook.ilendbooksId,
           userId : Meteor.userId(),
           dateTime: dateTime,
-          hasMatched : false
+          status : ilendbooks.public.status.MATCHED,
       };
       if(currentBookFromToBorrowDB == null) {
 
@@ -61,7 +61,6 @@ Meteor.methods({
                 })
             }
       }
-   // Meteor.call('setMatch', appUUID, borrowerInfoBook, currentBorrowerInfo);
       Meteor.call('updateUserBorrowShelf', appUUID, currentBorrowerInfo)
    }
 

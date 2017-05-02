@@ -30,7 +30,7 @@ Template.signup.events({
             }
          });
       }else {
-         Bert.alert('Your passwords didnt match.');
+         Bert.alert('Your two password values didnt match.', 'danger');
       }
       
    }

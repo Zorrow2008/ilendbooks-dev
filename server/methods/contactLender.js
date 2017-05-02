@@ -23,7 +23,6 @@ Meteor.methods({
 				contactParameters.fromEmail = ilendbooks.private.generic.FROM_EMAIL;
 				contactParameters.emailSubject = 'Lender found',
 				contactParameters.emailBody = 'TO-DO: improve this message  - A lender would like to borrow the book ' + book.title
-				console.log(appUUID + ":contactLender:start email sending ...");
 				for(var contactParametersKey in contactParameters) {
 					console.log(appUUID + ":contactLender(email):"+ contactParametersKey + "=" + contactParameters[contactParametersKey]);
 				}

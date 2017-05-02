@@ -5,45 +5,52 @@ Template.myBorrows.helpers({
 		return doc.bookInfo;
 	},
 
-	storeInSession:function(ilendbooksId) {
-		console.log("storeInSession is called");
-		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
-		Session.setAuth('currentBorrowBook' , currentBorrowBook);
-	},
+	// storeInSession:function(ilendbooksId) {
+	// 	console.log("storeInSession is called");
+	// 	var currentBorrowBook = Books.findOne({_id: ilendbooksId});
+	// 	Session.setAuth('currentBorrowBook' , currentBorrowBook);
+	// },
 
-	getAuthor: function() {
-		var currentBorrowBook = Session.get('currentBorrowBook');
+	getAuthor: function(ilendbooksId) {
+		//var currentBorrowBook = Session.get('currentBorrowBook');
+		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
 		return currentBorrowBook.ItemAttributes[0].Author[0];
 	},
 
-	getTitle: function() {
-		var currentBorrowBook = Session.get('currentBorrowBook');
+	getTitle: function(ilendbooksId) {
+		//var currentBorrowBook = Session.get('currentBorrowBook');
+		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
 		return currentBorrowBook.ItemAttributes[0].Title[0];
 	},
 
-	getImage: function() {
-		var currentBorrowBook = Session.get('currentBorrowBook');
+	getImage: function(ilendbooksId) {
+		//var currentBorrowBook = Session.get('currentBorrowBook');
+		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
 		return currentBorrowBook.MediumImage[0].URL[0];
 	},
 
-	getPublisher: function() {
-		var currentBorrowBook = Session.get('currentBorrowBook');
+	getPublisher: function(ilendbooksId) {
+		//var currentBorrowBook = Session.get('currentBorrowBook');
+		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
 		return currentBorrowBook.ItemAttributes[0].Publisher[0];
 
 	},
 
-	getISBN: function() {
-		var currentBorrowBook = Session.get('currentBorrowBook');
+	getISBN: function(ilendbooksId) {
+		//var currentBorrowBook = Session.get('currentBorrowBook');
+		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
 		return currentBorrowBook.ItemAttributes[0].ISBN[0];
 	},
 
-	getEdition: function() {
-		var currentBorrowBook = Session.get('currentBorrowBook');
+	getEdition: function(ilendbooksId) {
+		//var currentBorrowBook = Session.get('currentBorrowBook');
+		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
 		return currentBorrowBook.ItemAttributes[0].Edition[0];
 	},
 
-	getPublicationDate: function() {
-		var currentBorrowBook = Session.get('currentBorrowBook');
+	getPublicationDate: function(ilendbooksId) {
+		//var currentBorrowBook = Session.get('currentBorrowBook');
+		var currentBorrowBook = Books.findOne({_id: ilendbooksId});
 		return currentBorrowBook.ItemAttributes[0].PublicationDate[0];
 	}
 	// getBooks: function() {

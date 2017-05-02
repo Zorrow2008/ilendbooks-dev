@@ -34,36 +34,6 @@ Meteor.methods({
  		}
 
 	)
-
-    // ToLend.upsert({
-    //       title: bookConditionInfo.title,
-    //    }, {
-    //       $set: {
-    //     	lender: finalLender
-    //       }
-    //    }
-    // );
-
-    // ToLend.update({
-    // 	title: bookConditionInfo.title
-    // }, {
-    // 	$pull: {
-    // 		lender: {
-    // 			bookCondition: null
-    // 		}
-
-    // 	}
-    // })
-
-
-
-
-    // var selector = { title: title};
-    // var modifier = {$set: { 'lender.$.bookCondition': condition, 'lender.$.bookDescription' : description }};
- 	 // ToLend.update(
-   //      { title: title}, 
-   //      {$set: { 'lender.$.bookCondition': condition, 'lender.$.bookDescription' : description }}
-   //    );
    }
 
 })

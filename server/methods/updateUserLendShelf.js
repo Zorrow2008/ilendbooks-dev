@@ -1,6 +1,8 @@
 Meteor.methods({
 	updateUserLendShelf(appUUID, currentlenderBookInfo) {   
-		console.log( appUUID + ":updateUserLendShelf:currentlenderBookInfo.ilendbooksId=" + currentlenderBookInfo.ilendbooksId);
+		for (var currentlenderBookInfoKey in currentlenderBookInfo) {
+			console.log( appUUID + ":updateUserLendShelf:" + currentlenderBookInfoKey +"=" + currentlenderBookInfo[currentlenderBookInfoKey]);
+		}
 
 		var currentdate = new Date();
       	var dateTime = currentdate.getDate() + "/"

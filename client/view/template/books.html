@@ -1,135 +1,27 @@
 <template name="books">
-   <div class=".container-fluid">
-      <div class="row">
-         <h4 class="page-header">Books </h4>
-         {{#if currentUser}}
-         {{#unless currentUser.emails.[0].verified}}
-         <h5 class="alert alert-warning">You need to verify your email address before using ilendbooks. </h5>
-         {{/unless}}
-         {{else}}
-         <h5 class="alert alert-warning">You need to be logged in to begin lending or borrowing. </h5>
-         {{/if}}
-         {{#each getBooks}}
+   <div id="main">
+      <div class=".container-fluid">
          <div class="row">
-            <div class="span_4 column">
-               <img src="{{getMediumImage MediumImage}}" alt=""> 
-            </div>
-            <div class="span_4 column">
-               Title - <strong class="text-left">{{getTitle ItemAttributes}}</strong><br>
-               Author- <strong class="text-left">{{getAuthor ItemAttributes}}</strong><br>
-               No of pages - <strong class="text-left">{{getNumberOfPages ItemAttributes}}</strong><br>
-               Publisher - <strong class="text-left">{{getPublisher ItemAttributes}}</strong><br>
-               Edition - <strong class="text-left">{{getEdition ItemAttributes}}</strong><br>
-               ISBN - <strong class="text-left">{{getISBN ItemAttributes}}</strong><br>
-               Pub Date - <strong class="text-left">{{getPublicationDate ItemAttributes}}</strong><br>	
-               {{#if currentUser.emails.[0].verified}}	  
-               {{#if hasClickedBorrow}}                 
-               <a class="btn btn-info btn-xs borrow" href="{{pathFor 'borrow'}}" data-toggle="modal" data-target="#notNewBorrower" role="button">Borrow</a>&nbsp;
+            <h4 class="page-header">Books </h4>
+            
+               {{#if currentUser}}
+                  {{#unless currentUser.emails.[0].verified}}
+                     <div class="box">
+                        <h5 class="alert alert-warning">You need to verify your email address before using ilendbooks. </h5>
+                     </div>
+                  {{/unless}}
                {{else}}
-               <a class="btn btn-info btn-xs borrow" href="{{pathFor 'borrow'}}" data-toggle="modal" data-target="#isNewBorrower" role="button">Borrow</a>&nbsp;
+                  <div class="box">
+                     <h5 class="alert alert-warning">You need to be logged in to begin lending or borrowing. </h5>
+                  </div>
                {{/if}}
-               {{#if hasClickedLend}} 
-               <a class="btn btn-warning btn-xs lend" href="{{pathFor 'lend'}}" data-toggle="modal" data-target="#notNewLender"  role="button">Lend</a>&nbsp;
-               {{else}}
-               <a class="btn btn-warning btn-xs lend" href="{{pathFor 'lend'}}" data-toggle="modal" data-target="#isNewLender"  role="button">Lend</a>&nbsp;
-               {{/if}}
-               <a class="btn btn-primary btn-xs toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a>
-               {{else}}
-               <a class="btn btn-info btn-xs" role="button">Borrow</a>&nbsp;
-               <a class="btn btn-warning btn-xs" role="button">Lend</a>&nbsp;		                       	
-               <a class="btn btn-primary btn-xs" role="button">Buy on Amazon</a>
-               <style>
-                  .btn-info, .btn-warning, .btn-primary {
-                  background-color: #A9A9A9
-                  }
-               </style>
-               {{/if}}
+
+            <div id="page-content-wrapper">   
+               {{#each getBooks}}
+                  {{> searchResult}}
+               {{/each}}
             </div>
          </div>
-         <div class="modal fade" id="isNewBorrower" role="dialog">
-            <div class="modal-dialog">
-               <!-- Modal content-->
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                     <h4 class="modal-title">Thank you!</h4>
-                  </div>
-                  <div class="modal-body">
-                     <p>We got your request! We'll match you with a lender soon!</p>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="modal fade" id="notNewBorrower" role="dialog">
-            <div class="modal-dialog">
-               <!-- Modal content-->
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                     <h4 class="modal-title">Dont worry!</h4>
-                  </div>
-                  <div class="modal-body">
-                     <p>We're still trying to find a lender.</p>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="modal fade" id="isNewLender" role="dialog">
-            <div class="modal-dialog">
-               <!-- Modal content-->
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                     <h4 class="modal-title">Thank you!</h4>
-                  </div>
-                  <div class="modal-body">
-                     <p>We got your request! We'll let you know soon when someone is interested.</p>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="modal fade" id="notNewLender" role="dialog">
-            <div class="modal-dialog">
-               <!-- Modal content-->
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                     <h4 class="modal-title">Wait...</h4>
-                  </div>
-                  <div class="modal-body">
-                     <p>You are already in the system.</p>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div >
-               <span>&nbsp;</span>
-            </div>
-         </div>
-         <div class="row">
-            <div >
-               <hr>
-            </div>
-         </div>
-         <div class="row">
-            <div >
-               <span>&nbsp;</span>
-            </div>
-         </div>
-         {{/each}}
       </div>
    </div>
 </template>

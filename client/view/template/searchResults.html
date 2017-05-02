@@ -1,0 +1,24 @@
+<template name="searchResults">
+   <div id="main">
+      <div class=".container-fluid">
+         <div class="row">
+            <div class="box">
+               <h2 class="intro-text text-center">Search results for "{{getSearchResult.keyWords}}" </h2>
+
+               {{#if currentUser}}
+                  {{#unless currentUser.emails.[0].verified}}
+                  <h5 class="alert alert-warning">You need to verify your email address before using ilendbooks.  <a href="#" class="resend-verification-link">Resend verification link</a></h5>
+                  {{/unless}}
+               {{else}}
+                  <h5 class="alert alert-warning">You need to be logged in to begin lending or borrowing. </h5>
+               {{/if}}
+            </div>
+            <div id="page-content-wrapper">
+               {{#each getSearchResults}}
+                  {{> searchResult}}
+               {{/each}}
+            </div>
+         </div>
+      </div>
+   </div>
+</template>

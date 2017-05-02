@@ -110,38 +110,35 @@ Template.searchResult.helpers({
       return LargeImage[0].URL[0];
    }
    
-}),
+})
 
 Template.searchResult.events({
-   'submit form': function(event) {
+   'click .lend' : function(event) {
       event.preventDefault();
-      var condition = event.target.bookCondition.value;
-      var description = event.target.bookDescription.value;
-      var bookInfo = event.target.bookInfo.value;
-      console.log("searchResults::submit:bookInfo=" + bookInfo);
-      var parameters = bookInfo.split('--');
-      var ilendbooksId = parameters[0];
-      var title = parameters[1];
-      console.log("searchResults::submit:title" + title);
-      console.log("searchResults::submit:ilendbooksId" + ilendbooksId);
-
-      var currentlenderBookInfo = {
-         title: title,
-         ilendbooksId: ilendbooksId,
-         condition: condition,
-         description: description
+      var title = this.ItemAttributes[0].Title[0];
+      console.log("searchResult:lend:title=" + title);
+      var ilendbooksId = this.ilendbooksId;
+      if(! ilendbooksId) {
+         ilendbooksId = this._id; // if data is from 'books' collection
       }
+      console.log("searchResult:lend:ilendbooksId=" + ilendbooksId);
+      Session.set('condition-lendBook-title', title);
+      Session.set('condition-lendBook-ilendbooksId', ilendbooksId);
+      Modal.show('clickedLendModal');
+   },
 
-      var appUUID = Session.get('appUUID');
-      // var element = {
-      //    title : title,
-      //    lendbooksId: ilendbooksId 
-      // };
-      Meteor.call('updateToLend', appUUID, currentlenderBookInfo);
-      // console.log("upsert finished")
-      // Meteor.call('updateBookCondition', currentLender);
-      Router.go("myShelf");
-
+   'click .notNewLender' : function(event) {
+      event.preventDefault();
+      var title = this.ItemAttributes[0].Title[0];
+      console.log("searchResult:notNewLender:title=" + title);
+      var ilendbooksId = this.ilendbooksId;
+      if(! ilendbooksId) {
+         ilendbooksId = this._id; // if data is from 'books' collection
+      }
+      console.log("searchResult:notNewLender:ilendbooksId=" + ilendbooksId);
+      Session.set('condition-lendBook-title', title);
+      Session.set('condition-lendBook-ilendbooksId', ilendbooksId);
+      Modal.show('notNewLenderModal');
    },
 
    'click .toAmazon': function(event) {
@@ -158,24 +155,8 @@ Template.searchResult.events({
          url: myURL,
          dateTimeStamp: dateTime,
       }
-      console.log("right before upsert fails Amazon");
       ToAmazon.insert(data);
-      console.log("sent to toAmazon collection");
    },
-   
-   // 'click .confirmLend': function(event) {
-   //    var title = this.ItemAttributes[0].Title[0];
-   //    var appUUID = Session.get('appUUID');
-   //    console.log("title" + title);
-   //    var element = {};
-   //    element.title = title;
-   //    element.users = [];
-   //    element.ilendbooksId = this.ilendbooksId;
-   //    console.log("element" + element);
-   //    Meteor.call('updateToLend', appUUID, element);
-   //    console.log("upsert finished")
-      
-   // },
    
    'click .borrow': function(event) {
       var title = this.ItemAttributes[0].Title[0];
@@ -187,13 +168,10 @@ Template.searchResult.events({
       element.currentBorrowerId = Meteor.userId();
       element.ilendbooksId = this.ilendbooksId
       console.log("element" + element);
-      //Meteor.call('updateToBorrow', appUUID, element);
-      //Meteor.call('setMatch', element);
-     // console.log("upsert finished")
-      Session.setAuth('specificBookTitle', element.title);
-      Session.setAuth('ilendbooksId' , element.ilendbooksId);
-      //Session.setAuth('specificBookImage', this.LargeImage[0].URL[0]);
+      Session.setAuth('specificBook-title', element.title);
+      Session.setAuth('specificBook-ilendbooksId' , element.ilendbooksId);
       Router.go("specificBookPage");
       
    }
+
 })
