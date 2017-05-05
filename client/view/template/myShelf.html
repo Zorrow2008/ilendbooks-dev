@@ -3,137 +3,14 @@
 	<div class=".container-fluid">
 		<div class="row">
 			<div class="box">
-				<h1> Your lends </h1>
+				<h2> My book shelf </h2>
 			</div>
 		</div>		
 		<div id="page-content-wrapper">
-		{{#each getLentBooks}}	
-			<div class="row">
-				<div class="box">
-					<img class="img-responsive img-border img-left" src="{{getImage ilendbooksId}}" alt="">
-					<div class="span_4 column">
-						Title - <strong class="text-left">{{getTitle ilendbooksId}}</strong><br>
-						Author - <strong class="text-left">{{getAuthor ilendbooksId}}</strong><br>
-						Publisher - <strong class="text-left">{{getPublisher ilendbooksId}}</strong><br>
-						ISBN - <strong class="text-left">{{getISBN ilendbooksId}}</strong><br>
-						Edition - <strong class="text-left">{{getTitle ilendbooksId}}</strong><br>
-						Publication Date - <strong class="text-left">{{getPublicationDate ilendbooksId}}</strong><br>
-						Status - <!-- Large modal -->
-
-						{{#if isAvailable status}}
-						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#available">
-						  {{status}}
-						</button><br>
-						{{/if}}
-						{{#if isMatched status}}
-						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#matched">
-						  {{status}}
-						</button><br>
-						{{/if}}
-						{{#if noLender status}}
-						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#noLender">
-						  {{status}}
-						</button>
-						{{/if}}<br>	
-						{{#if isComplete}}
-						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#transComplete">
-						  {{status}}
-						</button>
-						{{/if}}
-
-
-						<div class="modal fade" id="available" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document">					  
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">Available</h4>
-						      </div>
-						      <div class="modal-body">
-						        Your book is currently available for lending
-						      </div>
-						      <div class="modal-footer">					        
-						        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-						      </div>
-						    </div>				   
-						  </div>
-						</div>	
-
-
-						<div class="modal fade" id="matched" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document">					  
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">Ready to Lend</h4>
-						      </div>
-						      <div class="modal-body">
-						        You're set to trade with PUTNAMEHERE.
-						      </div>
-						      <div class="modal-footer">					        
-						        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-						      </div>
-						    </div>				   
-						  </div>
-						</div>	
-
-						<div class="modal fade" id="noLender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document">					  
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">Your book is lent.</h4>
-						      </div>
-						      <div class="modal-body">
-						        You lent out your book to PUTNAMEHERE.
-						      </div>
-						      <div class="modal-footer">					        
-						        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-						      </div>
-						    </div>				   
-						  </div>
-						</div>	
-
-						<div class="modal fade" id="transComplete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document">					  
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">Congratulations!</h4>
-						      </div>
-						      <div class="modal-body">
-						       You completed a successful lend with PUTNAMEHERE! Make sure to give each other a review to earn points!
-						      </div>
-						      <div class="modal-footer">					        
-						        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-						      </div>
-						    </div>				   
-						  </div>
-						</div>						
-
-					</div>
-				</div>
-			</div>
-		{{/each}}
+			{{#each getLentBooks}}	
+				{{> bookInfo}}
+			{{/each}}
 		</div>
-<!-- 		<div class="row">
-			<div class="box">
-				{{#each getBooks}}	
-				<h2> {{getTitle ilendbooksId}} </h2>	
-				<div class="col-sm-2">
-					<img class="img-responsive img-border img-left" src="{{getImage ilendbooksId}}" alt="">
-				</div>
-				<div class="col-sm-2">
-					<p> Author: {{getAuthor ilendbooksId}} </p>					
-					<p> Publisher: {{getPublisher ilendbooksId}} </p>
-					<p> ISBN: {{getISBN ilendbooksId}} </p>
-					<p> Edition: {{getEdition ilendbooksId}}</p>
-					<p> Publication Date: {{getPublicationDate ilendbooksId}} </p>
-					<br>
-				</div>
-				{{/each}}
-			</div>
-		</div> -->
 	</div>
 </div>
 </template>

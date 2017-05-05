@@ -8,7 +8,9 @@ Template.login.events({
             console.log("You initiated login process.");
             Router.go('/')
          }else{
-            Bert.alert( 'Invalid credentials.', 'danger' );
+            Bert.alert( 'User or password is incorrect', 'danger' );
+            document.getElementById("password").style.borderColor="red"
+            document.getElementById("user").style.borderColor="red"
          }
       });
    },

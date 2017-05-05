@@ -19,7 +19,8 @@ Meteor.methods({
 	    var bookInfo = {
 	        ilendbooksId:currentlenderBookInfo.ilendbooksId,
 	        dateTime:dateTime,
-	        status:ilendbooks.public.status.AVAILABLE
+	        status:ilendbooks.public.status.AVAILABLE,
+	        matchedUserId: ""
 	    };
 		if(currentUserFromUserLendShelfDB==null) {
 		    UserLendShelf.upsert(

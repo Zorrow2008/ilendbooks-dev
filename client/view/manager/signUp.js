@@ -17,6 +17,7 @@ Template.signup.events({
          Accounts.createUser( user, ( error ) => {
             if ( error ) {
                Bert.alert( error.reason, 'danger' );
+
             } else {
                Meteor.call( 'sendVerificationLink', ( error, response ) => {
                   if ( error ) {
@@ -30,6 +31,7 @@ Template.signup.events({
             }
          });
       }else {
+         document.getElementById("confirm").style.borderColor="red";
          Bert.alert('Your two password values didnt match.', 'danger');
       }
       

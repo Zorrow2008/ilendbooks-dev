@@ -1,0 +1,16 @@
+<template name="bookInfo">
+			<div class="row">
+				<div class="box">
+					<img class="img-responsive img-border img-left" src="{{getImage ilendbooksId}}" alt="">
+					<div class="span_4 column">
+						Title - <strong class="text-left">{{getTitle ilendbooksId}}</strong><br>
+						Author - <strong class="text-left">{{getAuthor ilendbooksId}}</strong><br>
+						Publisher - <strong class="text-left">{{getPublisher ilendbooksId}}</strong><br>
+						ISBN - <strong class="text-left">{{getISBN ilendbooksId}}</strong><br>
+						Edition - <strong class="text-left">{{getEdition ilendbooksId}}</strong><br>
+						Publication Date - <strong class="text-left">{{getPublicationDate ilendbooksId}}</strong><br>
+						Status - <a href="#" class="text-left ilendInfoModal">{{status}}</a>				
+					</div>
+				</div>
+			</div>
+</template>

@@ -3,47 +3,14 @@
 	<div class=".container-fluid">
 		<div class="row">
 			<div class="box">
-				<h1> Your borrows </h1>
+				<h3> My borrows </h3>
 			</div>
 		</div>
 		<div id="page-content-wrapper">
-		{{#each getBorrowedBooks}}	
-			<div class="row">
-				<div class="box2">
-					<img class="img-responsive img-border img-left" src="{{getImage ilendbooksId}}" alt="">
-					<div class="span_4 column">
-						Title - <strong class="text-left">{{getTitle ilendbooksId}}</strong><br>
-						Author - <strong class="text-left">{{getAuthor ilendbooksId}}</strong><br>
-						Publisher - <strong class="text-left">{{getPublisher ilendbooksId}}</strong><br>
-						ISBN - <strong class="text-left">{{getISBN ilendbooksId}}</strong><br>
-						Edition - <strong class="text-left">{{getTitle ilendbooksId}}</strong><br>
-						Publication Date - <strong class="text-left">{{getPublicationDate ilendbooksId}}</strong><br>
-					</div>
-				</div>
-			</div>
-		{{/each}}
+			{{#each getBorrowedBooks}}	
+					{{> bookInfo}}
+			{{/each}}
 		</div>
-<!-- 		<div class="row">	
-				{{#each getBorrowedBooks}}	
-				<div class="row">
-				<div class="box">
-				<h2> {{getTitle ilendbooksId}} </h2>	
-				<h3> {{ilendbooksId}} </h3>
-				<div class="col-sm-2">
-					<img class="img-responsive img-border img-left" src="{{getImage ilendbooksId}}" alt="">
-				</div>
-				<div class="col-sm-2">
-					<p> Author: {{getAuthor ilendbooksId}} </p>					
-					<p> Publisher: {{getPublisher ilendbooksId}} </p>
-					<p> ISBN: {{getISBN ilendbooksId}} </p>
-					<p> Edition: {{getEdition ilendbooksId}}</p>
-					<p> Publication Date: {{getPublicationDate ilendbooksId}} </p>
-					<br>
-				</div>
-				</div>
-				</div>
-				{{/each}}	
-		</div> -->
 	</div>
 </div>
 </template>

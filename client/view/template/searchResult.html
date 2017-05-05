@@ -12,10 +12,13 @@
                         Pub Date - <strong class="text-left">{{getPublicationDate ItemAttributes}}</strong><br>   
 
                         {{#if currentUser.emails.[0].verified}}   
-                           <a id="borrow-{{ilendbooksId}}" class="btn btn-info btn-xs borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a>&nbsp;
+
+                           
                               {{#if hasClickedLend}} 
+                               <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">Borrow</a>&nbsp;
                                  <button  type="button" id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-xs notNewLender" >Lend</button>&nbsp;
                               {{else}}
+                                  <a id="borrow-{{ilendbooksId}}" class="btn btn-info btn-xs borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a>&nbsp;
                                  <button  type="button" id="lend-{{ilendbooksId}}" class="btn btn-warning btn-xs lend">Lend</button>&nbsp;
                               {{/if}}
                            <a id="{{ilendbooksId}}" class="btn btn-primary btn-xs toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a>

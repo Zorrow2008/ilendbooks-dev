@@ -4,22 +4,15 @@ Meteor.methods({
 			console.log( appUUID + ":updateUserBorrowShelf:" + currentborrowerBookInfoKey +"=" + currentborrowerBookInfo[currentborrowerBookInfoKey]);
 		}
 
-		var currentdate = new Date();
-      	var dateTime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();  
-
 		var currentUserFromUserBorrowSheldDB = UserBorrowShelf.findOne({userId: Meteor.userId()});
 		for(var currentUserFromUserBorrowShelfDBKey in currentUserFromUserBorrowSheldDB) {
 			console.log(appUUID + ":currentUserFromUserBorrowShelfDBKey=" + currentUserFromUserBorrowShelfDBKey +":value=" + currentUserFromUserBorrowSheldDB[currentUserFromUserBorrowShelfDBKey])
 		}
 	    var bookInfo = {
 	        ilendbooksId: currentborrowerBookInfo.ilendbooksId,
-	        dateTime:dateTime,
-	        hasBorrowed :false
+	        dateTime: currentborrowerBookInfo.dateTime,
+	        status: currentborrowerBookInfo.status,
+	        matchedUserId: currentborrowerBookInfo.matchedUserId
 	    };
 		if(currentUserFromUserBorrowSheldDB==null) {
 		    UserBorrowShelf.upsert(

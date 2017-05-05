@@ -6,122 +6,109 @@
    <body>
       <!-- Page Content -->
       <div class="container">
-<!--          <div class="row">
-            <div class="box">
-            <div class="col-md-9">
-               <h3 class=" text-center">
-                  {{getTitle}}
-               </h3>
-            </div>
-         </div>
-      </div> -->
-<!--       <div class="row">
-        
-            <img src="{{getImage}}" class="pull-left" alt="">
-         
-      </div> -->
 
       <div class="row">
       <div class="box2">
           <div class="col-lg-12">
                <h2 class="intro-text text-center" > {{getTitle}} </h2>
               <img src="{{getImage}}" class="img-responsive img-border img-left" alt="">
-              <p> Author: {{getAuthor}} <br>
-                  Publisher: {{getPublisher}} <br>
-                  Edition: {{getEdition}} <br>
-                  ISBN: {{getISBN}} <br>
-                  Publication Date: {{getPublicationDate}} 
+              <p> <b>Author</b>: {{getAuthor}} <br>
+                  <b>Publisher</b>: {{getPublisher}} <br>
+                  <b>Edition</b>: {{getEdition}} <br>
+                  <b>ISBN</b>: {{getISBN}} <br>
+                  <b>Publication Date</b>: {{getPublicationDate}} 
               </p>
           </div>
           </div>
       </div>
    </div>
 
-          
-         
-  
    <div class="container">
          <div class="row">
             {{#each getLenders}} 
-            <div class="col-sm-4 col-lg-4 col-md-4">
-               <div class="thumbnail">
-                  <img src="http://placehold.it/320x150" alt="">
-                  <div class="caption">
-                     <h4>{{getLenderFirstName userId}}
-                     </h4>
-                     {{#if hasClickedBorrow}}
-                        <a class="btn btn-info btn-xs" data-toggle="modal" data-target="#notNewBorrower" role="button">Request a lend!</a>&nbsp;
-                     {{else}}
-                        {{#if isEmail userId}}
-                           <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#email" role="button">Request a lend!</a>&nbsp;
-                        {{else}}
-                           <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#sms" role="button">Request a lend!</a>&nbsp;
-                        {{/if}}
-                     {{/if}}
-                  </div>
-                  <div class="ratings">
-                     <p class="pull-right">15 reviews</p>
-                     <p>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                     </p>
-                  </div>
-               </div>
-            </div>
-            <div class="modal fade" id="email" role="dialog">
-               <div class="modal-dialog">
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Thank you!</h4>
-                     </div>
-                     <div class="modal-body">
-                        <p>An email has been sent to the lender. Thank you!</p>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               {{#if isNotSameLender userId}}
+                {{#if isAvailable userId}}
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                     <div class="thumbnail">
+                        <img src="http://placehold.it/320x150" alt="">
+                        <div class="caption">
+                           <h4>{{getLenderFirstName userId}}
+                           </h4>
+                           {{#if hasClickedBorrow}}
+                              <a class="btn btn-info btn-xs" data-toggle="modal" data-target="#notNewBorrower" role="button">Request a lend!</a>&nbsp;
+                           {{else}}
+                              {{#if isEmail userId}}
+                                 <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#email" role="button">Request a lend!</a>&nbsp;
+                              {{else}}
+                                 <a class="btn btn-info btn-xs borrow" data-toggle="modal" data-target="#sms" role="button">Request a lend!</a>&nbsp;
+                              {{/if}}
+                           {{/if}}
+                        </div>
+                        <div class="ratings">
+                           <p class="pull-right">15 reviews</p>
+                           <p>
+                              <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star"></span>
+                           </p>
+                        </div>
                      </div>
                   </div>
-               </div>
-            </div>
-            <div class="modal fade" id="sms" role="dialog">
-               <div class="modal-dialog">
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Thank you!</h4>
-                     </div>
-                     <div class="modal-body">
-                        <p>An SMS has been sent to the lender. Thank you!</p>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="modal fade" id="notNewBorrower" role="dialog">
-               <div class="modal-dialog">
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Dont worry!</h4>
-                     </div>
-                     <div class="modal-body">
-                        <p>We're still trying to find a lender.</p>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <div class="modal fade" id="email" role="dialog">
+                     <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Thank you!</h4>
+                           </div>
+                           <div class="modal-body">
+                              <p>An email has been sent to the lender. Thank you!</p>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           </div>
+                        </div>
                      </div>
                   </div>
-               </div>
-            </div>
+                  <div class="modal fade" id="sms" role="dialog">
+                     <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Thank you!</h4>
+                           </div>
+                           <div class="modal-body">
+                              <p>An SMS has been sent to the lender. Thank you!</p>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="modal fade" id="notNewBorrower" role="dialog">
+                     <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Dont worry!</h4>
+                           </div>
+                           <div class="modal-body">
+                              <p>We're still trying to find a lender.</p>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               {{/if}}
+            {{/if}}
             {{/each}}
          </div>
       </div>

@@ -5,24 +5,46 @@ Template.specificBookPage.helpers({
       return title;
    },
 
+   isNotSameLender: function(userId) {
+      return Meteor.userId() != userId;
+   },
+
+   isAvailable: function(userId) {
+      var ilendbooksId = Session.get('specificBook-ilendbooksId');
+      var lender = UserLendShelf.findOne({userId: userId});
+      var realKey;
+      for(var lenderKey in lender.bookInfo) {
+          if(lender.bookInfo[lenderKey].ilendbooksId == ilendbooksId) {
+            realKey = lenderKey;
+          }
+      }
+      console.log("lender.bookInfo[realKey].status == ilendbooks.public.status.AVAILABLE")
+      return lender.bookInfo[realKey].status == ilendbooks.public.status.AVAILABLE;
+   },
+
    getAuthor: function() {
-      return Session.get('author');
+     var doc = Books.findOne({_id: Session.get('specificBook-ilendbooksId')})
+     return doc.ItemAttributes[0].Author[0];
    },
 
    getPublisher: function() {
-      return Session.get('publisher');
+      var doc = Books.findOne({_id: Session.get('specificBook-ilendbooksId')})
+     return doc.ItemAttributes[0].Publisher[0];
    },
 
    getEdition: function() {
-      return Session.get('edition');
+      var doc = Books.findOne({_id: Session.get('specificBook-ilendbooksId')})
+     return doc.ItemAttributes[0].Edition[0];
    },
 
    getISBN: function() {
-      return Session.get('ISBN');
+     var doc = Books.findOne({_id: Session.get('specificBook-ilendbooksId')})
+     return doc.ItemAttributes[0].ISBN[0];
    },
 
    getPublicationDate: function() {
-      return Session.get('publication date');
+      var doc = Books.findOne({_id: Session.get('specificBook-ilendbooksId')})
+     return doc.ItemAttributes[0].PublicationDate[0];
    },
 
    getImage: function() {
