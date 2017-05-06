@@ -11,6 +11,7 @@ Meteor.methods({
 		var lenderUserProfile = UserProfile.findOne({userId:contactParameters.lenderUserId});
 		var book = Books.findOne({"_id" : contactParameters.ilendbooksId});
 		var borrowerUserProfile = UserProfile.findOne({userId:contactParameters.borrowerUserId });
+		var notifLink = "your notifications";
 		if(book && lenderUserProfile && borrowerUserProfile) {
 			for(var lenderUserProfileKey in lenderUserProfile) {
 				console.log(appUUID + ":contactLender:userProfile(lender):"+ lenderUserProfileKey + "=" + lenderUserProfile[lenderUserProfileKey]);
@@ -22,7 +23,7 @@ Meteor.methods({
 				contactParameters.email = lenderUserProfile.email;
 				contactParameters.fromEmail = ilendbooks.private.generic.FROM_EMAIL;
 				contactParameters.emailSubject = 'Lender found',
-				contactParameters.emailBody = 'TO-DO: improve this message  - A lender would like to borrow the book ' + book.title
+				contactParameters.emailBody = 'TO-DO: improve this message  - A lender would like to borrow the book ' + book.title +'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
 				for(var contactParametersKey in contactParameters) {
 					console.log(appUUID + ":contactLender(email):"+ contactParametersKey + "=" + contactParameters[contactParametersKey]);
 				}

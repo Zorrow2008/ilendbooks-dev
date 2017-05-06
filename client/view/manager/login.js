@@ -6,7 +6,12 @@ Template.login.events({
       Meteor.loginWithPassword(email, password, function(){
          if (Meteor.user()) {
             console.log("You initiated login process.");
-            Router.go('/')
+            if(Session.get('backPath')) {
+               Router.go('/' + Session.get('backPath'));
+               delete Session.keys['backPath'];
+            }else{
+               Router.go('/');
+            }
          }else{
             Bert.alert( 'User or password is incorrect', 'danger' );
             document.getElementById("password").style.borderColor="red"

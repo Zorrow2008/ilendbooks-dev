@@ -1,11 +1,37 @@
 <template name="myNotifications">
-{{getPath}}
 <div class="row">
-	<div class="box">
+	{{#if isLoggedIn}}
+	
+
 		{{#each getPendingTransactions}}
+		<div class="box">
 			<p> {{getBorrowerName contactParameters }} has sent you a borrow request for the book {{getLenderBook contactParameters}}</p>
+			<button  type="button" id="accept" class="accept btn btn-info btn-md ilendInfoModal " >Accept</button>&nbsp;
+			<button  type="button" id="decline" class="decline btn btn-warning btn-md ilendActionModal " data-target="#ilendActionModal" data-toggle="modal" >Decline</button>&nbsp;
+		</div>
+	   <div class="modal fade" id="ilendActionModal" role="dialog">
+	      <div class="modal-dialog">
+	                     <!-- Modal content-->
+	         <div class="modal-content">
+	            <div class="modal-header">
+	               <button type="button" class="close" data-dismiss="modal">&times;</button>
+	               <h4 class="modal-title">{{getModalTitle}}</h4>
+	            </div>
+	            <div class="modal-body">
+	               <p>{{getModalBody}}</p>
+	            </div>
+	            <div class="modal-footer">
+	               <button type="button" class="btn btn-default confirm" data-dismiss="modal">Yes, decline</button>
+	            </div>
+	         </div>
+	      </div>
+	   </div>
 		{{/each}}
-	</div>
+	{{else}}
+		{{>loginValidation}}
+		{{setPathInSession}}
+	{{/if}}
 </div>
+
 
 </template>
