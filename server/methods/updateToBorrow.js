@@ -17,7 +17,7 @@ Meteor.methods({
           ilendbooksId: borrowerInfoBook.ilendbooksId,
           userId : Meteor.userId(),
           dateTime: dateTime,
-          status : ilendbooks.public.status.MATCHED,
+          status : ilendbooks.public.status.MATCHED_NOTIFIED,
           matchedUserId: borrowerInfoBook.lenderUserId       
       };
       if(currentBookFromToBorrowDB == null) {

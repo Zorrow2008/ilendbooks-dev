@@ -3,7 +3,7 @@ Meteor.methods({
 		ToLend.update(
 		    { "ilendbooksId": borrowerBookInfo.ilendbooksId,
 			  "lender.userId": borrowerBookInfo.lenderUserId },
-		    { "$set": { "lender.$.status": ilendbooks.public.status.MATCHED		     			
+		    { "$set": { "lender.$.status": ilendbooks.public.status.MATCHED_NOTIFIED		     			
 	 				  } 
 	 		}
 		)
@@ -12,7 +12,7 @@ Meteor.methods({
 			"userId": borrowerBookInfo.lenderUserId,
 			"bookInfo.ilendbooksId" : borrowerBookInfo.ilendbooksId
 		},
-		{ "$set": {"bookInfo.$.status": ilendbooks.public.status.MATCHED,
+		{ "$set": {"bookInfo.$.status": ilendbooks.public.status.MATCHED_NOTIFIED,
 				   "bookInfo.$.matchedUserId": currentBorrowerInfo.userId
 				 }
 

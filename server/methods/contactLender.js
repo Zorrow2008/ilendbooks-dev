@@ -28,11 +28,11 @@ Meteor.methods({
 				}
 				console.log(appUUID + ":contactLender:start email sending ...");
 		        var emailResult = Email.send({
-		            to: contactParameters.email,
-		            //to:'jayjo7@hotmail.com',
+		            to: contactParameters.email,	            
 		            from: contactParameters.fromEmail,
 		            subject: contactParameters.emailSubject,
-		            text: contactParameters.emailBody
+		            text: contactParameters.emailBody,
+		            
 		        });
          //  var emailResult = Email.send({
          //    to: "jayjo7@hotmail.com",
