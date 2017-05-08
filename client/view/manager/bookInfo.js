@@ -42,6 +42,11 @@ Template.bookInfo.helpers({
 		//var currentLentBook = Session.get('currentLentBook');
 		var currentLentBook = Books.findOne({_id: ilendbooksId});
 		return currentLentBook.ItemAttributes[0].PublicationDate[0];
+	},
+
+
+	isMatchedAcceptedLender: function(status) {
+		return status = ilendbooks.public.status.MATCHED_ACCEPTED;
 	}
 })
 
@@ -100,5 +105,6 @@ Template.bookInfo.events({
 	    Session.set(ilendbooks.public.modal.BODY, modalBody);
 
 	    Modal.show('ilendInfoModal');
-	}
+	},
+
 })

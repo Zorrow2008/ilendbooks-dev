@@ -62,9 +62,9 @@ Template.myNotifications.events({
 	    	to: UserProfile.findOne({userId: borrowerUserId}).email,
 	    	from: this.contactParameters.fromEmail,
 	    	subject: "Borrow request accepted",
-	    	text: lenderName + " has accepted your borrow request. Contact him at " + this.contactParameters.email + " to set up a book exchange."
+	    	text: lenderName + " has accepted your borrow request. Contact him at " + this.contactParameters.email + " to set up a book exchange. When you have received the book, make sure to go back to your borrows and let us know you have it!"
 	    }
-	    Meteor.call('emailBorrower', emailInfo);     
+	    Meteor.call('emailMatchedUser', emailInfo);     
 	},
 
 	'click .decline': function() {
@@ -90,8 +90,8 @@ Template.myNotifications.events({
 	    	subject: "Borrow request declined",
 	    	text: lenderName + " has declined your trade request."
 	    }
-	    Meteor.call('emailBorrower', emailInfo);
-		//console.log("matched-declined");
+	    Meteor.call('emailMatchedUser', emailInfo);
+		//console.log("emailMatchedUser-declined");
 	}
 })
 

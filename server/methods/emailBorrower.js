@@ -1,5 +1,5 @@
 Meteor.methods({
-	emailBorrower(emailInfo){
+	emailMatchedUser(emailInfo){
 		var emailResult = Email.send({
 			from: emailInfo.from,
 			to: emailInfo.to,
@@ -7,6 +7,6 @@ Meteor.methods({
 			text: emailInfo.text
 		});
 
-		console.log("borrower successfully emailed");
+		console.log("matched partner successfully emailed");
 	}
 })

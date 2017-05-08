@@ -8,7 +8,15 @@
 		</div>
 		<div id="page-content-wrapper">
 			{{#each getBorrowedBooks}}	
-					{{> bookInfo}}
+				{{> bookInfo}}
+				<div class="box">
+					{{#if isMatchedAcceptedBorrower}}
+						<br>
+						Confirm that you have received this book from the lender.
+						<button  type="button" id="yes" class="yes btn btn-info btn-xs ilendInfoModal " >Yes</button>&nbsp;
+						<button  type="button" id="no" class="no btn btn-warning btn-xs ilendInfoModal " >No</button>&nbsp;
+					{{/if}}
+				</div>
 			{{/each}}
 		</div>
 	</div>
