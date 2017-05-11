@@ -24,25 +24,25 @@
                      <a href="{{pathFor route='bookSearch'}}">Search Books</a>
                  </li> -->
                  {{#if currentUser}} 
-                 <li>
-                    <a href="{{pathFor route='#'}}" class="logout"> Log Out </a> 
-                 </li>
+                     <li>
+                        <a href="{{pathFor route='logout'}}" class="logout"> Log Out </a> 
+                     </li>
                  {{else}}
-                 <li>
-                     <a href="{{pathFor route='login'}}">Log in</a>
-                 </li>
+                     <li>
+                         <a href="{{pathFor route='login'}}">Log in</a>
+                     </li>
                  {{/if}}
                  <li>
                      <a href="{{pathFor route='aboutUs'}}">About Us</a>
                  </li>
                  {{#if currentUser.emails.[0].verified}}
-                 <li>
-                    <a href="#" onclick="openNav()">My Account</a>
-                 </li>
+                     <li>
+                        <a href="#" class='toggleSideNav'>My Account</a>
+                     </li>
                  {{else}}
-                  <li>
-                    <a href="{{pathFor route='login'}}">My Account</a>
-                 </li> 
+                      <li>
+                        <a href="{{pathFor route='login'}}">My Account</a>
+                     </li> 
                  {{/if}}               
              </ul>
          </div>
@@ -50,27 +50,7 @@
      </div>
      <!-- /.container -->
    </nav>
-    <div id="mySidenav" class="sidenav">
-         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-         
-         <a href="{{pathFor route='myShelf'}}">My shelf</a>
-         <a href="{{pathFor route='myBorrows'}}">My borrows</a>
-         
-         <!--<a href="{{pathFor route='aboutUs'}}">About Us</a>-->
-         <!--<a href="#">Help</a> -->
-         <!--<a href="#">Contact us</a> -->
-         <a class="myNotifications" href="{{pathFor route='myNotifications'}}">My notifications </a>
-         <a class="logout" href="#">Logout</a>
-   </div>
-    <script>
-       function openNav() {
-           document.getElementById("mySidenav").style.width = "250px";
-           document.getElementById("main").style.marginLeft = "250px";
-       }
 
-       function closeNav() {
-           document.getElementById("mySidenav").style.width = "0";
-           document.getElementById("main").style.marginLeft= "0";
-       }
-   </script>
+   {{>sideNavBar}}
+   
  </template>  

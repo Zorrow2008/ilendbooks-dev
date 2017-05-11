@@ -63,7 +63,7 @@ Template.bookInfo.events({
 	   	// var pendingTrans = PendingTransactions.findOne({lenderUserId: Meteor.userId()});
 	   	// var borrowerName = UserProfile.findOne({userId: pendingTrans.contactParameters.borrowerUserId}).fName;
 	   //	var matchedUserId = this.matchedUserId;
-	   	var matchedUserName = UserProfile.findOne({userId: this.matchedUserId}).fName;
+	   	var matchedUserName="";
 	 // 	var transKey;
 	 //   	for(var contactParametersKey in pendingTrans.contactParameters) {
 	 //   		if(pendingTrans.contactParameters[contactParametersKey].ilendbooksId == ilendbooksId) {
@@ -81,6 +81,7 @@ Template.bookInfo.events({
 		        modalBody =  "This book is available for lending ...";
 		        break;
 		    case ilendbooks.public.status.MATCHED:
+		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "Browwer Matched";
 		        modalBody =  "This book is set to be lended to " + matchedUserName + ". Please contact " + matchedUserName ;
 		        break;
@@ -93,10 +94,12 @@ Template.bookInfo.events({
 		        modalBody = "Transaction Complete, borrower returned the book back to you";
 		        break;
 		    case ilendbooks.public.status.WITH_BORROWER:
+		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "With Borrower";
 		        modalBody = "This book is with your friend " + matchedUserName;
 		        break;
 		    case ilendbooks.public.status.BORROWED:
+		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "Borrowed";
 		        modalBody = "You have borrowed this book from " + matchedUserName;
 		        break;
@@ -105,6 +108,5 @@ Template.bookInfo.events({
 	    Session.set(ilendbooks.public.modal.BODY, modalBody);
 
 	    Modal.show('ilendInfoModal');
-	},
-
+	}
 })

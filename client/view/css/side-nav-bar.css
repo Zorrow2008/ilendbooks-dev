@@ -46,3 +46,19 @@
      .sidenav {padding-top: 15px;}
      .sidenav a {font-size: 18px;}
    }
+
+      .ilend-openSideNav {
+      width:250px;
+   }
+
+   .ilend-mainOpenSideNav{
+      margin-left: 250px
+   }
+
+    .ilend-closeSideNav {
+      width:0px;
+    }
+
+   .ilend-mainCloseSideNav{
+      margin-left: 0px
+   }

@@ -1,34 +1,9 @@
 <template name="sideNavBar">
-   <div id="sidebar-wrapper">
-      <ul class="sidebar-nav">
-         {{#if currentUser.emails.[0].verified}}                
-         <li>
-            <a class="page-scroll hello">Hello {{getFirstName}}!</a>
-         </li>
-         {{/if}}
-         <li>
-            <a href="{{pathFor route='myShelf'}}">My shelf </a>
-         </li>
-         <li>
-            <a href="#">My borrows</a>
-         </li>
-         <li>
-            <a href="#">Settings</a>
-         </li>
-         <li>
-            <a href="{{pathFor route='books'}}">Books</a>
-         </li>
-         <li>
-            <a href="#">About Us</a>
-         </li>
-         <li>
-            <a href="#">Help</a>
-         </li>
-         {{#if currentUser.emails.[0].verified}}
-         <li>
-            <a class="page-scroll logout" href="#"> Logout</a>
-         </li>
-         {{/if}}
-      </ul>
+   <div id="mySidenav" class="sidenav ilend-closeSideNav">
+      <a href="javascript:void(0)" class="closebtn toggleSideNav">&times;</a>
+         <a href="{{pathFor route='myShelf'}}">my shelf</a>
+         <a href="{{pathFor route='myBorrows'}}">my borrows</a>
+         <a class="myNotifications" href="{{pathFor route='myNotifications'}}">my notifications </a>
+         <a href="{{pathFor route='logout'}}">logout</a>
    </div>
 </template>
