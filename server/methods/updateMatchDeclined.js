@@ -1,5 +1,13 @@
 Meteor.methods({
-	updateMatchDeclined(contactParameters) {       
+	updateMatchDeclined(contactParameters) {   
+		console.log('contactParameters='+ contactParameters);
+		for (var contactParametersKey in contactParameters) {
+			console.log( appUUID 
+				+ ":updateMatchDeclined:" 
+				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
+			);
+		}
+
 	    ToLend.update({
 	        "ilendbooksId": contactParameters.ilendbooksId,
 	        "lender.userId": Meteor.userId()
@@ -19,6 +27,13 @@ Meteor.methods({
 		    }
 
 		});
+
+		var currentBook = ToLend.findOne({
+      		ilendbooksId: Session.get('specificBook-ilendbooksId'), 
+      		lender: {$elemMatch:{userId:{$ne: contactParameters.borrowerUserId }, status:ilendbooks.public.status.AVAILABLE}}
+    	});
+
+    	
 
 	  	ToBorrow.update({
 	        "ilendbooksId": contactParameters.ilendbooksId,

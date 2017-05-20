@@ -1,8 +1,26 @@
-
 {
-  "TWILIO": {
-    "FROM": "+15005550006",
-    "SID": "ACb73c0a76f92985c26c437e973196b363",
-    "TOKEN": "39fd55e3d954d175934500a190e9bc99"
-  }
+	"public":
+	{
+		"gmtOffset"		: -7
+	},
+
+	"private":
+	{
+		"twilio"	: 
+		{
+	    	"from"	: "+15005550006",
+	    	"sid"	: "ACb73c0a76f92985c26c437e973196b363",
+	    	"token"	: "39fd55e3d954d175934500a190e9bc99"
+	  	},
+	  	"admin"     :
+	  	{
+	  		"bcc"   : true,
+	  		"email" : "jayjo7@hotmail.com",
+	  		"sms"   : true,
+	  		"phone" : "425-777-6970"
+	  	}
+
+	}
+
+
 }

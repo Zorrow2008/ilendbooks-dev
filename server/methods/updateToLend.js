@@ -5,20 +5,15 @@ updateToLend(appUUID, currentlenderBookInfo) {
         console.log( appUUID + ":updateToLend:currentlenderBookInfo." + currentlenderBookInfoKey +"=" + currentlenderBookInfo[currentlenderBookInfoKey]);
       }
 
-      var currentdate = new Date();
-      var dateTime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();     
-      var currentBookFromToLendDB = ToLend.findOne({title: currentlenderBookInfo.title, ilendbooksId: currentlenderBookInfo.ilendbooksId});
-      var lenderInfo = {
-            userId:Meteor.userId(),
-            dateTime:dateTime,
-            status : ilendbooks.public.status.AVAILABLE,
-            bookCondition: currentlenderBookInfo.condition,
-            bookDescription: currentlenderBookInfo.description
+      var dateTime = Meteor.call('getLocalTime');
+      var currentBookFromToLendDB = ToLend.findOne({title: currentlenderBookInfo.title
+        , ilendbooksId: currentlenderBookInfo.ilendbooksId
+      });
+      var lenderInfo = { userId:Meteor.userId()
+        , dateTime:dateTime
+        , status : ilendbooks.public.status.AVAILABLE
+        , bookCondition: currentlenderBookInfo.condition
+        , bookDescription: currentlenderBookInfo.description
       };
       if(currentBookFromToLendDB == null) {
             ToLend.upsert({

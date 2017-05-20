@@ -15,16 +15,16 @@
 
                            
                               {{#if hasClickedLend}} 
-                               <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">Borrow</a>&nbsp;
-                                 <button  type="button" id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-xs notNewLender" >Lend</button>&nbsp;
+                               <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">I want to borrow</a>&nbsp;
+                                 <button  type="button" id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-xs notNewLender" >I want to lend</button>&nbsp;
                               {{else}}
                                   <a id="borrow-{{ilendbooksId}}" class="btn btn-info btn-xs borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a>&nbsp;
-                                 <button  type="button" id="lend-{{ilendbooksId}}" class="btn btn-warning btn-xs lend">Lend</button>&nbsp;
+                                 <button  type="button" id="lend-{{ilendbooksId}}" class="btn btn-warning btn-xs lend">I want to lend</button>&nbsp;
                               {{/if}}
                            <a id="{{ilendbooksId}}" class="btn btn-primary btn-xs toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a>
                         {{else}}
-                           <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">Borrow</a>&nbsp;
-                           <a class="btn btn-warning btn-xs ilend-disabled-btn" role="button">Lend</a>&nbsp;                            
+                           <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">I want to borrow</a>&nbsp;
+                           <a class="btn btn-warning btn-xs ilend-disabled-btn" role="button">I want to lend</a>&nbsp;                            
                            <a class="btn btn-primary btn-xs ilend-disabled-btn" role="button">Buy on Amazon</a>
                         {{/if}}
                      </div>

@@ -4,13 +4,8 @@ Meteor.methods({
 			console.log( appUUID + ":updateUserLendShelf:" + currentlenderBookInfoKey +"=" + currentlenderBookInfo[currentlenderBookInfoKey]);
 		}
 
-		var currentdate = new Date();
-      	var dateTime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();  
+
+      	var dateTime = Meteor.call('getLocalTime');
 
 		var currentUserFromUserLendShelfDB = UserLendShelf.findOne({userId: Meteor.userId()});
 		for(var currentUserFromUserLendShelfDBKey in currentUserFromUserLendShelfDB) {

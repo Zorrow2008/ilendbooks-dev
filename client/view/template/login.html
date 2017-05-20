@@ -18,13 +18,14 @@
                      <input type="password" id="password" name="password" class="form-control" placeholder="Password">
                   </div>
                   <div class="form-group">
-                     <input type="submit" class="btn btn-success center-block" value="Login">
+                     <input type="submit" class="btn btn-success btn-sm center-block" value="Login">
                   </div>
                </form>
-               <a href="{{pathFor route='signup'}}"><p class='ilend-small-font'>Don't have an account?</p></a> 
-               <a href="{{pathFor route='forgotPassword'}}" class="sendResetPasswordEmail"><p class='ilend-small-font'> Forgot password?</p></a>
-            </div>
-            <div class="clearfix"></div>
+                  <a href="{{pathFor route='signup'}}"><span class='ilend-small-font'>Create an account</span></a>
+
+                  <br>
+                  <a href="{{pathFor route='forgotPassword'}}" class="sendResetPasswordEmail"><span class='ilend-small-font'>Recover password</span></a>
+            </div>               
          </div>
       </div>
    </div>

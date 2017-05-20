@@ -1,7 +1,7 @@
 var twilioClient = new Twilio({
-  from: Meteor.settings.TWILIO.FROM,
-  sid: Meteor.settings.TWILIO.SID,
-  token: Meteor.settings.TWILIO.TOKEN
+  from: Meteor.settings.private.twilio.from,
+  sid: Meteor.settings.private.twilio.sid,
+  token: Meteor.settings.private.twilio.token
 });
 
 

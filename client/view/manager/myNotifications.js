@@ -1,6 +1,8 @@
 Template.myNotifications.helpers({
 	getPendingTransactions: function() {
-		return PendingTransactions.find({lenderUserId: Meteor.userId()});
+		return PendingTransactions.find({lenderUserId: Meteor.userId()
+			, status:ilendbooks.public.status.MATCHED_NOTIFIED
+		});
 	},
 
 	getBorrowerName: function(contactParameters) {
@@ -26,7 +28,7 @@ Template.myNotifications.helpers({
 
 	setPathInSession: function() {
 		
-		Session.setAuth("backPath", Router.current().route.getName());
+		Session.setTemp("backPath", Router.current().route.getName());
 		Session.setAuth("author", author);
 		//this.redirect('login')
 	},
@@ -46,36 +48,40 @@ Template.myNotifications.helpers({
 
 Template.myNotifications.events({
 	'click .accept': function() {
-	    console.log("I CLICKED ACCEPT");
+	    var appUUID = Session.get('appUUID');
+	    this.contactParameters.appUUID = appUUID;
 	    //set status in userLendShelf and userBorrowShelf to matched-accepted
 	    var borrowerUserId = this.contactParameters.borrowerUserId
 	    var borrowerName = UserProfile.findOne({userId: this.contactParameters.borrowerUserId}).fName;
-	    var lenderName = UserProfile.findOne({userId: Meteor.userId()}).fName;
-	    Meteor.call('updateMatchAccepted', this.contactParameters);
+	    Meteor.call('updateMatchAcceptedAndContactBorrower'
+	    	, appUUID
+	    	, this.contactParameters
+	    );
 		console.log("matched-accepted");
 		var modalTitle = "Borrow request accepted!";
-		var modalBody = "You accepted " + borrowerName + "'s borrow request! We will provide " + borrowerName +" with your contact information for him to reach out to you.";
+		var modalBody = "You accepted " 
+			+ borrowerName 
+			+ "'s borrow request! We will provide " 
+			+ borrowerName 
+			+" with your contact information for him to reach out to you."
+		;
 	    Session.set(ilendbooks.public.modal.TITLE, modalTitle);
 	    Session.set(ilendbooks.public.modal.BODY, modalBody);
-	    Modal.show('ilendInfoModal');
-	    var emailInfo = {
-	    	to: UserProfile.findOne({userId: borrowerUserId}).email,
-	    	from: this.contactParameters.fromEmail,
-	    	subject: "Borrow request accepted",
-	    	text: lenderName + " has accepted your borrow request. Contact him at " + this.contactParameters.email + " to set up a book exchange. When you have received the book, make sure to go back to your borrows and let us know you have it!"
-	    }
-	    Meteor.call('emailMatchedUser', emailInfo);     
+	    Modal.show('ilendInfoModal');    
 	},
 
 	'click .decline': function() {
 	    console.log("I CLICKED DECLINE");
 	    //set status in userLendShelf and userBorrowShelf to matched-accepted
 	    var borrowerName = UserProfile.findOne({userId: this.contactParameters.borrowerUserId}).fName;
-		var modalTitle = "Borrow request declined.";
-		var modalBody = "Are you sure you want to decline " + borrowerName + "'s borrow request?";
-	    Session.set(ilendbooks.public.modal.TITLE, modalTitle);
-	    Session.set(ilendbooks.public.modal.BODY, modalBody);
-	    //Modal.show('ilendActionModal');		
+	    Session.set(ilendbooks.public.modal.action.TITLE,"Borrow request declined.");
+	    Session.set(ilendbooks.public.modal.action.BODY, "Are you sure you want to decline " + borrowerName + "'s borrow request?");
+	    Session.set(ilendbooks.public.modal.action.FEED_BACK_FLAG, true);
+	    Session.set(ilendbooks.public.modal.action.FEED_BACK_LABEL, "Would you like to give a reason?");
+	    Session.set(ilendbooks.public.modal.action.DISPLAY, "Yes, please");
+	    Session.set(ilendbooks.public.modal.action.CLASS, "matched-declined");
+
+	    Modal.show('ilendActionModal');		
 	},
 
 	'click .confirm': function() {

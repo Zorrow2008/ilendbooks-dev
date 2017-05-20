@@ -18,4 +18,8 @@ UserBorrowShelf = new Mongo.Collection("userBorrowShelf");
 
 PendingTransactions = new Mongo.Collection("pendingTransactions");
 
-SMS = new Mongo.Collection('sms');
+//SMS = new Mongo.Collection('sms');
+
+Correspondence = new Mongo.Collection("correspondence");
+
+History = new Mongo.Collection("history");

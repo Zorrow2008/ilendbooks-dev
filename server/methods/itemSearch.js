@@ -82,14 +82,18 @@ Meteor.methods({
          for(upsertResultKey in upsertResult) {
             console.log(appUUID + ':itemSearch:upsertResult='+ upsertResult[upsertResultKey]);
          }
-         // email sent is for debugging purpose only, can be commemted 
-          var emailResult = Email.send({
-            to: "jayjo7@hotmail.com",
-            from: "admin@ilendbooks.com",
-            subject: "itemSearch - result",
-            text: stringifiedResults
-         });
-         console.log(appUUID + ':itemSearch:Email sent')
+         console.log(appUUID + ':itemSearch:isBccAdmin='+ isBccAdmin());
+         console.log(appUUID + ':itemSearch:isSmsAdmin='+ isSmsAdmin());
+         if(isBccAdmin()) {
+           // email sent is for debugging purpose only, can be commemted 
+            var emailResult = Email.send({
+              to: "jayjo7@hotmail.com",
+              from: "ilendbooks<admin@ilendbooks.com>",
+              subject: "itemSearch - result",
+              text: stringifiedResults
+           });
+            console.log(appUUID + ':itemSearch:Email sent')
+          }
       }).catch(function(err){
             console.log(err);
             console.log('Stringified error object' + JSON.stringify(err, null, 4));

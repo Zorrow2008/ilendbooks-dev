@@ -5,22 +5,22 @@ Template.specificBookPage.helpers({
       return title;
    },
 
-   isNotSameLender: function(userId) {
-      return Meteor.userId() != userId;
-   },
+   // isNotSameLender: function(userId) {
+   //    return Meteor.userId() != userId;
+   // },
 
-   isAvailable: function(userId) {
-      var ilendbooksId = Session.get('specificBook-ilendbooksId');
-      var lender = UserLendShelf.findOne({userId: userId});
-      var realKey;
-      for(var lenderKey in lender.bookInfo) {
-          if(lender.bookInfo[lenderKey].ilendbooksId == ilendbooksId) {
-            realKey = lenderKey;
-          }
-      }
-      console.log("lender.bookInfo[realKey].status == ilendbooks.public.status.AVAILABLE")
-      return lender.bookInfo[realKey].status == ilendbooks.public.status.AVAILABLE;
-   },
+   // isAvailable: function(userId) {
+   //    var ilendbooksId = Session.get('specificBook-ilendbooksId');
+   //    var lender = UserLendShelf.findOne({userId: userId});
+   //    var realKey;
+   //    for(var lenderKey in lender.bookInfo) {
+   //        if(lender.bookInfo[lenderKey].ilendbooksId == ilendbooksId) {
+   //          realKey = lenderKey;
+   //        }
+   //    }
+   //    console.log("lender.bookInfo[realKey].status == ilendbooks.public.status.AVAILABLE")
+   //    return lender.bookInfo[realKey].status == ilendbooks.public.status.AVAILABLE;
+   // },
 
    getAuthor: function() {
      var doc = Books.findOne({_id: Session.get('specificBook-ilendbooksId')})
@@ -62,7 +62,11 @@ Template.specificBookPage.helpers({
    getLenders: function() {
      // console.log("getLenders called");
      // console.log("ilendbooksid: " + Session.get('ilendbooksId'));
-      var currentBook = ToLend.findOne({ilendbooksId: Session.get('specificBook-ilendbooksId')});
+    var currentBook = ToLend.findOne({
+      ilendbooksId: Session.get('specificBook-ilendbooksId'), 
+      lender: {$elemMatch:{userId:{$ne: Meteor.userId() }, status:ilendbooks.public.status.AVAILABLE}}
+    });
+    // var currentBook = ToLend.findOne({ilendbooksId: Session.get('specificBook-ilendbooksId')});
       for(key in currentBook) {
          console.log("key: " + key + ";value: " + currentBook[key]);
       }
@@ -117,6 +121,19 @@ Template.specificBookPage.events({
         console.log(borrowerKey + "; " + borrowerInfo[borrowerKey]);
       }
       Meteor.call('updateToBorrowAndContactLender', appUUID, borrowerInfo);
+      var modalTitle = "Thank you!";
+      var modalBody = "It is great that you are lending/borrowing text books... SAVE THE EARTH!"
+      var userProfile = UserProfile.findOne({userId: this.userId})
+      if (userProfile.contactPreference === ilendbooks.public.contactPreference.EMAIL) {
+          modalBody =  "An email has been sent to the lender. Thank you!";
+      } else if (userProfile.contactPreference === ilendbooks.public.contactPreference.PHONE) {
+          modalBody =  "An SMS has been sent to the lender. Thank you!";
+      } 
+
+      Session.set(ilendbooks.public.modal.TITLE, modalTitle);
+      Session.set(ilendbooks.public.modal.BODY, modalBody);
+
+      Modal.show('ilendInfoModal');
       console.log("updateToBorrowAndContactLender finished");
 
    }

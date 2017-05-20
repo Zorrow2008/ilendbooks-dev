@@ -19,28 +19,25 @@ Meteor.methods({
 			
 			if(ilendbooks.public.contactPreference.EMAIL === lenderUserProfile.contactPreference) {
 				// email the lender that someone is intrested in borrowing the book
-				contactParameters.contactMethod = lenderUserProfile.contactPreference;
+				contactParameters.contactPreference = lenderUserProfile.contactPreference;
 				contactParameters.email = lenderUserProfile.email;
 				contactParameters.fromEmail = ilendbooks.private.generic.FROM_EMAIL;
-				contactParameters.emailSubject = 'Lender found',
-				contactParameters.emailBody = 'TO-DO: improve this message  - A lender would like to borrow the book ' + book.title +'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
+				contactParameters.emailSubject = 'Intrested Borrower...',
+				contactParameters.emailBody = 'TO-DO: improve this message  - A borrower would like to borrow the book ' + contactParameters.title +'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
 				for(var contactParametersKey in contactParameters) {
 					console.log(appUUID + ":contactLender(email):"+ contactParametersKey + "=" + contactParameters[contactParametersKey]);
 				}
+				console.log(appUUID + ":contactLender:getBcc()=" + getBcc());
 				console.log(appUUID + ":contactLender:start email sending ...");
 		        var emailResult = Email.send({
-		            to: contactParameters.email,	            
+		            to: contactParameters.email,
+                    bcc: getBcc(),
 		            from: contactParameters.fromEmail,
 		            subject: contactParameters.emailSubject,
 		            text: contactParameters.emailBody,
 		            
 		        });
-         //  var emailResult = Email.send({
-         //    to: "jayjo7@hotmail.com",
-         //    from: "admin@ilendbooks.com",
-         //    subject: "itemSearch - Jay",
-         //    text: "test mesage"
-         // });
+
           		console.log(appUUID + ":contactLender:email sent." + emailResult);
 
 		        contactParameters.contactResult = emailResult;
@@ -49,10 +46,10 @@ Meteor.methods({
 		        	console.log(appUUID + ":contactLender:contactResult (email):"+ contactResultKey + "=" + contactParameters.contactResult[contactResultKey]);
 		        }
 
-			} else if (ilendbooks.public.contactPreference.CELL === lenderUserProfile.contactPreference){ 
-				contactParameters.contactMethod = lenderUserProfile.contactPreference;
+			} else if (ilendbooks.public.contactPreference.PHONE=== lenderUserProfile.contactPreference){ 
+				contactParameters.contactPreference = lenderUserProfile.contactPreference;
 				contactParameters.phoneNumber = lenderUserProfile.phoneNumber
-				contactParameters.smsMessage = 'TO-DO: improve this message  - A lender would like to borrow the book ' + book.title
+				contactParameters.smsMessage = 'TO-DO: improve this message  - A borrower would like to borrow the book ' + contactParameters.title+'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
 				var smsParameters = {
 					to:contactParameters.phoneNumber,
 					message: contactParameters.smsMessage 
@@ -62,6 +59,8 @@ Meteor.methods({
 				contactParameters.status = smsResult.status;
 			} else {
 				console.log(appUUID + ":contactLender: Fatal, no good, no contact preference...");
+				contactParameters.status = ilendbooks.public.status.FAILED;
+				contactParameters.contactResult = "No contact preference for this user " + contactParameters.lenderUserId;
 			}
 
 		} else {
@@ -73,9 +72,7 @@ Meteor.methods({
 			console.log(appUUID + ":contactLender: Fatal: book = " + book);
 			console.log(appUUID + ":contactLender:************************* Fatal *************************");
 		}
-		PendingTransactions.insert({
-			lenderUserId: contactParameters.lenderUserId,
-			contactParameters: contactParameters
-		})
+		Meteor.call("insertPendingTransactions", appUUID, contactParameters, ilendbooks.public.status.MATCHED_NOTIFIED);
+		Meteor.call("insertCorrespondence", appUUID, contactParameters.lenderUserId, contactParameters);
 	}
 });

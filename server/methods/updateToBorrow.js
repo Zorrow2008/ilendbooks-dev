@@ -4,14 +4,8 @@ Meteor.methods({
         console.log( appUUID + ":updateToBorrow:borrowerInfoBook." + borrowerInfoBookKey +"=" + borrowerInfoBook[borrowerInfoBookKey]);
       }
 
-      var currentdate = new Date();
-      var dateTime = currentdate.getDate() + "/"
-          + (currentdate.getMonth()+1)  + "/" 
-          + currentdate.getFullYear() + " @ "  
-          + currentdate.getHours() + ":"  
-          + currentdate.getMinutes() + ":" 
-          + currentdate.getSeconds();   
 
+      var dateTime = Meteor.call('getLocalTime');
       var currentBookFromToBorrowDB = ToBorrow.findOne({title: borrowerInfoBook.title, ilendbooksId: borrowerInfoBook.ilendbooksId});
       var currentBorrowerInfo = {
           ilendbooksId: borrowerInfoBook.ilendbooksId,
@@ -63,7 +57,20 @@ Meteor.methods({
             }
       }
       Meteor.call('updateUserBorrowShelf', appUUID, currentBorrowerInfo);
-      Meteor.call('updateLenderStatus', currentBorrowerInfo, borrowerInfoBook);
+      //Currently logged user is the borrower 
+      //matchedUserId is lender
+      var transactionInfo ={
+        appUUID : appUUID,
+        ilendbooksId : currentBorrowerInfo.ilendbooksId,
+        borrowerUserId : currentBorrowerInfo.userId,
+        lenderUserId : currentBorrowerInfo.matchedUserId ,
+        status : ilendbooks.public.status.MATCHED_NOTIFIED
+
+      }
+      Meteor.call('updateLenderStatusAndMatchedUserId', appUUID, transactionInfo );
+      Meteor.call("updateStatus", appUUID, transactionInfo );
+      Meteor.call('insertHistory', appUUID,transactionInfo );
+
    }
 
 })

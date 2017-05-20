@@ -1,3 +1,33 @@
+gmtOffset = function() {
+	return  Meteor.settings.public.gmtOffset;
+};
+
+isBccAdmin = function() {
+	return  Meteor.settings.private.admin.bcc;
+};
+
+isSmsAdmin = function() {
+	return  Meteor.settings.private.admin.sms;
+};
+
+getAdminEmail = function() {
+	return  Meteor.settings.private.admin.email;
+};
+
+getAdminPhone = function() {
+	return  Meteor.settings.private.admin.phone;
+};
+
+getBcc = function () {
+	console.log('isBccAdmin()=' + isBccAdmin());
+	console.log('getAdminEmail()=' + getAdminEmail());
+	if(isBccAdmin())
+	{
+		console.log('getAdminEmail()=' + getAdminEmail());
+		return getAdminEmail();
+	}
+}
+
 Meteor.methods({
 	substitueKey(appUUID, data, searchKeyValue, replaceKeyValue){
 		console.log(appUUID + ":substitueKey:data="+data);
@@ -10,7 +40,13 @@ Meteor.methods({
 		}
 
 		return data;
-	}
+	},
+
+  	getLocalTime() {
+  	  console.log('gmtOffset=' + gmtOffset());
+      return moment().utcOffset(gmtOffset()).format('MM/DD/YYYY HH:mm:ss:SSS');
+
+  	}
 });
 
 genericReplaceKey = function(appUUID, data, searchKeyValue, replaceKeyValue) {

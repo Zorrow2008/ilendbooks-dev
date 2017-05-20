@@ -1,5 +1,5 @@
 Accounts.emailTemplates.siteName = "ilendbooks";
-Accounts.emailTemplates.from     = "Yokesh <admin@ilendbooks.com>";
+Accounts.emailTemplates.from     = ilendbooks.private.generic.FROM_EMAIL;
 
 Accounts.emailTemplates.verifyEmail = {
    subject() {

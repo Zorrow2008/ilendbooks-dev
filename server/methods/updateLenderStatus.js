@@ -1,23 +1,25 @@
 Meteor.methods({
-	updateLenderStatus(currentBorrowerInfo, borrowerBookInfo) {
-		ToLend.update({
-		    "ilendbooksId": borrowerBookInfo.ilendbooksId,
-		    "lender.userId": borrowerBookInfo.lenderUserId
-		}, {
-		    "$set": {
-		        "lender.$.status": ilendbooks.public.status.MATCHED_NOTIFIED
-		    }
-		})
+	updateLenderStatus(appUUID, ilendbooksId, lenderUserId, status ) {
+	     console.log( appUUID + ":updateLenderStatus:" + ilendbooksId +"=" + ilendbooksId);
+	     console.log( appUUID + ":updateLenderStatus:" + lenderUserId +"=" + lenderUserId);
+	     console.log( appUUID + ":updateLenderStatus:" + status +"=" + status);
+	    
+	    ToLend.update({
+	        "ilendbooksId": ilendbooksId,
+	        "lender.userId": lenderUserId
+	    }, {
+	        "$set": {
+	            "lender.$.status": status
+	        }
+	    });
 
 		UserLendShelf.update({
-		    "userId": borrowerBookInfo.lenderUserId,
-		    "bookInfo.ilendbooksId": borrowerBookInfo.ilendbooksId
+		    "userId": lenderUserId,
+		    "bookInfo.ilendbooksId": ilendbooksId
 		}, {
-		    "$set": {
-		        "bookInfo.$.status": ilendbooks.public.status.MATCHED_NOTIFIED,
-		        "bookInfo.$.matchedUserId": currentBorrowerInfo.userId
-		    }
-
-		})
+		    	"$set": {
+		        	"bookInfo.$.status": status
+		    	}
+		});
 	}
 })
