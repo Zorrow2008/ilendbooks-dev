@@ -1,12 +1,13 @@
 <template name="myBorrows">
 <div id="main">
+<div id="page-content-wrapper">
 	<div class=".container-fluid">
 		<div class="row">
 			<div class="box">
 				<h3> My borrows </h3>
 			</div>
 		</div>
-		<div id="page-content-wrapper">
+		
 			{{#each getBorrowedBooks}}	
 				{{> bookInfo}}
 				<div class="box">

@@ -42,7 +42,7 @@ Template.user.events({
          degree: degree,
          points: 10
       })
-      Router.go('/');
+      Router.go('userHome');
    }
 })
 

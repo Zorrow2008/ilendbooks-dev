@@ -10,7 +10,7 @@ Template.login.events({
                Router.go('/' + Session.get('backPath'));
                delete Session.keys['backPath'];
             }else{
-               Router.go('/');
+               Router.go('userHome');
             }
          }else{
             Bert.alert( 'User or password is incorrect', 'danger' );

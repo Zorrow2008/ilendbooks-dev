@@ -7,6 +7,7 @@ Template.keywordSearch.events({
        var searchParameters = {
           keywords : keywords,
        }
+       console.log("keywords: " + keywords)
        Meteor.call( 'itemSearch', appUUID, searchParameters);
        Router.go('searchResults');
 	}	

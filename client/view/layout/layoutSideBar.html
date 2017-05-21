@@ -1,0 +1,16 @@
+<template name="layoutSideBar">
+    <div id="wrapper">
+	{{> sideBar}}
+	        <div id="page-content-wrapper">
+            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+    			<span class="hamb-middle"></span>
+				<span class="hamb-bottom"></span>
+            </button>
+    {{> yield}}
+    {{> footer}}
+        </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+</template>
