@@ -5,6 +5,14 @@ Template.myBorrows.helpers({
 		return doc.bookInfo;
 	},
 
+	hasBooks: function() {
+		console.log("isEmpty was called");
+		if( UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
+			return true;
+		}
+		return false;
+	},
+
 	isMatchedAcceptedBorrower: function(status) {
 		return status = ilendbooks.public.status.MATCHED_ACCEPTED;
 	},

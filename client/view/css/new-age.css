@@ -3,6 +3,44 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+ .box {
+    margin-bottom: 20px;
+
+    color: black;
+    padding: 30px 15px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+
+.box2 {
+    margin-bottom: 40px;
+    padding: 100px 50px 100px 200px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+.bookDiv {
+  margin-left: 50px;
+  color: black;
+}
+.row-padded {
+  padding: 35px;
+  background-color: #F7F7F7;
+  border: 1px solid #DDD;
+}
+
+.row-padded .span4 {
+  background-color: #bbb;
+  width: 30%;
+}
+
+.userHome {
+  text-align: center
+}
+
+strong {
+  color: black;
+}
+
 .heading-font {
   font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
   font-weight: 200;
@@ -23,6 +61,7 @@ body {
 }
 body {
   font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
+
 }
 a {
   -webkit-transition: all 0.35s;

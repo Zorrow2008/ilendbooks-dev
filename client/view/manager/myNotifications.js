@@ -5,6 +5,10 @@ Template.myNotifications.helpers({
 		});
 	},
 
+	hasPendingTransactions: function() {
+		return ( PendingTransactions.findOne({lenderUserId: Meteor.userId()}) != null);
+	},
+
 	getBorrowerName: function(contactParameters) {
 		return UserProfile.findOne({userId: contactParameters.borrowerUserId}).fName;
 	},

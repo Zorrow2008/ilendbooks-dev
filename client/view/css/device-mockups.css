@@ -32,22 +32,7 @@
  */
 
  /* GENERAL STYLE */
-.box {
-    margin-bottom: 20px;
-    padding: 30px 15px;
-    background: #fff;
-    background: rgba(128,128,129,0.9);
-}
 
-.box2 {
-    margin-bottom: 40px;
-    padding: 80px 40px;
-    background: #fff;
-    background: rgba(255,255,255,0.9);
-}
-.searchResultDiv {
-	margin-left: 50px
-}
 .device-mockup {
 	position: relative;
 	width: 100%;

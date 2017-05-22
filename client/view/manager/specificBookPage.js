@@ -54,7 +54,7 @@ Template.specificBookPage.helpers({
      var currentBook = Books.findOne({"_id": ilendbooksId});
     // console.log("currentbook:"+currentBook);
    //  var currentbook = Books.findOne({Session.get('ilendbooksId')});
-     return currentBook.MediumImage[0].URL[0];
+     return currentBook.LargeImage[0].URL[0];
 
      // return Session.get('specificBookImage');
    },

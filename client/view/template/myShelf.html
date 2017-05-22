@@ -1,16 +1,22 @@
 <template name="myShelf">
+<header>
+<h1> My book shelf </h1>
 <div id="main">
-	<div class=".container-fluid">
-		<div class="row">
-			<div class="box">
-				<h2> My book shelf </h2>
-			</div>
-		</div>		
+<div class="bookDiv">
+	<div class=".container-fluid">	
 		<div id="page-content-wrapper">
-			{{#each getLentBooks}}	
-				{{> bookInfo}}
-			{{/each}}
+			{{#if hasBooks}}
+				{{#each getLentBooks}}		
+					{{> bookInfo}}		
+				{{/each}}
+			{{else}}
+				<div class="box bookDiv">
+					<h3> You have no books on your shelf right now. </h3>
+				</div>
+			{{/if}}
 		</div>
 	</div>
 </div>
+</div>
+</header>
 </template>

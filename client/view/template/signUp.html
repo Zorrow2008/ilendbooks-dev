@@ -1,37 +1,35 @@
 <template name="signup">
-   <div id="wrap">
-   <div class="row">
-   
-    <div class="col-lg-12">
+   <header>
+      <div id="wrap">
+         <div class="row">
+            <div class="col-lg-12">
                <h2 class="intro-text text-center">
                   <strong> Sign up</strong>
                </h2>
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+               <form id="signup" class="signup">
+                  <div class="form-group">
+                     <label for="emailAddress">UW alias</label>  (must end with "@uw.edu")
+                     <br>
+                     <input  type="text" name="emailAddress" class="form-control" placeholder="
+                        Email Address" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="password">Password</label>
+                     <input type="password" name="password" class="form-control" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                     <label for="password2"> Confirm password</label>
+                     <input type="password" id="confirm" name="password2" class="form-control" placeholder="Confirm password">
+                  </div>
+                  <div class="form-group">
+                     <input type="submit" class="btn btn-success center-block" value="Sign Up">
+                  </div>
+               </form>
+               <a href="{{pathFor route='login'}}"><span class='ilend-small-font'>Already signed up?</span></a>
+            </div>
+         </div>
       </div>
-
-      <div class="col-md-4 col-md-offset-4">
-         <form id="signup" class="signup">
-            <div class="form-group">
-               <label for="emailAddress">UW alias</label>  (must end with "@uw.edu")
-               <br>
-               <input  type="text" name="emailAddress" class="form-control" placeholder="
-                  Email Address" required>
-               
-            </div>
-            <div class="form-group">
-               <label for="password">Password</label>
-               <input type="password" name="password" class="form-control" placeholder="Password">
-            </div>
-            <div class="form-group">
-               <label for="password2"> Confirm password</label>
-               <input type="password" id="confirm" name="password2" class="form-control" placeholder="Confirm password">
-            </div>
-            <div class="form-group">
-               <input type="submit" class="btn btn-success center-block" value="Sign Up">
-            </div>
-         </form>
-         <a href="{{pathFor route='login'}}"><span class='ilend-small-font'>Already signed up?</span></a>
-      </div>
-   </div>
-   </div>
-  
+   </header>
 </template>
