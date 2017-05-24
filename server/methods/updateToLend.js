@@ -60,6 +60,7 @@ updateToLend(appUUID, currentlenderBookInfo) {
       }
       // update user lender shelf
       Meteor.call('updateUserLendShelf', appUUID, currentlenderBookInfo);
+      Meteor.call('addNewBookBookcoin', 2);
     }
   }
 )

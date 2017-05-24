@@ -14,7 +14,7 @@ Template.myBorrows.helpers({
 	},
 
 	isMatchedAcceptedBorrower: function(status) {
-		return status = ilendbooks.public.status.MATCHED_ACCEPTED;
+		return status == ilendbooks.public.status.MATCHED_ACCEPTED;
 	},
 })
 

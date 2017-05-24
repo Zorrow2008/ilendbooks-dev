@@ -14,23 +14,14 @@ Template.user.events({
             newPhoneNumber += phoneNumber.charAt(i);
          }
       }
+      var degreeElement = document.getElementById("degrees");
+      var degree = degreeElement.options[degreeElement.selectedIndex].value;
 
-      var radios = document.getElementsByName('contact');
-      //var degree = document.getElementsByName('degree');
-      var option = document.getElementById("degrees");
-      var degree = option.options[option.selectedIndex].value;
 
-      if (radios[0].checked) {
-        // do whatever you want with the checked radio
-        var contactPreference = ilendbooks.public.contactPreference.EMAIL;
-      }else{
-         var contactPreference = ilendbooks.public.contactPreference.CELL;
-      }
+      var contactElement = document.getElementById('contacts');
+      var contactPreference = contactElement.options[contactElement.selectedIndex].value;
 
-      console.log(firstName);
-      console.log(lastName);
       
-      console.log(degree);
       UserProfile.insert({
          userId: Meteor.userId(),
          fName: firstName,
@@ -40,8 +31,16 @@ Template.user.events({
          email: Meteor.user().emails[0].address,
          contactPreference: contactPreference,
          degree: degree,
-         points: 10
-      })
+         bookcoin: 10
+      });
+      Reviews.insert({
+         userId: Meteor.userId(),
+         asLenderReviews: [],
+         asBorrowerReviews: [],
+         averageLenderRating: 0,
+         averageBorrowerRating: 0,
+         averageUserRating: 0
+      });
       Router.go('userHome');
    }
 })

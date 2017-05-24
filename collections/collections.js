@@ -23,3 +23,5 @@ PendingTransactions = new Mongo.Collection("pendingTransactions");
 Correspondence = new Mongo.Collection("correspondence");
 
 History = new Mongo.Collection("history");
+
+Reviews = new Mongo.Collection("reviews");

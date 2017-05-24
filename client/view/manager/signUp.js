@@ -25,7 +25,7 @@ Template.signup.events({
                      Bert.alert( error.reason, 'danger' );
                   } else {
                      Bert.alert( 'Welcome!', 'success' );
-                     Router.go('emailSent');
+                     Router.go('verificationEmailSent');
                   }
                });
             }
