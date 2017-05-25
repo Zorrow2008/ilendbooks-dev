@@ -1,37 +1,36 @@
-         <template name="searchResult">
-            <div class="bookDiv">
-               <div class="row">
-                  
-                     <div class="col-xs-3">
-                         <img class="img-responsive img-border img-left" src="{{getMediumImage MediumImage}}" alt="">
-                     </div>
-                     <div  class="col-xs-3">
-                        <strong class="text-left">Title - {{getTitle ItemAttributes}}</strong><br>
-                        <strong class="text-left">Author - {{getAuthor ItemAttributes}}</strong><br>
-                        <strong class="text-left">No of pages - {{getNumberOfPages ItemAttributes}}</strong><br>
-                        <strong class="text-left">Publisher - {{getPublisher ItemAttributes}}</strong><br>
-                        <strong class="text-left">Edition - {{getEdition ItemAttributes}}</strong><br>
-                        <strong class="text-left">ISBN - {{getISBN ItemAttributes}}</strong><br>
-                        <strong class="text-left">Pub Date - {{getPublicationDate ItemAttributes}}</strong><br>   
-
-                        {{#if currentUser.emails.[0].verified}}   
-
-                           
-                              {{#if hasClickedLend}} 
-                               <a class="btn btn-info btn-xs disabled ilend-disabled-btn" role="button">I want to borrow</a>&nbsp;
-                                 <button  type="button" id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-xs notNewLender" >I want to lend</button>&nbsp;
-                              {{else}}
-                                  <a id="borrow-{{ilendbooksId}}" class="btn btn-info btn-xs borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a>&nbsp;
-                                 <button  type="button" id="lend-{{ilendbooksId}}" class="btn btn-warning btn-xs lend">I want to lend</button>&nbsp;
-                              {{/if}}
-                           <a id="{{ilendbooksId}}" class="btn btn-primary btn-xs toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a>
-                        {{else}}
-                           <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">I want to borrow</a>&nbsp;
-                           <a class="btn btn-warning btn-xs ilend-disabled-btn" role="button">I want to lend</a>&nbsp;                            
-                           <a class="btn btn-primary btn-xs ilend-disabled-btn" role="button">Buy on Amazon</a>
-                        {{/if}}
-                     </div>
-                
-               </div>
-            </div>
-         </template>
+<template name="searchResult">
+   <div class="bookDiv">
+      <div class="row">
+         <div class="col-xs-3">
+            <img class="img-responsive img-border img-left" src="{{getMediumImage MediumImage}}" alt="">
+         </div>
+         <div  class="col-xs-6">
+            Title - <strong class="text-left">{{getTitle ItemAttributes}}</strong><br>
+            Author - <strong class="text-left">{{getAuthor ItemAttributes}}</strong><br>
+            No of pages - <strong class="text-left">{{getNumberOfPages ItemAttributes}}</strong><br>
+            Publisher - <strong class="text-left">{{getPublisher ItemAttributes}}</strong><br>
+            Edition - <strong class="text-left">{{getEdition ItemAttributes}}</strong><br>
+            ISBN - <strong class="text-left">{{getISBN ItemAttributes}}</strong><br>
+            Pub Date - <strong class="text-left">{{getPublicationDate ItemAttributes}}</strong><br>   
+ 
+         </div>
+         <div class="col-xs-3">
+           {{#if currentUser.emails.[0].verified}}   
+            {{#if hasClickedLend}} 
+            <br><br>
+            <a class="btn btn-info btn-xs disabled ilend-disabled-btn" role="button">I want to borrow</a> <br><br>
+            <button  type="button" id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-xs notNewLender" >I want to lend</button><br><br>
+            {{else}}
+            <a id="borrow-{{ilendbooksId}}" class="btn btn-info btn-xs borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a><br><br>
+            <button  type="button" id="lend-{{ilendbooksId}}" class="btn btn-warning btn-xs lend">I want to lend</button><br><br>
+            {{/if}}
+            <a id="{{ilendbooksId}}" class="btn btn-primary btn-xs toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a><br><br>
+            {{else}}
+            <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">I want to borrow</a><br><br>
+            <a class="btn btn-warning btn-xs ilend-disabled-btn" role="button">I want to lend</a> <br><br>                     
+            <a class="btn btn-primary btn-xs ilend-disabled-btn" role="button">Buy on Amazon</a>
+            {{/if}}
+         </div>
+      </div>
+   </div>
+</template>

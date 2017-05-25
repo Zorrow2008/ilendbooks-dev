@@ -1,29 +1,61 @@
 <template name="keywordSearch">
 
 
-   <form >
+<!--    <form >
       <div class="form-group">
-        <div class="input-group">
-          	<input type="text" name="keyword" class="form-control" placeholder="book tilte, author name, ISBN etc., " required>
+        <div class="form-group input-group">
+          	<input type="text" name="keyword" class="form-control"  placeholder="book tilte, author name, ISBN etc., " required>
           	 <span class="input-group-btn">
-        		<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+        		<button class="btn btn-default" name="action" type="submit"><span class="glyphicon glyphicon-search"></span></button>
      		 </span>
          </div>
       </div>
-      <div class="row">
+    </form> -->
+
+     <form >
+        <div class="form-group">
+            <div class="form-group input-group">
+           
+              <input class="form-control"  type="text" name='keyword' placeholder="book tilte, author name, ISBN etc., " required/>
+              <span class="input-group-btn">
+            <button class="btn btn-default" name="action" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+         </span>
+            </div>
+        </div> 
+
+     </form>
+
+
+<!--       <div class="row">
         <div class="col-md-6">
           <div class="box userHome">
          
-            <button type="button submit" class="btn btn-primary btn-md">Add to shelf</button>
+            <button type="button submit" name="add" value="add" class="btn btn-primary btn-md add">Add to shelf</button>
           </div>
         </div>
         <div class="col-md-6">
           <div class="box userHome">
           
-            <button type="button submit" class="btn btn-primary btn-md">Add to borrows</button>
+            <button type="button submit"  name="borrow" value="borrow" class="btn btn-primary btn-md borrow">Add to borrows</button>
           </div>
         </div>
+      </div> -->
+
+
+<!--   <form id="login" class="login">
+  <div class="form-group">
+      <div class="form-group input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input class="form-control" id="user" type="email" name='emailAddress' placeholder="Email Address" required/>
       </div>
-   </form>
+  </div> 
+   <div class="form-group input-group">
+     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+     <input class="form-control" type="password" id="password" name='password' placeholder="Password"/>     
+   </div>
+  <div class="form-group">
+     <input type="submit" class="btn btn-success btn-sm center-block" value="Login">
+  </div>
+</form>   -->
 
 </template>

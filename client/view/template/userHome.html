@@ -1,5 +1,5 @@
 <template name="userHome">
-   <summary>
+<!--    <summary>
       <div id="main">
          <div id="page-content-wrapper">
             <div class="row">
@@ -20,5 +20,50 @@
 
          </div>
       </div>
-   </summary>
+   </summary> -->
+<!--    <summary>
+        <div class="container">
+            <div class="row" >
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="header-content">
+                        <div class="header-content-inner">
+                           <h1 class="text-center">Search for a book</h1>
+                              <div class="col-md-4 col-md-offset-4">
+                                {{> keywordSearch}}
+                               </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </summary> -->
+   <summary>
+        <div class="container">
+            <div class="row" >
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="header-content">
+                        <div class="header-content-inner">
+                           <h1 class="text-center">Search for books</h1>
+<!--                            <form id="login" class="login">
+                              <div class="form-group">
+                                  <div class="form-group input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input class="form-control" id="user" type="email" name='emailAddress' placeholder="Email Address" required/>
+                                  </div>
+                              </div> 
+                               <div class="form-group input-group">
+                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                 <input class="form-control" type="password" id="password" name='password' placeholder="Password"/>     
+                               </div>
+                              <div class="form-group">
+                                 <input type="submit" class="btn btn-success btn-sm center-block" value="Login">
+                              </div>
+                           </form> -->
+                           {{> keywordSearch}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </summary>
 </template>

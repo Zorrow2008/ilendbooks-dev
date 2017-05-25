@@ -30,12 +30,26 @@ Template.searchResult.helpers({
       lenderBookInfo.users = [];
       var currentBook = ToLend.findOne({title: lenderBookInfo.title});
       var lenderInfo = {};
+      var clickedLend = false;
       for(key in currentBook.lender) {
          if(currentBook.lender[key].userId == Meteor.userId()) {
-            return true;
+            if(currentBook.lender[key].status == ilendbooks.public.status.REMOVED ) {
+               clickedLend = false;
+            }else{
+               clickedLend = true;
+            }
          }
       }
-      return false;
+
+     // for(key in currentBook.lender) {
+     //     if(currentBook.lender[key].userId == Meteor.userId()) {
+     //        clickedLend = true;
+     //     } else {
+     //         clickedLend = false;
+     //     }
+     //  }
+     
+      return clickedLend;
    },
    
    getSearchAuthor: function() {

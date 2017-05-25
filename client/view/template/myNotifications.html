@@ -1,5 +1,5 @@
 <template name="myNotifications">
-<header>
+<!-- <summary>
 <h1> My notifications </h1>
 <div id="main">
 <div class="row">
@@ -23,6 +23,37 @@
 	{{/if}}
 </div>
 </div>
-</header>
-
+</summary> -->
+<summary>
+<h1 class="text-center">My notifications</h1>
+   <div class="container">
+      <div id="main">
+      <div class=".container-fluid">
+         <div class="row" >
+			<div id="page-content-wrapper">
+			{{#if isLoggedIn}}
+				{{#if hasPendingTransactions}}
+					{{#each getPendingTransactions}}
+					<div class="box bookDiv ">
+						<p> {{getBorrowerName contactParameters }} has sent you a borrow request for the book {{getLenderBook contactParameters}}</p>
+						<button  type="button" id="accept" class="accept btn btn-info btn-xs" >Accept</button>&nbsp;
+						<button  type="button" id="decline" class="decline btn btn-warning btn-xs" >Decline</button>&nbsp;
+					</div>
+					{{/each}}
+				{{else}} 
+					<div class="box bookDiv">
+						<h3> You have no new notifications as of now. </h3>
+					</div>
+				{{/if}}
+			{{else}}
+				{{>loginValidation}}
+				{{setPathInSession}}
+			{{/if}}
+			</div>        	
+           
+         </div>
+      </div>
+   </div>
+   </div>
+</summary>
 </template>

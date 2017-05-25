@@ -11,5 +11,25 @@ Template.myShelf.helpers({
 			return true;
 		}
 		return false;
+	},
+
+	notRemoved: function(ilendbooksId) {
+		var doc = UserLendShelf.findOne({userId: Meteor.userId()});
+		var bookKey;
+		for(var key in doc.bookInfo) {
+			if(doc.bookInfo[key].ilendbooksId == ilendbooksId) {
+				bookKey = key;
+			}
+		}
+		return (doc.bookInfo[bookKey].status != ilendbooks.public.status.REMOVED) && (doc.bookInfo[bookKey].status == ilendbooks.public.status.AVAILABLE);		
 	}
 })
+
+// Template.myShelf.events({
+// 	'click .remove': function(event) {
+// 		var ilendbooksId = this.ilendbooksId;
+// 		console.log(ilendbooksId);
+// 		Meteor.call('deleteFromMyShelf', ilendbooksId);
+		
+// 	}
+// })

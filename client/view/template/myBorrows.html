@@ -1,6 +1,6 @@
 <template name="myBorrows">
-<header>
-<h1> My borrows </h1>
+<!-- <summary>
+<h1 class="text-center">My book shelf</h1>
 <div id="main">
 <div class="bookDiv">
 <div id="page-content-wrapper">
@@ -26,5 +26,36 @@
 	</div>
 	</div>
 </div>
-</header>
+</summary> -->
+<summary>
+<h1 class="text-center">My borrows</h1>
+   <div class="container">
+      <div id="main">
+      <div class=".container-fluid">
+         <div class="row" >
+			<div id="page-content-wrapper">
+			{{#if hasBooks}}
+			{{#each getBorrowedBooks}}	
+				{{> bookInfo}}
+				<div class="box">
+					{{#if isMatchedAcceptedBorrower}}
+						<br>
+						Confirm that you have received this book from the lender.
+						<button  type="button" id="yes" class="yes btn btn-info btn-xs ilendInfoModal " >Yes</button>&nbsp;
+						<button  type="button" id="no" class="no btn btn-warning btn-xs ilendInfoModal " >No</button>&nbsp;
+					{{/if}}
+				</div>
+			{{/each}}
+			{{else}}
+				<div class="box bookDiv">
+					<h3> You have no current borrows right now. </h3>
+				</div>
+			{{/if}}
+			</div>        	
+           
+         </div>
+      </div>
+   </div>
+   </div>
+</summary>
 </template>

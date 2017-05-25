@@ -133,5 +133,11 @@ Template.bookInfo.events({
 	    Session.set(ilendbooks.public.modal.BODY, modalBody);
 
 	    Modal.show('ilendInfoModal');
+	},
+	'click .remove': function(event) {
+		var ilendbooksId = this.ilendbooksId;
+		console.log(ilendbooksId);
+		Meteor.call('deleteFromMyShelf', ilendbooksId);
+		
 	}
 })
