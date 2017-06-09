@@ -47,6 +47,11 @@ Template.specificBookPage.helpers({
      return doc.ItemAttributes[0].PublicationDate[0];
    },
 
+   getNumberOfPages: function() {
+      var doc = Books.findOne({_id: Session.get('specificBook-ilendbooksId')})
+     return doc.ItemAttributes[0].NumberOfPages[0];
+   },
+
    getImage: function() {
     // console.log("i reached getImage");
      var ilendbooksId = Session.get('specificBook-ilendbooksId').valueOf();
@@ -58,6 +63,7 @@ Template.specificBookPage.helpers({
 
      // return Session.get('specificBookImage');
    },
+
 
    getLenders: function() {
      // console.log("getLenders called");
@@ -102,6 +108,14 @@ Template.specificBookPage.helpers({
          }
       }
       return false;
+   },
+
+   getLenderAverageRating: function(userId) {
+      // var currentLender = Reviews.findOne({userId: userId});
+      // console.log("getLenderAverageRating called");
+      // console.log("currentLender.averageLenderRating: " + currentLender.averageLenderRating);
+      // return currentLender.averageLenderRating;
+      return Reviews.findOne({userId: this.userId }).averageLenderRating;
    }
 })
 
@@ -122,19 +136,20 @@ Template.specificBookPage.events({
       }
       Meteor.call('updateToBorrowAndContactLender', appUUID, borrowerInfo);
       var modalTitle = "Thank you!";
-      var modalBody = "It is great that you are lending/borrowing text books... SAVE THE EARTH!"
+      var modalBody = ["It is great that you are lending/borrowing text books... SAVE THE EARTH!"];
       var userProfile = UserProfile.findOne({userId: this.userId})
       if (userProfile.contactPreference === ilendbooks.public.contactPreference.EMAIL) {
-          modalBody =  "An email has been sent to the lender. Thank you!";
+          modalBody =  ["An email has been sent to the lender. Thank you!"];
       } else if (userProfile.contactPreference === ilendbooks.public.contactPreference.PHONE) {
-          modalBody =  "An SMS has been sent to the lender. Thank you!";
+          modalBody =  ["An SMS has been sent to the lender. Thank you!"];
       } 
 
       Session.set(ilendbooks.public.modal.TITLE, modalTitle);
-      Session.set(ilendbooks.public.modal.BODY, modalBody);
+      Session.set(ilendbooks.public.modal.BODY_ARRAY, modalBody);
 
       Modal.show('ilendInfoModal');
       console.log("updateToBorrowAndContactLender finished");
+      Router.go("myBorrows");
 
    }
 })

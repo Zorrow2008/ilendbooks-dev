@@ -10,11 +10,10 @@
                </div>
                <div class="modal-body">
                   <p>{{getActionModalBody}}</p>
-                  {{#if isActionModalFeedBackFlag}}
-                     <br>  
+                  {{#if isActionModalFeedBackFlag}}  
                      {{getActionModalFeedBackLabel}}
                      <br>
-                     <textarea class="form-control" name="ilendActionModalTextArea" placeholder="{{getActionModalFeedBackLabel}}"></textarea>
+                     <textarea class="form-control" id="ilendActionModalTextArea" name="ilendActionModalTextArea" placeholder="{{getActionModalFeedBackLabel}}"></textarea>
                   {{/if}}
                </div>
                <div class="modal-footer">

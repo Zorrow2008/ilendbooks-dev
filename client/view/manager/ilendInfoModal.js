@@ -1,10 +1,10 @@
 Template.ilendInfoModal.helpers({
-   getModalTitle: function() {
+   	getModalTitle: function() {
       return Session.get(ilendbooks.public.modal.TITLE);
-   },
+   	},
 
-   getModalBody: function() {
-      return Session.get(ilendbooks.public.modal.BODY);
-   },
+   	getModalBodyArray: function() {
+      return Session.get(ilendbooks.public.modal.BODY_ARRAY);
+   	},
 
 })

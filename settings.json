@@ -1,7 +1,9 @@
 {
 	"public":
 	{
-		"gmtOffset"		: -7
+		"gmtOffset"		: -7,
+		"imageFormatter":"https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=220&resize_h=300&refresh=31536000&url="
+
 	},
 
 	"private":
@@ -14,9 +16,9 @@
 	  	},
 	  	"admin"     :
 	  	{
-	  		"bcc"   : true,
+	  		"bcc"   : false,
 	  		"email" : "jayjo7@hotmail.com",
-	  		"sms"   : true,
+	  		"sms"   : false,
 	  		"phone" : "425-777-6970"
 	  	}
 

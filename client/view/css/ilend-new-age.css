@@ -42,7 +42,7 @@ summary .device-container .screen img {
   border-radius: 3px;
 }
 @media (min-width: 768px) {
-  header {
+  summary {
     min-height: 100%;
   }
   summary .header-content {

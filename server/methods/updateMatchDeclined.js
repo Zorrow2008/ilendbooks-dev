@@ -1,62 +1,47 @@
 Meteor.methods({
-	updateMatchDeclined(contactParameters) {   
-		console.log('contactParameters='+ contactParameters);
+	updateMatchDeclined(appUUID, contactParameters) {   
+		console.log(appUUID +':contactParameters='+ contactParameters);
 		for (var contactParametersKey in contactParameters) {
 			console.log( appUUID 
 				+ ":updateMatchDeclined:" 
 				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
 			);
 		}
+	
 
-	    ToLend.update({
-	        "ilendbooksId": contactParameters.ilendbooksId,
-	        "lender.userId": Meteor.userId()
-	    }, {
-	        "$set": {
-	            "lender.$.status": ilendbooks.public.status.AVAILABLE
-	        }
-	    });
+		var lenderUserProfile = UserProfile.findOne({userId: contactParameters.lenderUserId});
+		var borrowerUserProfile = UserProfile.findOne({userId: contactParameters.borrowerUserId});
+		contactParameters.appUUID = appUUID;
+		contactParameters.toUserId = contactParameters.borrowerUserId;
+		contactParameters.emailSubject =  "Borrow request declined";
 
-		UserLendShelf.update({
-		    "userId": Meteor.userId(),
-		    "bookInfo.ilendbooksId": contactParameters.ilendbooksId
-		}, {
-		    "$set": {
-		        "bookInfo.$.status": ilendbooks.public.status.AVAILABLE
-		        
-		    }
+		if(ilendbooks.public.contactPreference.EMAIL === borrowerUserProfile.contactPreference) {
 
-		});
+			contactParameters.email = borrowerUserProfile.email;
+			contactParameters.contactPreference = borrowerUserProfile.contactPreference;
+			contactParameters.emailBody = lenderUserProfile.fName 
+		    	+ " has declined your borrow request. please go online " 
+		    	+ (Router.routes['userHome'].url({_id: 1}))  
+		    	+ " to search for another lender." 
 
-		var currentBook = ToLend.findOne({
-      		ilendbooksId: Session.get('specificBook-ilendbooksId'), 
-      		lender: {$elemMatch:{userId:{$ne: contactParameters.borrowerUserId }, status:ilendbooks.public.status.AVAILABLE}}
-    	});
+		} else if (ilendbooks.public.contactPreference.CELL === borrowerUserProfile.contactPreference){
+			contactParameters.phoneNumber = borrowerUserProfile.phoneNumber;
+			contactParameters.contactPreference = borrowerUserProfile.contactPreference;
+			contactParameters.smsMessage = lenderUserProfile.phoneNumber
+		    	+ " has declined your borrow request. please go online " 
+		    	+ (Router.routes['userHome'].url({_id: 1}))  
+		    	+ " to search for another lender." 
+		}
 
-    	
-
-	  	ToBorrow.update({
-	        "ilendbooksId": contactParameters.ilendbooksId,
-	        "borrower.userId": contactParameters.borrowerUserId
-	    }, {
-	        "$set": {
-	            "borrower.$.status": ilendbooks.public.status.AVAILABLE
-	        }
-	    });
-
-		UserBorrowShelf.update({
-		    "userId": contactParameters.borrowerUserId,
-		    "bookInfo.ilendbooksId": contactParameters.ilendbooksId
-		}, {
-		    "$set": {
-		        "bookInfo.$.status": ilendbooks.public.status.AVAILABLE
-		       
-		    }
-
-		})
-
-
-	}
-
-
+	    var updateStatusInfo = {
+	    	appUUID : appUUID,
+	    	status : ilendbooks.public.status.MATCHED_DECLINED,
+	    	ilendbooksId : contactParameters.ilendbooksId,
+	    	lenderUserId : contactParameters.lenderUserId,
+	    	borrowerUserId : contactParameters.borrowerUserId
+	    }
+		Meteor.call("updateStatus", appUUID, updateStatusInfo );
+		Meteor.call("contact", appUUID, contactParameters);
+		Meteor.call('insertHistory', appUUID, updateStatusInfo );
+   	}
 })

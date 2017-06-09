@@ -13,10 +13,11 @@
     background: #fff;
     background: rgba(255,255,255,0.9);
 }
+
 .bookDiv {
   margin-left: 50px;
-  color: black;
 }
+
 .row-padded {
   padding: 35px;
   background-color: #F7F7F7;
@@ -42,6 +43,4 @@
   height: 50%;
   width: auto;
 }
-strong {
-  color: black;
-}
+

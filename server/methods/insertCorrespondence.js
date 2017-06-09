@@ -1,5 +1,5 @@
 Meteor.methods({
-  	insertCorrespondence(appUUID, toUserId, correspondanceDetail) {
+  	insertCorrespondence(appUUID, toUserId, ilendbooksId, correspondanceDetail) {
 		console.log( appUUID + ":insertCorrespondence:toUserId=" + toUserId);
 		for (var correspondanceDetailKey in correspondanceDetail) {
 			console.log( appUUID 
@@ -8,13 +8,15 @@ Meteor.methods({
 			);
 		}
             Correspondence.upsert({
-				toUserId:toUserId
+				        toUserId:toUserId,
+                ilendbooksId:ilendbooksId
             }, {
                   $set: {
-					toUserId:toUserId
+					         toUserId:toUserId,
+                   ilendbooksId:ilendbooksId
                   },
-                  $push: {
-                        correspondanceDetail:correspondanceDetail
+                    $push: {
+                          correspondanceDetail:correspondanceDetail
                   }
                }
             )

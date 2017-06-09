@@ -1,8 +1,13 @@
 Template.bookInfo.helpers({
 
+	getNumberOfPages: function(ilendbooksId) {
+		//var currentLentBook = Session.get('currentLentBook');
+		var currentLentBook = Books.findOne({_id: ilendbooksId});
+		return currentLentBook.ItemAttributes[0].NumberOfPages[0];
+	},
+
 	getAuthor: function(ilendbooksId) {
 		//var currentLentBook = Session.get('currentLentBook');
-		console.log("getAuthor called");
 		var currentLentBook = Books.findOne({_id: ilendbooksId});
 		return currentLentBook.ItemAttributes[0].Author[0];
 	},
@@ -47,97 +52,191 @@ Template.bookInfo.helpers({
 
 	isMatchedAcceptedLender: function(status) {
 		return status = ilendbooks.public.status.MATCHED_ACCEPTED;
-	}
+	}, 
+
+   getNextStatePrompt() {
+   		var currentRoute=Router.current().route.getName();
+   		var forWho;
+   		if(currentRoute == "myBorrows"){
+   			forWho=ilendbooks.public.userType.BORROWER;
+   		} else if(currentRoute == "myShelf") {
+   			forWho=ilendbooks.public.userType.LENDER;
+   		}
+		var iLendMetaData = ILendMetaData.findOne(
+			{
+				$and: [
+					{status:this.status},
+					{ $or: [{forWho:forWho},{forWho:ilendbooks.public.userType.BOTH}]}
+				]
+			}
+		)
+		return iLendMetaData.statusMeta;
+
+
+
+		
+
+     //  	switch(this.status) {
+     //      	case ilendbooks.public.status.AVAILABLE:
+     //          	nextStatus = ilendbooks.public.status.REMOVED;
+     //          	prompt= "Remove from shelf?";
+     //          	break;
+     //      	case ilendbooks.public.status.MATCHED_NOTIFIED:
+     //          	nextStatus = ilendbooks.public.status.MATCHED_ACCEPTED;
+     //          	prompt= "Remove from shelf?";
+     //          	break;
+     //      	case ilendbooks.public.status.MATCHED_ACCEPTED:
+     //          	nextStatus = ilendbooks.public.status.LENDER_LENT_DECLARED;
+     //          	prompt= "Handed over the book to borrower?";
+     //          	break;
+     //     	case ilendbooks.public.status.MATCHED_DECLINED:
+     //          	modalTitle = "Lender Declined the Borrow Request";
+     //          	modalBody =  "Lender  " + matchedUserName 
+     //          		+ " declined the borrower's request to borrow this book. Please search for another lender.";
+     //          	break;
+     //      	case ilendbooks.public.status.LENDER_LENT_DECLARED:
+     //          	nextStatus = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
+     //          	prompt= "Received the book back?";
+     //          	break;
+		  	// case ilendbooks.public.status.BORROWER_LENT_RECEIVED:
+		   //      modalTitle = "Borrower received the book";
+		   //      prompt= "Did you gave the book to borrower?";
+		   //      break;
+     //      	case ilendbooks.public.status.WITH_BORROWER:
+     //          	nextStatus = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
+     //          	prompt= "Received the book back?";
+     //          	break;
+		  	// case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
+			  // 	nextStatus = ilendbooks.public.status.LENDER_RETURN_REVIEW;
+			  // 	prompt= "Provide review, pretty please!!!";
+		   //    	break;
+
+     //   	}
+   }
 })
 
 Template.bookInfo.events({
+
+	'click .option': function(event) {
+		event.preventDefault();
+
+		// for (var thisKey in this) {
+		// 	console.log("option-1:" + thisKey +"=" + this[thisKey]);
+		// }
+		// for (var eventKey in event) {
+		// 	console.log("option-1:" + eventKey +"=" + event[eventKey]);
+		// }
+		var ilendbooksId=event.currentTarget.id;
+		var appUUID = Session.get('appUUID');
+		console.log('option:ilendbooksId=' + ilendbooksId)
+		if (this.actionModalNext){
+		    Session.set(ilendbooks.public.modal.action.TITLE,this.modalTitle);
+		    Session.set(ilendbooks.public.modal.action.BODY, this.modalBody);
+		    Session.set(ilendbooks.public.modal.action.FEED_BACK_FLAG, this.modalFeedBackFlag);
+		    Session.set(ilendbooks.public.modal.action.FEED_BACK_LABEL, this.modalFeedBackLabel);
+		    Session.set(ilendbooks.public.modal.action.DISPLAY, this.modalDisplay);
+		    Session.set(ilendbooks.public.modal.action.CLASS, this.modalClass);
+		    Session.set("ilendbooksId", ilendbooksId);
+
+		    Modal.show('ilendActionModal');	
+		} else {
+	   		switch(this.nextStatus) {
+	   		case ilendbooks.public.status.AVAILABLE:
+	   			Meteor.call("updateUserBookAddedBack", appUUID, ilendbooksId);
+	   			break;
+			case ilendbooks.public.status.MATCHED_ACCEPTED:
+		    	  var appUUID = Session.get('appUUID');
+		    	  console.log("lenderUserId: " + Meteor.userId());
+			      var contactParameters = PendingTransactions.findOne({
+			         lenderUserId: Meteor.userId(),  
+			         ilendbooksId: ilendbooksId,
+			         status:ilendbooks.public.status.MATCHED_NOTIFIED
+			      }).contactParameters;
+			      Meteor.call("updateMatchAcceptedAndContactBorrower", appUUID, contactParameters);
+		        break;
+			}
+		}
+	},
 	   'click .ilendInfoModal' : function(event) {
 	   	var ilendbooksId = this.ilendbooksId;
-	   	console.log("ilendbooksId: " + ilendbooksId);
 	   	var status = this.status;
 	   	console.log("status: " + status);
 	   	var modalTitle = "ilendbooks";
-	   	var modalBody = "It is great that you are lending/borrowing text books... SAVE THE EARTH!"
-	   	// var lenderName = UserProfile.findOne({userId: Meteor.userId()}).fName;
-	   	// console.log("lender name: " + lenderName);
-	   	// var pendingTrans = PendingTransactions.findOne({lenderUserId: Meteor.userId()});
-	   	// var borrowerName = UserProfile.findOne({userId: pendingTrans.contactParameters.borrowerUserId}).fName;
-	   //	var matchedUserId = this.matchedUserId;
+	   	var modalBodyArray = ["It is great that you are lending/borrowing text books... SAVE THE EARTH!"];
+
 	   	var matchedUserName="";
-	 // 	var transKey;
-	 //   	for(var contactParametersKey in pendingTrans.contactParameters) {
-	 //   		if(pendingTrans.contactParameters[contactParametersKey].ilendbooksId == ilendbooksId) {
-	 //   			transKey = contactParametersKey;
-	 //   		}
-	 //   	}
-
-		// var borrowerName = UserProfile.findOne({userId: pendingTrans.contactParameters[transKey].borrowerUserId}).fName;
-
-
 		
 	   	switch(this.status) {
 		    case ilendbooks.public.status.AVAILABLE:
 		        modalTitle = "Available";
-		        modalBody =  "This book is available for lending ...";
+		        modalBodyArray =  ["This book is available for lending ..."];
+		        break;
+		    case ilendbooks.public.status.REMOVED:
+		        modalTitle = "Removed";
+		        modalBodyArray =  ["This book has been removed from your shelf ..."];
 		        break;
 		    case ilendbooks.public.status.MATCHED_NOTIFIED:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "Lender Notified";
-		        modalBody =  "Lender  " + matchedUserName + " is notified of borrower request to borrow this book";
+		        modalBodyArray =  ["Lender  " + matchedUserName + " is notified of borrower request to borrow this book"];
 		        break;
 		    case ilendbooks.public.status.MATCHED_ACCEPTED:
 		        modalTitle = "Lender Accepted the Borrowe Request";
-		        modalBody =  "Lender  " + matchedUserName + " accepted the borrower's request to borrow this book. Please arrange a meet up for exchange.";
+		        modalBodyArray =  ["Lender  " 
+		        					+ matchedUserName 
+		        					+ " accepted the borrower's request to borrow this book. Please arrange a meet up for exchange."
+		        				  ];
+		        break;
+			case ilendbooks.public.status.MATCHED_DECLINED:
+		        modalTitle = "Lender Declined the Borrow Request";
+		        modalBodyArray =  ["Lender  " 
+		        					+ matchedUserName 
+		        					+ " declined the borrower's request to borrow this book. Please search for another lender."
+		        				   ];
 		        break;
 		    case ilendbooks.public.status.BORROWER_LENT_RECEIVED:
 		        modalTitle = "Borrower received the book";
-		        modalBody =  "The borrower indicated that received the book from the lender,  lender yet to confirm.";
+		        modalBodyArray =  ["The borrower indicated that received the book from the lender,  lender yet to confirm."];
 		        break;
 		    case ilendbooks.public.status.LENDER_LENT_DECLARED:
 		        modalTitle = "Lender gave the book";
-		        modalBody =  "The lender indicated that gave the book to borrower,  borrower yet to confirm.";
+		        modalBodyArray =  ["The lender indicated that gave the book to borrower,  borrower yet to confirm."];
 		        break;
 		    case ilendbooks.public.status.WITH_BORROWER:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "With Borrower";
-		        modalBody = "This book is with your friend " + matchedUserName;
+		        modalBodyArray = ["This book is with your friend " + matchedUserName];
 		        break;
 		    case ilendbooks.public.status.BORROWED:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "Borrowed";
-		        modalBody = "You have borrowed this book from " + matchedUserName;
+		        modalBodyArray = ["You have borrowed this book from " + matchedUserName];
 		        break;
 		    case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
 		        modalTitle = "Lender got the book back";
-		        modalBody =  "The lender indicated that received the book back from the borrower, borrower yet to confirm.";
+		        modalBodyArray =  ["The lender indicated that received the book back from the borrower, borrower yet to confirm."];
 		        break;
 		    case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
 		        modalTitle = "Borrower returned the book";
-		        modalBody =  "The Borrower indicated that returned the book back to the lender, lender yet to confirm.";
+		        modalBodyArray =  ["The Borrower indicated that returned the book back to the lender, lender yet to confirm."];
 		        break;
 		    case ilendbooks.public.status.MATCHED:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "Borrower Matched";
-		        modalBody =  "This book is set to be lended to " + matchedUserName + ". Please contact " + matchedUserName ;
+		        modalBodyArray =  ["This book is set to be lended to " + matchedUserName + ". Please contact " + matchedUserName ];
 		        break;
 		    case ilendbooks.public.status.NO_LENDER:
 		        modalTitle = "No Lender";
-		        modalBody =  "You don't worry! we are working hard to find a lender will contact you as soon as we find one.";
+		        modalBodyArray =  ["You don't worry! we are working hard to find a lender will contact you as soon as we find one."];
 		        break;
 		    case ilendbooks.public.status.TRANSACTION_COMPLETE:
 		        modalTitle = "Transaction Complete";
-		        modalBody = "Transaction Complete, borrower returned the book back to lender";
+		        modalBodyArray = ["Transaction Complete, borrower returned the book back to lender"];
 		        break;
 	    }
 	    Session.set(ilendbooks.public.modal.TITLE, modalTitle);
-	    Session.set(ilendbooks.public.modal.BODY, modalBody);
+	    Session.set(ilendbooks.public.modal.BODY_ARRAY, modalBodyArray);
 
 	    Modal.show('ilendInfoModal');
-	},
-	'click .remove': function(event) {
-		var ilendbooksId = this.ilendbooksId;
-		console.log(ilendbooksId);
-		Meteor.call('deleteFromMyShelf', ilendbooksId);
-		
 	}
 })

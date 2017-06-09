@@ -8,10 +8,12 @@ Meteor.methods({
       );
     }
 
-    var statusInfo = { 
+    var historyInfo = { 
       appUUID:appUUID,
       status:transactionInfo.status,
-      createdAt: new Date()
+      userReason:transactionInfo.userReason,
+      createdAt: new Date(),
+      contactParameters: transactionInfo
     }
 
     History.upsert({
@@ -25,7 +27,7 @@ Meteor.methods({
                       ilendbooksId: transactionInfo.ilendbooksId
                   },
                   $push: {
-                      statusInfo
+                      historyInfo
                   }
                }
             )

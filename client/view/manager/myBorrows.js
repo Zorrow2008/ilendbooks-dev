@@ -6,8 +6,8 @@ Template.myBorrows.helpers({
 	},
 
 	hasBooks: function() {
-		console.log("isEmpty was called");
-		if( UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
+		console.log("hasBooks was called");
+		if( UserBorrowShelf.findOne({userId: Meteor.userId()})) {
 			return true;
 		}
 		return false;
@@ -30,5 +30,15 @@ Template.myBorrows.events({
 			text: borrowerName + "has received your book. Please visit " + notificationLink + " to confirm that you have lent him your book."
 		}
 		Meteor.call('emailMatchedUser', emailInfo);
+	},
+
+	'click .lenderReview': function(event) {
+		Session.setAuth('ilendbooksId', this.ilendbooksId);
+		Session.setAuth('lenderId', this.matchedUserId);
+		Session.setAuth('borrowerId', Meteor.userId());
+		console.log("myBorrows ilendbooksId set");
+		Modal.show("lenderReview");
+		
 	}
+
 })

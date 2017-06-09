@@ -33,7 +33,8 @@ Template.searchResult.helpers({
       var clickedLend = false;
       for(key in currentBook.lender) {
          if(currentBook.lender[key].userId == Meteor.userId()) {
-            if(currentBook.lender[key].status == ilendbooks.public.status.REMOVED ) {
+            if(currentBook.lender[key].status == ilendbooks.public.status.REMOVED 
+               || currentBook.lender[key].status == ilendbooks.public.status.DELETE) {
                clickedLend = false;
             }else{
                clickedLend = true;
@@ -141,18 +142,35 @@ Template.searchResult.events({
       Modal.show('clickedLendModal');
    },
 
+   'click .ownThisBook' : function(event) {
+      event.preventDefault();
+
+      var modalTitle = "Wait...";
+      var title = "Title : " + this.ItemAttributes[0].Title[0];
+      var modalBodyArray = [title, "You own this book and have added to your shelf.." ];
+
+      Session.set(ilendbooks.public.modal.TITLE, modalTitle);
+      //remove if there any in the session
+      Session.delete(ilendbooks.public.modal.BODY);
+      Session.set(ilendbooks.public.modal.BODY_ARRAY, modalBodyArray);
+      Modal.show('ilendInfoModal');
+   },
+
    'click .notNewLender' : function(event) {
       event.preventDefault();
-      var title = this.ItemAttributes[0].Title[0];
-      console.log("searchResult:notNewLender:title=" + title);
-      var ilendbooksId = this.ilendbooksId;
-      if(! ilendbooksId) {
-         ilendbooksId = this._id; // if data is from 'books' collection
-      }
-      console.log("searchResult:notNewLender:ilendbooksId=" + ilendbooksId);
-      Session.set('condition-lendBook-title', title);
-      Session.set('condition-lendBook-ilendbooksId', ilendbooksId);
-      Modal.show('notNewLenderModal');
+
+      var modalTitle = "Wait...";
+      var title = "Title : " + this.ItemAttributes[0].Title[0];
+      var modalBodyArray = [title, "This book is already in your lender shelf..." ];
+
+      Session.set(ilendbooks.public.modal.TITLE, modalTitle);
+
+      //remove if there any in the session
+      Session.delete(ilendbooks.public.modal.BODY);
+      Session.set(ilendbooks.public.modal.BODY_ARRAY, modalBodyArray);
+
+      Modal.show('ilendInfoModal');
+
    },
 
    'click .toAmazon': function(event) {

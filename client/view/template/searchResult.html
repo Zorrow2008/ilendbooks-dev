@@ -1,36 +1,38 @@
 <template name="searchResult">
-   <div class="bookDiv">
+
+      <div class="row">&nbsp;<br>&nbsp;<br>&nbsp;</div>
       <div class="row">
-         <div class="col-xs-3">
-            <img class="img-responsive img-border img-left" src="{{getMediumImage MediumImage}}" alt="">
+         <div class="col-sm-3">
+            <img class="img-responsive img-border  center-block" src="{{getMediumImage MediumImage}}" alt=""><br>
          </div>
-         <div  class="col-xs-6">
-            Title - <strong class="text-left">{{getTitle ItemAttributes}}</strong><br>
-            Author - <strong class="text-left">{{getAuthor ItemAttributes}}</strong><br>
-            No of pages - <strong class="text-left">{{getNumberOfPages ItemAttributes}}</strong><br>
-            Publisher - <strong class="text-left">{{getPublisher ItemAttributes}}</strong><br>
-            Edition - <strong class="text-left">{{getEdition ItemAttributes}}</strong><br>
-            ISBN - <strong class="text-left">{{getISBN ItemAttributes}}</strong><br>
-            Pub Date - <strong class="text-left">{{getPublicationDate ItemAttributes}}</strong><br>   
- 
+
+         <div  class="col-sm-6">
+            Title - {{getTitle ItemAttributes}}<br>
+            Author - {{getAuthor ItemAttributes}}<br>
+            No of pages - {{getNumberOfPages ItemAttributes}}<br>
+            Publisher - {{getPublisher ItemAttributes}}<br>
+            Edition - {{getEdition ItemAttributes}}<br>
+            ISBN - {{getISBN ItemAttributes}}<br>
+            Publication Date - {{getPublicationDate ItemAttributes}}<br><br>
          </div>
-         <div class="col-xs-3">
-           {{#if currentUser.emails.[0].verified}}   
-            {{#if hasClickedLend}} 
-            <br><br>
-            <a class="btn btn-info btn-xs disabled ilend-disabled-btn" role="button">I want to borrow</a> <br><br>
-            <button  type="button" id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-xs notNewLender" >I want to lend</button><br><br>
+         <div class="col-sm-3">
+            {{#if currentUser.emails.[0].verified}}   
+               {{#if hasClickedLend}} 
+                  <a class="btn btn-info btn-sm  center-block  ownThisBook" role="button">You own this book!!!</a> <br>
+                  <a id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-sm center-block notNewLender"  role="button">In your shelf to lend!!!</a><br>
+
+               {{else}}
+                  <a id="borrow-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a><br>
+                  <a id="lend-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block lend"  role="button">I want to lend</a><br>
+
+               {{/if}}
+                  <a id="{{ilendbooksId}}" class="btn btn-outline btn-sm center-block toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a><br>
+
             {{else}}
-            <a id="borrow-{{ilendbooksId}}" class="btn btn-info btn-xs borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a><br><br>
-            <button  type="button" id="lend-{{ilendbooksId}}" class="btn btn-warning btn-xs lend">I want to lend</button><br><br>
-            {{/if}}
-            <a id="{{ilendbooksId}}" class="btn btn-primary btn-xs toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a><br><br>
-            {{else}}
-            <a class="btn btn-info btn-xs ilend-disabled-btn" role="button">I want to borrow</a><br><br>
-            <a class="btn btn-warning btn-xs ilend-disabled-btn" role="button">I want to lend</a> <br><br>                     
-            <a class="btn btn-primary btn-xs ilend-disabled-btn" role="button">Buy on Amazon</a>
+               <a class="btn btn-info btn-sm center-block ilend-disabled-btn" role="button">I want to borrow</a><br>
+               <a class="btn btn-warning btn-sm center-block ilend-disabled-btn" role="button">I want to lend</a> <br>                     
+               <a class="btn btn-primary btn-sm center-block ilend-disabled-btn" role="button">Buy on Amazon</a>
             {{/if}}
          </div>
-      </div>
    </div>
 </template>

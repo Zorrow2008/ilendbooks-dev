@@ -23,7 +23,7 @@ Meteor.methods({
 		}, {
 		    "$set": {
 		        "bookInfo.$.status": transactionInfo.status,
-		        "bookInfo.$.matchedUserId": transactionInfo.borrowrUserId
+		        "bookInfo.$.matchedUserId": transactionInfo.borrowerUserId
 		    }
 
 		})

@@ -31,5 +31,10 @@ Template.clickedLendModal.helpers({
 
   getIlendbooksId: function (){
     return Session.get('condition-lendBook-ilendbooksId');
+  },
+
+  getBookConditionOptions(){
+    return ilendbooks.public.bookCondition;
+
   }
 })

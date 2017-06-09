@@ -84,6 +84,7 @@ Template.myNotifications.events({
 	    Session.set(ilendbooks.public.modal.action.FEED_BACK_LABEL, "Would you like to give a reason?");
 	    Session.set(ilendbooks.public.modal.action.DISPLAY, "Yes, please");
 	    Session.set(ilendbooks.public.modal.action.CLASS, "matched-declined");
+	    Session.set(ilendbooks.public.other.CONTACT_PARAMETERS, this.contactParameters);
 
 	    Modal.show('ilendActionModal');		
 	},

@@ -1,19 +1,22 @@
 <template name="bookInfo">
-			<div class="row">
-					<div class="col-md-2">
-						<img class="img-responsive img-border img-left" src="{{getImage ilendbooksId}}" alt="">
-					</div>
-
-					<div class="col-md-8 bookInfoText">
-							Title - <strong class="text-left">{{getTitle ilendbooksId}}</strong><br>
-							Author - <strong class="text-left">{{getAuthor ilendbooksId}}</strong><br>
-							Publisher - <strong class="text-left">{{getPublisher ilendbooksId}}</strong><br>
-							ISBN - <strong class="text-left">{{getISBN ilendbooksId}}</strong><br>
-							Edition - <strong class="text-left">{{getEdition ilendbooksId}}</strong><br>
-							Publication Date - <strong class="text-left">{{getPublicationDate ilendbooksId}}</strong><br>
-							Status - <a href="#" class="text-left ilendInfoModal">{{status}}</a><br>
-							<button type="button" class="btn btn-link btn-primary btn-sm remove">Remove from shelf</button>		
-					</div>
-				
-			</div>
+   <div class="row">&nbsp;<br>&nbsp;<br>&nbsp;</div>
+   <div class="row">
+      <div class="col-sm-5">
+         <img class="img-responsive  img-border margin-top center-block" src="{{getImage ilendbooksId}}" alt=""><br>
+      </div>
+      <div  class="col-sm-7">
+         Title - {{getTitle ilendbooksId}}<br>
+         Author - {{getAuthor ilendbooksId}}<br>
+         No of pages - {{getNumberOfPages ilendbooksId}}<br>
+         Publisher - {{getPublisher ilendbooksId}}<br>
+         Edition - {{getEdition ilendbooksId}}<br>
+         ISBN - {{getISBN ilendbooksId}}<br>
+         Publication Date - {{getPublicationDate ilendbooksId}}<br>
+         Status - <a href="#" class="text-left ilendInfoModal">{{status}}</a><br>
+         {{#each getNextStatePrompt}}
+             <a id="{{../ilendbooksId}}" class="option" href="#">{{prompt}}</a> &nbsp;
+         {{/each}}
+      </div>
+      <div>&nbsp;</div>
+   </div>
 </template>

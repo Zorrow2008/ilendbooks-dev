@@ -1,35 +1,44 @@
 Template.myShelf.helpers({
 	getLentBooks: function() {
 		console.log("getLendBooks is called");
-		var doc = UserLendShelf.findOne({userId: Meteor.userId()});
+		//var doc = UserLendShelf.findOne({userId: Meteor.userId()});
+		var doc=UserLendShelf.findOne({
+			userId: Meteor.userId(),
+			bookInfo:{$elemMatch:{status:{$ne: ilendbooks.public.status.DELETE}}}});
 		return doc.bookInfo;
 	},
 
 	hasBooks: function() {
-		console.log("isEmpty was called");
-		if( UserLendShelf.findOne({userId: Meteor.userId()}) != null) {
-			return true;
-		}
-		return false;
-	},
+		console.log("hasBooks was called");
+		var doc = UserLendShelf.findOne({userId: Meteor.userId()})
+		console.log("hasBooks was called" + doc);
 
-	notRemoved: function(ilendbooksId) {
-		var doc = UserLendShelf.findOne({userId: Meteor.userId()});
-		var bookKey;
-		for(var key in doc.bookInfo) {
-			if(doc.bookInfo[key].ilendbooksId == ilendbooksId) {
-				bookKey = key;
+		if( doc.bookInfo) {
+			for(key in  doc.bookInfo) {
+				if(doc.bookInfo[key].status != ilendbooks.public.status.DELETE) {
+					return true;
+					break;
+				} 
 			}
 		}
-		return (doc.bookInfo[bookKey].status != ilendbooks.public.status.REMOVED) && (doc.bookInfo[bookKey].status == ilendbooks.public.status.AVAILABLE);		
+		return false;
+
+	},
+
+	isNotDelete: function(status) {
+		console.log("isNotDelete:status=" + status);
+		return status != ilendbooks.public.status.DELETE;
 	}
+
 })
 
-// Template.myShelf.events({
-// 	'click .remove': function(event) {
-// 		var ilendbooksId = this.ilendbooksId;
-// 		console.log(ilendbooksId);
-// 		Meteor.call('deleteFromMyShelf', ilendbooksId);
+Template.myShelf.events({
+	'click .borrowerReview': function(event) {
+		Session.setAuth('ilendbooksId', this.ilendbooksId);
+		Session.setAuth('lenderId', Meteor.userId());
+		Session.setAuth('borrowerId',this.matchedUserId);
+		console.log("myShelf ilendbooksId set");
+		Modal.show("borrowerReview");
 		
-// 	}
-// })
+	}
+})

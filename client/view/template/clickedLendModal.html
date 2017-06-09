@@ -15,9 +15,9 @@
                            
                   Book Condition
                   <select name="bookCondition" class="form-control">
-                     <option value="excellent">Excellent</option>
-                     <option value="good">Good</option>
-                     <option value="worn">Worn</option>
+                    {{#each getBookConditionOptions}}
+                     <option value="{{this}}">{{this}}</option>
+                    {{/each}}
                   </select>
                   <br>
                      Any other notes about your copy of the book? <br>

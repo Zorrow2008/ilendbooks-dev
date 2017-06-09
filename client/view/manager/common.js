@@ -17,3 +17,9 @@ Template.registerHelper('getSearchResult', function() {
 	Session.set('SearchResult', searchResult);
 	return searchResult;
 })
+
+Template.registerHelper('imageFormatter', function(){
+
+	return Meteor.settings.public.imageFormatter;
+
+});

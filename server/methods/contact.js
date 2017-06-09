@@ -7,13 +7,17 @@ Meteor.methods({
 	// 5. contactParameters.emailBody - required (email)
 	// 6. contactParameters.phoneNumber - required (sms)
 	// 7. contactParameters.smsMessage - required (sms)
-	// 7. contactParameters.toUserId - required
+	// 8. contactParameters.toUserId - required
+	// 9. contactParameters.ilendbooksId - required
 	contact(appUUID, contactParameters){
 		for (var contactParametersKey in contactParameters) {
 			console.log( appUUID 
 				+ ":contact:" 
 				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
 			);
+		}
+		if (! contactParameters.fromEmail) {
+			contactParameters.fromEmail=ilendbooks.private.generic.FROM_EMAIL;
 		}
 
 		if(ilendbooks.public.contactPreference.EMAIL === contactParameters.contactPreference) {
@@ -45,11 +49,11 @@ Meteor.methods({
 			contactParameters.contactResult = smsResult;
 			contactParameters.status = smsResult.status;
 		} else {
-				console.log(appUUID + ":contactLender: Fatal, no good, no contact preference...");
+				console.log(appUUID + ":contact: Fatal, no good, no contact preference...");
 				contactParameters.status = ilendbooks.public.status.FAILED;
 				contactParameters.contactResult = "No contact preference for this user " + contactParameters.borrowerUserId;
 		}
-		Meteor.call("insertCorrespondence", appUUID, contactParameters.toUserId, contactParameters);
-		console.log(appUUID  + ":contact:matched partner successfully emailed");
+		Meteor.call("insertCorrespondence", appUUID, contactParameters.toUserId, contactParameters.ilendbooksId, contactParameters);
+		console.log(appUUID  + ":contact:emailed successfully ");
 	}
 })

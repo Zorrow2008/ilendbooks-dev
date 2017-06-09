@@ -31,7 +31,7 @@ Template.user.events({
          email: Meteor.user().emails[0].address,
          contactPreference: contactPreference,
          degree: degree,
-         bookcoin: 10
+         bookcoin: ilendbooks.private.bitCoin.ACCOUT_CREATION
       });
       Reviews.insert({
          userId: Meteor.userId(),

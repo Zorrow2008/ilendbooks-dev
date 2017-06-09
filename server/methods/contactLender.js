@@ -54,17 +54,17 @@ Meteor.methods({
 					to:contactParameters.phoneNumber,
 					message: contactParameters.smsMessage 
 				}
-				var smsResult = Method.call('sendSMS', appUUID, )
+				var smsResult = Meteor.call('sendSMS', appUUID, smsParameters);
 				contactParameters.contactResult = smsResult;
-				contactParameters.status = smsResult.status;
+				contactParameters.correspondenceStatus = smsResult.status;
 			} else {
 				console.log(appUUID + ":contactLender: Fatal, no good, no contact preference...");
-				contactParameters.status = ilendbooks.public.status.FAILED;
+				contactParameters.correspondenceStatus = ilendbooks.public.status.FAILED;
 				contactParameters.contactResult = "No contact preference for this user " + contactParameters.lenderUserId;
 			}
 
 		} else {
-			contactParameters.status = ilendbooks.public.status.FAILED;
+			contactParameters.correspondenceStatus = ilendbooks.public.status.FAILED;
 			console.log(appUUID + ":contactLender:************************* Fatal *************************");
 			console.log(appUUID + ":contactLender: Fatal, no good, not all data available");
 			console.log(appUUID + ":contactLender: Fatal: lenderUserProfile = " + lenderUserProfile);
@@ -73,6 +73,6 @@ Meteor.methods({
 			console.log(appUUID + ":contactLender:************************* Fatal *************************");
 		}
 		Meteor.call("insertPendingTransactions", appUUID, contactParameters, ilendbooks.public.status.MATCHED_NOTIFIED);
-		Meteor.call("insertCorrespondence", appUUID, contactParameters.lenderUserId, contactParameters);
+		Meteor.call("insertCorrespondence", appUUID, contactParameters.lenderUserId, contactParameters.ilendbooksId, contactParameters);
 	}
 });

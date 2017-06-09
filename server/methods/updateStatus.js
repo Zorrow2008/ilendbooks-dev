@@ -13,17 +13,38 @@ Meteor.methods({
       }
 
 	   	switch(updateStatusInfo.status) {
-		    case ilendbooks.public.status.AVAILABLE:
-		    	//No Action 
-		        break;
-		    case ilendbooks.public.status.MATCHED_NOTIFIED:
-		        Meteor.call("updatePendingTransactions"
+		    case ilendbooks.public.status.AVAILABLE: // this is called on Add Back
+		        Meteor.call("updateLenderStatus"
 		        	, appUUID
-		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.status
 		        );
+		        break;
+		    case ilendbooks.public.status.REMOVED:
+		        Meteor.call("updateLenderStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
+		        	, updateStatusInfo.status
+		        );
+		        break;
+		    case ilendbooks.public.status.DELETE:
+		        Meteor.call("updateLenderStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
+		        	, updateStatusInfo.status
+		        );
+		        break;
+		    case ilendbooks.public.status.MATCHED_NOTIFIED:
+		        // Meteor.call("updatePendingTransactions"
+		        // 	, appUUID
+		        // 	, updateStatusInfo.lenderUserId
+		        // 	, updateStatusInfo.borrowerUserId
+		        // 	, updateStatusInfo.ilendbooksId
+		        // 	, updateStatusInfo.status
+		        // );
 		        break;
 		    case ilendbooks.public.status.MATCHED_ACCEPTED:
 		        Meteor.call("updateBorrowerStatus"
@@ -46,6 +67,27 @@ Meteor.methods({
 		        	, updateStatusInfo.status
 		        );
 		        break;
+		    case ilendbooks.public.status.MATCHED_DECLINED:
+		        Meteor.call("updateBorrowerStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.borrowerUserId
+		        	, updateStatusInfo.status
+		        );
+		        Meteor.call("updateLenderStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
+		        	, ilendbooks.public.status.AVAILABLE
+		        );
+		        break;
+		        Meteor.call("updatePendingTransactions"
+		        	, appUUID
+		        	, updateStatusInfo.lenderUserId
+		        	, updateStatusInfo.borrowerUserId
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.status
+		        );
 		    case ilendbooks.public.status.BORROWER_LENT_RECEIVED:
 		        Meteor.call("updateBorrowerStatus"
 		        	, appUUID

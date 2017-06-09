@@ -46,11 +46,93 @@ Template.ilendActionModal.helpers({
 
 
 Template.ilendActionModal.events({
+   'click .delete': function(event, target) {
+      event.preventDefault();
+      var appUUID = Session.get('appUUID');
+      console.log("appUUID=" + appUUID);
+      var ilendbooksId = Session.get ("ilendbooksId");
+      console.log("delete:ilendbookdsId=" + ilendbooksId );
+      var userReason = $('textarea#ilendActionModalTextArea').val();
+      console.log("delete:userReason=" + userReason );
 
-	'click .matched-declined': function() {
-	    //set status in userLendShelf and userBorrowShelf to matched-accepted
-	    var appUUID = Session.get('appUUID');
-        console.log("appUUID=" + appUUID);
-	    Modal.hide('ilendActionModal');		
-	}	
+      var contactParameters = PendingTransactions.find({
+         lenderUserId: Meteor.userId(),  
+         ilendbooksId: Session.get('ilendbooksId'),
+         status:ilendbooks.public.status.MATCHED_NOTIFIED
+      }).contactParameters;
+      contactParameters.userReason=userReason;
+      Meteor.call("updateUserBookDelete", appUUID, contactParameters );
+      Modal.hide('ilendActionModal');
+   },
+
+   'click .removed': function(event, target) {
+      event.preventDefault();
+      var appUUID = Session.get('appUUID');
+      console.log("appUUID=" + appUUID);
+      var ilendbooksId = Session.get ("ilendbooksId");
+      console.log("removed:ilendbookdsId=" + ilendbooksId );
+      var userReason = $('textarea#ilendActionModalTextArea').val();
+      console.log("removed:userReason=" + userReason );
+
+      var contactParameters={};
+      contactParameters.ilendbooksId=ilendbooksId;
+      contactParameters.userReason=userReason;
+
+      Meteor.call("updateUserBookRemoved", appUUID, contactParameters );
+      Modal.hide('ilendActionModal');
+   },
+
+   // 'click .matched-accepted': function(event) {
+   //    event.preventDefault();
+   //    var appUUID = Session.get('appUUID');
+   //    var contactParameters = PendingTransactions.find({
+   //       lenderUserId: Meteor.userId(),  
+   //       ilendbooksId: Session.get('ilendbooksId'),
+   //       status:ilendbooks.public.status.MATCHED_NOTIFIED
+   //    }).contactParameters;
+   //    Meteor.call("updateMatchAcceptedAndContactBorrower", contactParameters);
+   //    Modal.hide('ilendActionModal');
+
+   // },
+
+	'click .matched-declined': function(event) {
+	   //set status in userLendShelf and userBorrowShelf to matched-accepted
+      event.preventDefault();
+	   var appUUID = Session.get('appUUID');
+      console.log("appUUID=" + appUUID);
+      //var contactParameters = Session.get(ilendbooks.public.other.CONTACT_PARAMETERS);
+      // var contactParameters = {
+      //    ilendbooksId: Session.get('ilendbooksId'),
+      //    lenderUserId: Meteor.userId(),
+      //    borrowerUserId: PendingTransactions.find({lenderUserId: Meteor.userId()
+      // }
+      var contactParameters = PendingTransactions.find({
+         lenderUserId: Meteor.userId(),  
+         ilendbooksId: Session.get('ilendbooksId'),
+         status:ilendbooks.public.status.MATCHED_NOTIFIED
+      }).contactParameters;
+
+      console.log("contactParameters =" + contactParameters );  
+      Meteor.call("updateMatchDeclined", appUUID, contactParameters );
+	   Modal.hide('ilendActionModal');		
+	},
+
+   'click .lender-lent-declared': function(event) {
+      event.preventDefault();
+      var appUUID = Session.get('appUUID');
+      var contactParameters = Session.get(ilendbooks.public.other.CONTACT_PARAMETERS);
+      // for(var key in contactParameters) {
+      //    console.log("contactParametersKey: " + key + "value: " + contactParameters[key]);
+      // }
+      console.log("contactParameters =" + contactParameters );
+      Meteor.call("updateLenderLentDeclared", appUUID, contactParameters);
+   },
+
+   'click .borrower-lent-received': function(event) {
+      event.preventDefault();
+      var appUUID = Session.get('appUUID');
+      var contactParameters = Session.get(ilendbooks.public.other.CONTACT_PARAMETERS);
+
+      Meteor.call("updateBorrowerLentReceived", appUUID, contactParameters);
+   }
 })

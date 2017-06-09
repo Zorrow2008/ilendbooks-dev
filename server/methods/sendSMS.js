@@ -31,7 +31,7 @@ Meteor.methods({
             if (!err) {   
               for (responseDataKey in responseData)
               {
-                console.log(appUUID + ":sendSMS:" + tresponseDataKey + "=" + responseData[responseDataKey]);
+                console.log(appUUID + ":sendSMS:" + responseDataKey + "=" + responseData[responseDataKey]);
               }          
             } else {
               smsResult.status = ilendbooks.public.status.FAILED

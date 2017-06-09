@@ -8,18 +8,21 @@ Meteor.methods({
 			optionalNotes: optionalNotes
 		}
 		var totalLenderRatings = 0;
-		var keyCount = 0;
+		var keyCount = 1;
 		for(var key in lenderReviewDoc.asLenderReviews) {
 			totalLenderRatings = lenderReviewDoc.asLenderReviews[key].userInteractionRating 
 			+ lenderReviewDoc.asLenderReviews[key].advertisedQualityRating;
 			keyCount++;
 		}
-		averageLenderRating = (totalLenderRatings/(2*keyCount)).toPrecision(3);
-		averageUserRating = lenderReviewDoc.averageBorrowerRating + averageLenderRating;
+		totalLenderRatings += userInteractionRating + advertisedQualityRating;
+		averageLenderRating = totalLenderRatings / ((2 * keyCount).toPrecision(3));
+		averageUserRating = (lenderReviewDoc.averageLenderRating + averageLenderRating)/2;
+		console.log("averageLenderRating: " + averageLenderRating);
 		Reviews.update({userId: lenderUserId}, {$set: {averageLenderRating: averageLenderRating, averageUserRating: averageUserRating}});
 		Reviews.update({userId: lenderUserId}, {$push: {asLenderReviews: lenderReview}});
 
 
 
 	}
+
 })
