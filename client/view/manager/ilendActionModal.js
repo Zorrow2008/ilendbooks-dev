@@ -54,13 +54,10 @@ Template.ilendActionModal.events({
       console.log("delete:ilendbookdsId=" + ilendbooksId );
       var userReason = $('textarea#ilendActionModalTextArea').val();
       console.log("delete:userReason=" + userReason );
-
-      var contactParameters = PendingTransactions.find({
-         lenderUserId: Meteor.userId(),  
-         ilendbooksId: Session.get('ilendbooksId'),
-         status:ilendbooks.public.status.MATCHED_NOTIFIED
-      }).contactParameters;
-      contactParameters.userReason=userReason;
+      var contactParameters = {
+         ilendbooksId: ilendbooksId,
+         userReason: userReason
+      };
       Meteor.call("updateUserBookDelete", appUUID, contactParameters );
       Modal.hide('ilendActionModal');
    },
@@ -81,19 +78,6 @@ Template.ilendActionModal.events({
       Meteor.call("updateUserBookRemoved", appUUID, contactParameters );
       Modal.hide('ilendActionModal');
    },
-
-   // 'click .matched-accepted': function(event) {
-   //    event.preventDefault();
-   //    var appUUID = Session.get('appUUID');
-   //    var contactParameters = PendingTransactions.find({
-   //       lenderUserId: Meteor.userId(),  
-   //       ilendbooksId: Session.get('ilendbooksId'),
-   //       status:ilendbooks.public.status.MATCHED_NOTIFIED
-   //    }).contactParameters;
-   //    Meteor.call("updateMatchAcceptedAndContactBorrower", contactParameters);
-   //    Modal.hide('ilendActionModal');
-
-   // },
 
 	'click .matched-declined': function(event) {
 	   //set status in userLendShelf and userBorrowShelf to matched-accepted
@@ -121,18 +105,58 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var contactParameters = Session.get(ilendbooks.public.other.CONTACT_PARAMETERS);
-      // for(var key in contactParameters) {
-      //    console.log("contactParametersKey: " + key + "value: " + contactParameters[key]);
-      // }
+      ilendbooksId = Session.get('ilendbooksId');
+      borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
+      var contactParameters = {
+         ilendbooksId: ilendbooksId,
+         lenderUserId: Meteor.userId(),
+         borrowerUserId: borrowerUserId
+      }
       console.log("contactParameters =" + contactParameters );
       Meteor.call("updateLenderLentDeclared", appUUID, contactParameters);
+      Modal.hide('ilendActionModal');
    },
 
    'click .borrower-lent-received': function(event) {
       event.preventDefault();
       var appUUID = Session.get('appUUID');
-      var contactParameters = Session.get(ilendbooks.public.other.CONTACT_PARAMETERS);
+      var ilendbooksId = Session.get('ilendbooksId');
+      var lenderUserId = PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId;
+      var contactParameters = {
+         ilendbooksId: ilendbooksId,
+         lenderUserId: lenderUserId,
+         borrowerUserId: Meteor.userId()
+      }
 
       Meteor.call("updateBorrowerLentReceived", appUUID, contactParameters);
+      Modal.hide('ilendActionModal');
+   },
+
+   'click .with-borrower': function(event) {
+      event.preventDefault();
+      var appUUID = Session.get('appUUID');
+      ilendbooksId = Session.get('ilendbooksId');
+      borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
+      var contactParameters = {
+         ilendbooksId: ilendbooksId,
+         lenderUserId: Meteor.userId(),
+         borrowerUserId: borrowerUserId
+      }
+      Meteor.call('updateWithBorrower', appUUID, contactParameters);
+      Modal.hide('ilendActionModal');
+   },
+
+   'click .borrowed': function(event) {
+      event.preventDefault();
+      var appUUID = Session.get('appUUID');
+      var ilendbooksId = Session.get('ilendbooksId');
+      var lenderUserId = PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId;
+      var contactParameters = {
+         ilendbooksId: ilendbooksId,
+         lenderUserId: lenderUserId,
+         borrowerUserId: Meteor.userId()
+      }   
+      Meteor.call('updateBorrowed', appUUID, contactParameters);
+      Modal.hide('ilendActionModal');
    }
 })

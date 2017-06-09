@@ -131,6 +131,12 @@ Meteor.methods({
 		        );
 		        break;
 		    case ilendbooks.public.status.WITH_BORROWER:
+		        Meteor.call("updateBorrowerStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.borrowerUserId
+		        	, ilendbooks.public.status.BORROWED
+		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
@@ -151,6 +157,12 @@ Meteor.methods({
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.status
+		        );
+		        Meteor.call("updateLenderStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
+		        	, ilendbooks.public.status.WITH_BORROWER
 		        );
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
