@@ -154,6 +154,26 @@ Template.bookInfo.events({
 			      }).contactParameters;
 			      Meteor.call("updateMatchAcceptedAndContactBorrower", appUUID, contactParameters);
 		        break;
+	        // case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
+	        // 	var appUUID = Session.get('appUUID');
+	        // 	var contactParameters = PendingTransactions.findOne({
+	        // 		lenderUserId: Meteor.userId(),
+	        // 		borrowerUserId: PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId,
+	        // 		ilendbooksId: ilendbooksId,
+	        // 		status: ilendbooks.public.status.BORROWER_RETURN_DECLARED
+	        // 	}).contactParameters;
+	        // 	Meteor.call('updateAvailable', appUUID, contactParameters);
+	        // 	Meteor.call('updateTransactionComplete', appUUID, contactParameters);
+        	// case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
+        	// 	var appUUID = Session.get('appUUID');
+	        // 	var contactParameters = PendingTransactions.findOne({
+	        // 		borrowerUserId: Meteor.userId(),
+	        // 		lenderUserId: PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId,
+	        // 		ilendbooksId: ilendbooksId,
+	        // 		status: ilendbooks.public.status.BORROWER_RETURN_DECLARED
+	        // 	}).contactParameters;
+	        // 	Meteor.call('updateAvailable', appUUID, contactParameters);
+	        // 	Meteor.call('updateTransactionComplete', appUUID, contactParameters);
 			}
 		}
 	},

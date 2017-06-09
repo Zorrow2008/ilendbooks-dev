@@ -207,17 +207,70 @@ Meteor.startup(function() {
         /********************************************************/
         //Now the book is with the borrower.
 
+        //Lender --> Borrower
         //Lender's point of view
+        var statusMeta = [{
+               "nextStatus": ilendbooks.public.status.LENDER_RETURN_RECEIVED,
+               "prompt": "Have you received your book back?",
+               "actionModalNext": true,
+               "option": ilendbooks.public.option.ONE,
+               "modalTitle": "Congratulations!",
+               "modalBody": "After clicking yes, fill out a review to earn BookCoin!",
+               "modalFeedBackFlag": false,
+               "modalDisplay": "Yes",
+               "modalClass": ilendbooks.public.status.LENDER_RETURN_RECEIVED
+        }]
+
+         ILendMetaData.upsert({
+          "status": ilendbooks.public.status.WITH_BORROWER,
+          "forWho": ilendbooks.public.userType.LENDER
+        }, {
+           $set: {
+             statusMeta :   statusMeta
+           }
+        }); 
+
+      //  Borrower's point of view
         // var statusMeta = [{
         //        "nextStatus": ilendbooks.public.status.LENDER_RETURN_RECEIVED,
+        //        "prompt": "Confirm that you have returned the book.",
+        // }]
+
+        //  ILendMetaData.upsert({
+        //   "status": ilendbooks.public.status.BORROWED,
+        //   "forWho": ilendbooks.public.userType.LENDER
+        // }, {
+        //    $set: {
+        //      statusMeta :   statusMeta
+        //    }
+        // }); 
+        //Borrower --> Lender
+        //Borrower's point of view           
+         var statusMeta = [{
+               "nextStatus": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
+               "prompt": "Have you returned the lender's book?",
+               "actionModalNext": true,
+               "option": ilendbooks.public.option.ONE,
+               "modalTitle": "Congratulations!",
+               "modalBody": "After clicking yes, fill out a review to earn BookCoin!",
+               "modalFeedBackFlag": false,
+               "modalDisplay": "Yes",
+               "modalClass": ilendbooks.public.status.BORROWER_RETURN_DECLARED
+        }]
+
+         ILendMetaData.upsert({
+          "status": ilendbooks.public.status.BORROWED ,
+          "forWho": ilendbooks.public.userType.BORROWER
+        }, {
+           $set: {
+             statusMeta :   statusMeta
+           }
+        }); 
+
+        //Lender's point of view
+        // var statusMeta = [{
+        //        "nextStatus": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
         //        "prompt": "Confirm that you have received your book back.",
-        //        "actionModalNext": true,
-        //        "option": ilendbooks.public.option.ONE,
-        //        "modalTitle": "Congratulations!",
-        //        "modalBody": "You confirmed that your book has been returned. Your transaction is complete!",
-        //        "modalFeedBackFlag": false,
-        //        "modalDisplay": "Yes",
-        //        "modalClass": ilendbooks.public.status.LENDER_RETURN_RECEIVED
         // }]
 
         //  ILendMetaData.upsert({
@@ -227,28 +280,82 @@ Meteor.startup(function() {
         //    $set: {
         //      statusMeta :   statusMeta
         //    }
-        // }); 
-
-        // //Borrower's point of view           
-        //  var statusMeta = [{
-        //        "nextStatus": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
-        //        "prompt": "Confirm that you have received your book back.",
-        //        "actionModalNext": true,
-        //        "option": ilendbooks.public.option.ONE,
-        //        "modalTitle": "Congratulations!",
-        //        "modalBody": "You confirmed that your book has been returned. Your transaction is complete!",
-        //        "modalFeedBackFlag": false,
-        //        "modalDisplay": "Yes",
-        //        "modalClass": ilendbooks.public.status.BORROWER_RETURN_DECLARED
-        // }]
-
-        //  ILendMetaData.upsert({
-        //   "status": ilendbooks.public.status.BORROWED ,
-        //   "forWho": ilendbooks.public.userType.BORROWER
-        // }, {
-        //    $set: {
-        //      statusMeta :   statusMeta
-        //    }
         // });    
+
+         /********************************************************/
+       // LENDER CONFIRMS HE GOT BOOK BACK FIRST
+       var statusMeta = [{
+               "nextStatus": ilendbooks.public.status.AVAILABLE,
+               "prompt": "You have confirmed that you have received your book back.",
+        }]
+
+         ILendMetaData.upsert({
+          "status": ilendbooks.public.status.LENDER_RETURN_RECEIVED,
+          "forWho": ilendbooks.public.userType.LENDER
+        }, {
+           $set: {
+             statusMeta :   statusMeta
+           }
+        });  
+
+        var statusMeta = [{
+            "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE,
+            "prompt": "Confirm that you returned the book?",
+            "actionModalNext": true,
+            "option": ilendbooks.public.option.ONE,
+            "modalTitle": "Congratulations!",
+            "modalBody": "Click yes to confirm you have returned the book. Then fill out a survey to earn BookCoin!",
+            "modalFeedBackFlag": false,
+            "modalDisplay": "Yes",
+            "modalClass": ilendbooks.public.status.TRANSACTION_COMPLETE
+        }]
+
+        ILendMetaData.upsert({
+            "status": ilendbooks.public.status.LENDER_RETURN_RECEIVED,
+            "forWho": ilendbooks.public.userType.BORROWER
+        }, {
+            $set: {
+                statusMeta: statusMeta
+            }
+        });
+
+         //Borrower had to confirm with a modal he has returned it.
+
+       //WHEN BORROWER SAYS HE RETURNED IT FIRST
+        var statusMeta = [{
+               "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE,
+               "prompt": "You have confirmed that you have returned the book.",
+        }]
+
+         ILendMetaData.upsert({
+          "status": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
+          "forWho": ilendbooks.public.userType.BORROWER
+        }, {
+           $set: {
+             statusMeta :   statusMeta
+           }
+        }); 
+        var statusMeta = [{
+            "nextStatus": ilendbooks.public.status.AVAILABLE,
+            "prompt": "Confirm that you received your book?",
+            "actionModalNext": true,
+            "option": ilendbooks.public.option.ONE,
+            "modalTitle": "Congratulations!",
+            "modalBody": "Click yes to confirm you have received your book back. Then fill out a survey to earn BookCoin!",
+            "modalFeedBackFlag": false,
+            "modalDisplay": "Yes",
+            "modalClass": ilendbooks.public.status.AVAILABLE
+        }]
+
+        ILendMetaData.upsert({
+            "status": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
+            "forWho": ilendbooks.public.userType.LENDER
+        }, {
+            $set: {
+                statusMeta: statusMeta
+            }
+        });
+
+
     }
 });
