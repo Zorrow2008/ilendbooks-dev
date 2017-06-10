@@ -20,6 +20,12 @@
 	  		"email" : "jayjo7@hotmail.com",
 	  		"sms"   : false,
 	  		"phone" : "425-777-6970"
+	  	},
+	  	"amazon"   	:
+	  	{
+			 "awsId"		: "AKIAJM537YQDVUA3ENVQ", 
+			 "awsSecret"	: "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",
+			 "awsTag"		: "ilendbooks0e-20"
 	  	}
 
 	}

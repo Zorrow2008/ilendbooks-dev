@@ -5,11 +5,13 @@
               <hr style="color: white">
               {{#if hasPendingTransactions}}
                 {{#each getPendingTransactions}}
-					<div class="box bookDiv ">
+					
+             <div class=" text-center">
 						<p> {{getBorrowerName contactParameters }} has sent you a borrow request for the book "{{getLenderBook contactParameters}}"</p>
-						<button  type="button" id="accept" class="accept btn btn-info btn-xs" >Accept</button>&nbsp;
-						<button  type="button" id="decline" class="decline btn btn-warning btn-xs" >Decline</button>&nbsp;
-					</div>
+            
+						  <button  type="button" id="accept" class="accept btn btn-info btn-xs" >Accept</button>&nbsp;
+						  <button  type="button" id="decline" class="decline btn btn-warning btn-xs" >Decline</button>&nbsp;
+					  </div>
                 {{/each}}
                {{else}} 
                   <div class="col-sm-6 col-sm-offset-3 text-center">

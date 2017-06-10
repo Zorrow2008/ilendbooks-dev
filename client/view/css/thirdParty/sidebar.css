@@ -49,11 +49,11 @@ html { height: 100%;}
 
 #page-content-wrapper {
     width: 100%;
-    padding-top: 70px;
-}
+/*    padding-top: 70px;
+*/}
 
 #wrapper.toggled #page-content-wrapper {
-    position: absolute;
+/*    position: absolute;*/
     margin-right: -220px;
 }
 

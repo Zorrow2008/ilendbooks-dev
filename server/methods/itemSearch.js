@@ -1,9 +1,9 @@
 var amazon = require('amazon-product-api');
 
 var client = amazon.createClient({
-  awsId: "AKIAJM537YQDVUA3ENVQ", 
-  awsSecret: "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",
-  awsTag: "ilendbooks-20"
+  awsId: Meteor.settings.private.amazon.awsId,
+  awsSecret: Meteor.settings.private.amazon.awsSecret,
+  awsTag: Meteor.settings.private.amazon.awsTag
 });
 
 Meteor.methods({
