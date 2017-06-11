@@ -232,6 +232,12 @@ Meteor.methods({
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.status
 		        );
+		        Meteor.call("updateLenderStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
+		        	, ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER
+		        );		        
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
@@ -240,6 +246,34 @@ Meteor.methods({
 		        	, updateStatusInfo.status
 		        );
 		        break;
+	        case ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER:
+		        Meteor.call("updateLenderStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
+		        	, updateStatusInfo.status
+		        );
+		        Meteor.call("updateBorrowerStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.borrowerUserId
+		        	, ilendbooks.public.status.TRANSACTION_COMPLETE
+		        );		        
+		        Meteor.call("updatePendingTransactions"
+		        	, appUUID
+		        	, updateStatusInfo.lenderUserId
+		        	, updateStatusInfo.borrowerUserId
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.status
+		        );	
+		       	break;	        
+	        case ilendbooks.public.status.PAST_BORROW:
+	        	Meteor.call('updateBorrowerStatus'
+	        		, appUUID
+	        		, updateStatusInfo.ilendbooksId
+	        		, updateStatusInfo.borrowerUserId
+	        		, updateStatusInfo.status
+        		);
 	    }
 	}
 })

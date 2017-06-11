@@ -15,12 +15,12 @@ Meteor.methods({
 			keyCount++;
 		}
 		totalLenderRatings += userInteractionRating + advertisedQualityRating;
-		averageLenderRating = totalLenderRatings / ((2 * keyCount).toPrecision(3));
-		averageUserRating = (lenderReviewDoc.averageLenderRating + averageLenderRating)/2;
+		averageLenderRating = Math.round((totalLenderRatings / ((2 * keyCount).toPrecision(3)))* 100) / 100;
+		averageUserRating = Math.round(((lenderReviewDoc.averageLenderRating + averageLenderRating)/2)* 100) / 100
 		console.log("averageLenderRating: " + averageLenderRating);
 		Reviews.update({userId: lenderUserId}, {$set: {averageLenderRating: averageLenderRating, averageUserRating: averageUserRating}});
 		Reviews.update({userId: lenderUserId}, {$push: {asLenderReviews: lenderReview}});
-
+		
 
 
 	}

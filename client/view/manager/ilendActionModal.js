@@ -199,11 +199,11 @@ Template.ilendActionModal.events({
          borrowerUserId: Meteor.userId()
       }  
       Meteor.call('updateTransactionComplete', appUUID, contactParameters);  
-      Meteor.call('updateAvailable', appUUID, contactParameters);
+    //  Meteor.call('updateAvailable', appUUID, contactParameters);
       Modal.hide('ilendActionModal');
    },
 
-   'click .available': function(event) {
+   'click .transaction-complete-lender': function(event) {
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var ilendbooksId = Session.get('ilendbooksId');
@@ -213,8 +213,8 @@ Template.ilendActionModal.events({
          lenderUserId: Meteor.userId(),
          borrowerUserId: borrowerUserId
       }
-      Meteor.call('updateAvailable', appUUID, contactParameters);
-      Meteor.call('updateTransactionComplete', appUUID, contactParameters);
+     // Meteor.call('updateAvailable', appUUID, contactParameters);
+      Meteor.call('updateTransactionCompleteLender', appUUID, contactParameters);
       Modal.hide('ilendActionModal');
    }
 })

@@ -285,7 +285,7 @@ Meteor.startup(function() {
          /********************************************************/
        // LENDER CONFIRMS HE GOT BOOK BACK FIRST
        var statusMeta = [{
-               "nextStatus": ilendbooks.public.status.AVAILABLE,
+               "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
                "prompt": "You have confirmed that you have received your book back.",
         }]
 
@@ -336,7 +336,7 @@ Meteor.startup(function() {
            }
         }); 
         var statusMeta = [{
-            "nextStatus": ilendbooks.public.status.AVAILABLE,
+            "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
             "prompt": "Confirm that you received your book?",
             "actionModalNext": true,
             "option": ilendbooks.public.option.ONE,
@@ -344,7 +344,7 @@ Meteor.startup(function() {
             "modalBody": "Click yes to confirm you have received your book back. Then fill out a survey to earn BookCoin!",
             "modalFeedBackFlag": false,
             "modalDisplay": "Yes",
-            "modalClass": ilendbooks.public.status.AVAILABLE
+            "modalClass": ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER
         }]
 
         ILendMetaData.upsert({

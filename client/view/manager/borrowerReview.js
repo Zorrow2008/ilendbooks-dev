@@ -17,7 +17,15 @@ Template.borrowerReview.events({
 		console.log("rating2: " + rating2);
 		console.log("notes: " + notes)
 		var borrowerId = Session.get('borrowerId');
+		var ilendbooksId = Session.get('ilendbooksId');
 		Meteor.call('insertBorrowerReview', borrowerId, rating1, rating2, notes);
+		var contactParameters = {
+			ilendbooksId: ilendbooksId,
+			lenderUserId: Meteor.userId(),
+			borrowerUserId: Session.get('borrowerId')
+		}
+		var appUUID = Session.get('appUUID');
+		Meteor.call('updateAvailable', appUUID, contactParameters);
 		Modal.hide('borrowerReview');
 	  	Router.go("myShelf");
 	   }

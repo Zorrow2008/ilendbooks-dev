@@ -28,8 +28,12 @@ Template.myShelf.helpers({
 	isNotDelete: function(status) {
 		console.log("isNotDelete:status=" + status);
 		return status != ilendbooks.public.status.DELETE;
-	}
+	},
 
+	isTransactionCompleteLender: function(status) {
+		console.log(status ==ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER)
+		return status ==ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER;
+	}
 })
 
 Template.myShelf.events({

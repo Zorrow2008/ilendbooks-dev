@@ -16,6 +16,11 @@ Template.myBorrows.helpers({
 	isMatchedAcceptedBorrower: function(status) {
 		return status == ilendbooks.public.status.MATCHED_ACCEPTED;
 	},
+
+	isTransactionComplete: function(status) {
+		console.log(status ==ilendbooks.public.status.TRANSACTION_COMPLETE)
+		return status ==ilendbooks.public.status.TRANSACTION_COMPLETE;
+	}
 })
 
 Template.myBorrows.events({
