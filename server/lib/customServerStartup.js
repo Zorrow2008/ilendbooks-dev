@@ -355,7 +355,33 @@ Meteor.startup(function() {
                 statusMeta: statusMeta
             }
         });
+        /********************************************************/
+        var statusMeta = [{
+               "nextStatus": ilendbooks.public.status.AVAILABLE,
+               "prompt": "Review borrower?",
+        }]
 
+         ILendMetaData.upsert({
+          "status": ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
+          "forWho": ilendbooks.public.userType.LENDER
+        }, {
+           $set: {
+             statusMeta :   statusMeta
+           }
+        }); 
 
+         var statusMeta = [{
+               "nextStatus": ilendbooks.public.status.PAST_BORROW,
+               "prompt": "Review lender?",
+        }]
+
+         ILendMetaData.upsert({
+          "status": ilendbooks.public.status.TRANSACTION_COMPLETE,
+          "forWho": ilendbooks.public.userType.BORROWER
+        }, {
+           $set: {
+             statusMeta :   statusMeta
+           }
+        }); 
     }
 });

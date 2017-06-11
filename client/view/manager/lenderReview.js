@@ -19,7 +19,7 @@ Template.lenderReview.events({
 		var lenderId = Session.get('lenderId');
 		var ilendbooksId = Session.get('ilendbooksId');
 		var appUUID = Session.get('appUUID');
-		Meteor.call('insertLenderReview', lenderId, rating1, rating2, notes);
+		Meteor.call('insertLenderReview', appUUID, lenderId, rating1, rating2, notes);
 		var contactParameters = {
 			ilendbooksId: ilendbooksId,
 			lenderUserId: Session.get('lenderId'),

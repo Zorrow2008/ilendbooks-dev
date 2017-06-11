@@ -1,5 +1,5 @@
 Meteor.methods({
-	insertLenderReview(lenderUserId, userInteractionRating, advertisedQualityRating,optionalNotes ) {
+	insertLenderReview(appUUID, lenderUserId, userInteractionRating, advertisedQualityRating,optionalNotes ) {
 		var lenderReviewDoc = Reviews.findOne({userId: lenderUserId});
 		var lenderReview = {
 			matchedReviewerId: Meteor.userId(),

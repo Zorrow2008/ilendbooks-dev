@@ -97,17 +97,39 @@ Template.specificBookPage.helpers({
       return contactMethod  == ilendbooks.public.contactPreference.EMAIL;
    },
 
-   hasClickedBorrow: function() {
+   // hasClickedBorrow: function() {
+   //    var title = Session.get('specificBook-title');
+   //    var ilendbooksId = Session.get('specificBook-ilendbooksId')
+   //    console.log("title" + title);
+   //    var currentBook = ToBorrow.findOne({title: title, ilendbooksId:ilendbooksId});
+   //    for(key in currentBook.borrower) {
+   //       if(currentBook.borrower[key].userId == Meteor.userId()) {
+   //          console.log("true");
+   //          return true;
+   //       }
+   //    }
+   //    console.log("false");
+   //    return false;
+   // },
+
+    hasClickedBorrowAndNotPastBorrow: function() {
       var title = Session.get('specificBook-title');
       var ilendbooksId = Session.get('specificBook-ilendbooksId')
       console.log("title" + title);
       var currentBook = ToBorrow.findOne({title: title, ilendbooksId:ilendbooksId});
-      for(key in currentBook.borrower) {
+      var userKey;
+      for(var key in currentBook.borrower) {
          if(currentBook.borrower[key].userId == Meteor.userId()) {
-            return true;
+            if(currentbook.borrower[key].status == ilendbooks.public.status.PAST_BORROW) {
+                return false;
+            }else{
+                return true;
+            }
+            //return true;
          }
       }
-      return false;
+      console.log("false");
+     return false;
    },
 
    getLenderAverageRating: function(userId) {

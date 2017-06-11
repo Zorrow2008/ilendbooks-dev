@@ -90,7 +90,7 @@ Template.ilendActionModal.events({
       //    lenderUserId: Meteor.userId(),
       //    borrowerUserId: PendingTransactions.find({lenderUserId: Meteor.userId()
       // }
-      var contactParameters = PendingTransactions.find({
+      var contactParameters = PendingTransactions.findOne({
          lenderUserId: Meteor.userId(),  
          ilendbooksId: Session.get('ilendbooksId'),
          status:ilendbooks.public.status.MATCHED_NOTIFIED

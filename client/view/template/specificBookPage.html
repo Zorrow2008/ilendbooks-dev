@@ -35,7 +35,7 @@
                            <h4>{{getLenderFirstName userId}}
                            </h4>
                            <h4> Average Rating: {{getLenderAverageRating}} </h4>
-                           {{#if hasClickedBorrow}}
+                           {{#if hasClickedBorrowAndNotPastBorrow}}
                               <a class="btn btn-info btn-xs" data-toggle="modal" data-target="#notNewBorrower" role="button">Request a lend!</a>&nbsp;
                            {{else}}
                                  <a class="btn btn-info btn-xs borrow" role="button">Request a lend!</a>&nbsp;

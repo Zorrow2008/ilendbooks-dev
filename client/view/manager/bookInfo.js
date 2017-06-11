@@ -154,6 +154,19 @@ Template.bookInfo.events({
 			      }).contactParameters;
 			      Meteor.call("updateMatchAcceptedAndContactBorrower", appUUID, contactParameters);
 		        break;
+	        case ilendbooks.public.status.PAST_BORROW:
+		      var contactParameters = PendingTransactions.findOne({
+			         borrowerUserId: Meteor.userId(),  
+			         ilendbooksId: ilendbooksId,
+			         status:ilendbooks.public.status.TRANSACTION_COMPLETE
+			      }).contactParameters;	        	
+				Session.setAuth('ilendbooksId', this.ilendbooksId);
+				Session.setAuth('lenderId', contactParameters.lenderUserId);
+				Session.setAuth('borrowerId', Meteor.userId());
+				console.log("myBorrows ilendbooksId set");
+				Modal.show("lenderReview");
+				break;
+
 	        // case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
 	        // 	var appUUID = Session.get('appUUID');
 	        // 	var contactParameters = PendingTransactions.findOne({
