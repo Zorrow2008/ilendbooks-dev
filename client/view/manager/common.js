@@ -23,3 +23,25 @@ Template.registerHelper('imageFormatter', function(){
 	return Meteor.settings.public.imageFormatter;
 
 });
+
+Template.registerHelper('getFacebookUrl', function() {
+	return ilendbooks.public.socialMedia.facebookUrl;
+});
+
+Template.registerHelper('getTwitterUrl', function() {
+	return ilendbooks.public.socialMedia.twitterUrl;
+});
+
+Template.registerHelper('getInstagramUrl', function() {
+	return ilendbooks.public.socialMedia.instagramUrl;
+})
+
+
+isAllowedAccount = function(email){
+
+	if (AllowedAccounts.findOne({"email": email})) {
+		return true;
+	} else {
+		return false;
+	}
+}

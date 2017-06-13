@@ -11,7 +11,7 @@ Meteor.methods({
 	    var bookInfo = {
 	        ilendbooksId: currentborrowerBookInfo.ilendbooksId,
 	        dateTime: currentborrowerBookInfo.dateTime,
-	        status: currentborrowerBookInfo.status,
+	        status: currentborrowerBookInfo.statusBorrow,
 	        matchedUserId: currentborrowerBookInfo.matchedUserId
 	    };
 		if(currentUserFromUserBorrowSheldDB==null) {

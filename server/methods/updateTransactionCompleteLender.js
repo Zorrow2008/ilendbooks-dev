@@ -1,14 +1,10 @@
 Meteor.methods({
 	updateTransactionCompleteLender(appUUID, contactParameters) {
-
-	    var updateStatusInfo = {
-	    	status : ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
-	    	ilendbooksId : contactParameters.ilendbooksId,
-	    	lenderUserId : contactParameters.lenderUserId,
-	    	borrowerUserId : contactParameters.borrowerUserId
-	    }
-		Meteor.call("updateStatus", appUUID, updateStatusInfo );
+		contactParameters.appUUID = appUUID;
+		contactParameters.statusLend = ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER;
+		contactParameters.statusBorrow = ilendbooks.public.status.TRANSACTION_COMPLETE;
+		Meteor.call("updateStatus", appUUID, contactParameters );
 		//Meteor.call("contact", appUUID, contactParameters);
-		Meteor.call('insertHistory', appUUID, updateStatusInfo );
+		Meteor.call('insertHistory', appUUID, contactParameters );
 	}
 })

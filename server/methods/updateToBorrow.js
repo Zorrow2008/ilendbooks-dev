@@ -1,5 +1,8 @@
 Meteor.methods({
     updateToBorrow(appUUID, borrowerInfoBook) {
+        borrowerInfoBook.dateTime = Meteor.call('getLocalTime');
+        borrowerInfoBook.userId = Meteor.userId();
+        borrowerInfoBook.matchedUserId = borrowerInfoBook.lenderUserId;
         for (var borrowerInfoBookKey in borrowerInfoBook) {
             console.log(appUUID + ":updateToBorrow:borrowerInfoBook." + borrowerInfoBookKey + "=" + borrowerInfoBook[borrowerInfoBookKey]);
         }
@@ -12,10 +15,10 @@ Meteor.methods({
         });
         var currentBorrowerInfo = {
             ilendbooksId: borrowerInfoBook.ilendbooksId,
-            userId: Meteor.userId(),
-            dateTime: dateTime,
-            status: borrowerInfoBook.status,
-            matchedUserId: borrowerInfoBook.lenderUserId
+            userId: borrowerInfoBook.userId,
+            dateTime: borrowerInfoBook.dateTime,
+            status: borrowerInfoBook.statusBorrow,
+            matchedUserId: borrowerInfoBook.matchedUserId
         };
         if (currentBookFromToBorrowDB == null) {
 
@@ -74,24 +77,24 @@ Meteor.methods({
         }
 
 
-        Meteor.call('updateUserBorrowShelf', appUUID, currentBorrowerInfo);
+        Meteor.call('updateUserBorrowShelf', appUUID, borrowerInfoBook);
         //Currently logged user is the borrower 
         //matchedUserId is lender
-        var transactionInfo = {
-            appUUID: appUUID,
-            ilendbooksId: currentBorrowerInfo.ilendbooksId,
-            borrowerUserId: currentBorrowerInfo.userId,
-            lenderUserId: currentBorrowerInfo.matchedUserId,
-            status: ilendbooks.public.status.MATCHED_NOTIFIED
+        // var transactionInfo = {
+        //     appUUID: appUUID,
+        //     ilendbooksId: currentBorrowerInfo.ilendbooksId,
+        //     borrowerUserId: currentBorrowerInfo.userId,
+        //     lenderUserId: currentBorrowerInfo.matchedUserId,
+        //     statusLend: ilendbooks.public.status.MATCHED_NOTIFIED
 
-        }
-        for (var key in transactionInfo) {
-            console.log(appUUID + "updateToBorrowt:" + key + "transactionInfoValue: " + transactionInfo[key]);
-        }
-        Meteor.call('updateLenderStatusAndMatchedUserId', appUUID, transactionInfo);
-        Meteor.call("updateStatus", appUUID, transactionInfo);
-        Meteor.call('insertHistory', appUUID, transactionInfo);
-
+        // }
+        // for (var key in transactionInfo) {
+        //     console.log(appUUID + "updateToBorrowt:" + key + "transactionInfoValue: " + transactionInfo[key]);
+        // }
+        Meteor.call('updateLenderStatusAndMatchedUserId', appUUID, borrowerInfoBook);
+        Meteor.call("updateStatus", appUUID, borrowerInfoBook);
+        Meteor.call('insertHistory', appUUID, borrowerInfoBook);
+        
     }
 
 })

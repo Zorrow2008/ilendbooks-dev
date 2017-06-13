@@ -14,13 +14,21 @@ Meteor.methods({
 			+ lenderReviewDoc.asLenderReviews[key].advertisedQualityRating;
 			keyCount++;
 		}
-		totalLenderRatings += userInteractionRating + advertisedQualityRating;
-		averageLenderRating = Math.round((totalLenderRatings / ((2 * keyCount).toPrecision(3)))* 100) / 100;
-		averageUserRating = Math.round(((lenderReviewDoc.averageLenderRating + averageLenderRating)/2)* 100) / 100
-		console.log("averageLenderRating: " + averageLenderRating);
-		Reviews.update({userId: lenderUserId}, {$set: {averageLenderRating: averageLenderRating, averageUserRating: averageUserRating}});
-		Reviews.update({userId: lenderUserId}, {$push: {asLenderReviews: lenderReview}});
-		
+		if(keyCount == 1) {
+		averageLenderRating = userInteractionRating + advertisedQualityRating;
+		if(lenderReviewDoc.averageBorrowerRating == 0) {
+			averageUserRating = averageLenderRating;
+		}else{
+			averageUserRating = Math.round(((lenderReviewDoc.averageBorrowerRating + averageLenderRating)/2)* 100) / 100
+	    	}
+		}else{
+			totalLenderRatings += userInteractionRating + advertisedQualityRating;
+			averageLenderRating = Math.round((totalLenderRatings / ((2 * keyCount).toPrecision(3)))* 100) / 100;
+			averageUserRating = Math.round(((lenderReviewDoc.averageBorrowerRating + averageLenderRating)/2)* 100) / 100
+			console.log("averageLenderRating: " + averageLenderRating);
+			Reviews.update({userId: lenderUserId}, {$set: {averageLenderRating: averageLenderRating, averageUserRating: averageUserRating}});
+			Reviews.update({userId: lenderUserId}, {$push: {asLenderReviews: lenderReview}});
+		}
 
 
 	}

@@ -150,7 +150,8 @@ Template.bookInfo.events({
 			      var contactParameters = PendingTransactions.findOne({
 			         lenderUserId: Meteor.userId(),  
 			         ilendbooksId: ilendbooksId,
-			         status:ilendbooks.public.status.MATCHED_NOTIFIED
+			         statusLend:ilendbooks.public.status.MATCHED_NOTIFIED,
+                     statusBorrow:ilendbooks.public.status.MATCHED_NOTIFIED
 			      }).contactParameters;
 			      Meteor.call("updateMatchAcceptedAndContactBorrower", appUUID, contactParameters);
 		        break;
@@ -158,7 +159,8 @@ Template.bookInfo.events({
 		      var contactParameters = PendingTransactions.findOne({
 			         borrowerUserId: Meteor.userId(),  
 			         ilendbooksId: ilendbooksId,
-			         status:ilendbooks.public.status.TRANSACTION_COMPLETE
+			         statusLend:ilendbooks.public.status.TRANSACTION_COMPLETE,
+                     statusBorrow:ilendbooks.public.status.TRANSACTION_COMPLETE
 			      }).contactParameters;	        	
 				Session.setAuth('ilendbooksId', this.ilendbooksId);
 				Session.setAuth('lenderId', contactParameters.lenderUserId);

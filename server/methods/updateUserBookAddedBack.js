@@ -25,13 +25,15 @@ Meteor.methods({
 		    	+ book.ItemAttributes[0].Title[0]; 
 		}
 
-	    contactParameters.status=ilendbooks.public.status.AVAILABLE;
 	    contactParameters.ilendbooksId=ilendbooksId;
 	    contactParameters.lenderUserId=Meteor.userId();
-
+	    contactParameters.statusLend = ilendbooks.public.status.AVAILABLE;
+	    contactParameters.statusBorrow = "";
+	    contactParameters.bookCoin = ilendbooks.private.bitCoin.ADDONE_BOOK;
+	    
 		Meteor.call('updateStatus', appUUID, contactParameters);
 		Meteor.call('contact', appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters);
-		Meteor.call('addNewBookBookcoin', appUUID, ilendbooks.private.bitCoin.ADDONE_BOOK);
+		Meteor.call('addNewBookBookcoin', appUUID, contactParameters.bookCoin);
 	}
 })

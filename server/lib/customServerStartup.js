@@ -1,6 +1,12 @@
 Meteor.startup(function() {
 
     if (Meteor.isServer) {
+        /**************** Allowed accounts **********************/
+         AllowedAccounts.upsert ({"name" : "Jay", "email":"jayjo7@hotmail.com"}, 
+                                  {$set:{"name" : "Jay", "email":"jayjo7@hotmail.com"}});
+         AllowedAccounts.upsert ({"name" : "JayJoe", "email":"jayjoester@gmail.com"},
+                                  {$set:{"name" : "JayJoe", "email":"jayjoester@gmail.com"}});
+
         /********************* start ****************************/
         var statusMeta = [{
             "next-status": ilendbooks.public.status.REMOVED,

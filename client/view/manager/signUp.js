@@ -1,18 +1,16 @@
 Template.signup.events({
-   'submit form' ( event, template ) {
+   'submit form': function(event, template) {
       event.preventDefault();
-      password = template.find( '[name="password"]' ).value;
-      validationPassword = template.find( '[name="password2"]' ).value
+      var validationPassword = template.find( '[name="password2"]' ).value.trim();
       let user = {
          // email: template.find( '[name="emailAddress"]' ).value + "@uw.edu",
-         email: template.find( '[name="emailAddress"]' ).value,
-         password: template.find( '[name="password"]' ).value
+         email: template.find( '[name="emailAddress"]' ).value.trim(),
+         password: template.find( '[name="password"]' ).value.trim()
          
       };
-      console.log("did i make a user?");
-      
-      
-      if(validationPassword == password) {
+
+      if( validationPassword === user.password 
+         && ("@uw.edu" === user.email.slice(-7)|| isAllowedAccount(user.email))) {
          
          Accounts.createUser( user, ( error ) => {
             if ( error ) {
@@ -32,7 +30,7 @@ Template.signup.events({
          });
       }else {
          document.getElementById("confirm").style.borderColor="red";
-         Bert.alert('Your two password values didnt match.', 'danger');
+         Bert.alert('Your two password values didnt match or you did not enter a UW email.', 'danger');
       }
       
    }

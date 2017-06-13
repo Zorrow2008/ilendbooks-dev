@@ -4,7 +4,11 @@ Template.mainNavSideBar.helpers({
 			, status:ilendbooks.public.status.MATCHED_NOTIFIED});
 		console.log("length: " + pendingTransactions.count())
 		return pendingTransactions.count();
-	}
+	},
+
+  getBookCoin: function() {
+      return UserProfile.findOne({userId: Meteor.userId()}).bookcoin
+  }
 })
 
 Template.mainNavSideBar.events({

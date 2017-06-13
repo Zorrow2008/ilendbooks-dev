@@ -11,7 +11,10 @@ Meteor.methods({
 		var borrowerUserProfile = UserProfile.findOne({userId: contactParameters.borrowerUserId});
 		contactParameters.appUUID = appUUID;
 		contactParameters.toUserId = contactParameters.borrowerUserId;
+   		contactParameters.statusLend= ilendbooks.public.status.MATCHED_ACCEPTED
+   		contactParameters.statusBorrow= ilendbooks.public.status.MATCHED_ACCEPTED;
 		contactParameters.emailSubject =  "Borrow request accepted";
+
 
 		if(ilendbooks.public.contactPreference.EMAIL === borrowerUserProfile.contactPreference) {
 
@@ -35,13 +38,13 @@ Meteor.methods({
 		    	+ " and let us know you have it!";
 		}
 
-	    var updateStatusInfo = {
-	    	status : ilendbooks.public.status.MATCHED_ACCEPTED,
-	    	ilendbooksId : contactParameters.ilendbooksId,
-	    	lenderUserId : contactParameters.lenderUserId,
-	    	borrowerUserId : contactParameters.borrowerUserId
-	    }
-		Meteor.call("updateStatus", appUUID, updateStatusInfo );
+	    // var updateStatusInfo = {
+	    // 	status : ilendbooks.public.status.MATCHED_ACCEPTED,
+	    // 	ilendbooksId : contactParameters.ilendbooksId,
+	    // 	lenderUserId : contactParameters.lenderUserId,
+	    // 	borrowerUserId : contactParameters.borrowerUserId
+	    // }
+		Meteor.call("updateStatus", appUUID, contactParameters );
 		Meteor.call("contact", appUUID, contactParameters);
    	}
 })

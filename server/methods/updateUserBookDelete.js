@@ -30,7 +30,7 @@ Meteor.methods({
 		}
 
 	    var updateStatusInfo = {
-	    	status : ilendbooks.public.status.DELETE,
+	    	statusLend : ilendbooks.public.status.DELETE,
 	    	ilendbooksId : contactParameters.ilendbooksId ,
 	    	lenderUserId : Meteor.userId(),
 	    }
@@ -38,6 +38,6 @@ Meteor.methods({
 		Meteor.call('updateStatus', appUUID, updateStatusInfo);
 		Meteor.call('contact', appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters);
-		//Meteor.call('addNewBookBookcoin', appUUID, ilendbooks.private.bitCoin.ADDONE_BOOK);
+		
 	}
 })

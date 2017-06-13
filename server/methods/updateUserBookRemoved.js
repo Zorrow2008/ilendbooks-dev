@@ -35,11 +35,13 @@ Meteor.methods({
 	    // 	lenderUserId : Meteor.userId(),
 	    // }
 	    contactParameters.lenderUserId=Meteor.userId();
-	    contactParameters.status=ilendbooks.public.status.REMOVED;
+	    contactParameters.statusLend = ilendbooks.public.status.REMOVED;
+	    contactParameters.statusBorrow = "";
+	    contactParameters.bookCoin = ilendbooks.private.bitCoin.REMOVE_ONE_BOOK;
 
 		Meteor.call('updateStatus', appUUID, contactParameters);
 		Meteor.call('contact', appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters);
-		Meteor.call('addNewBookBookcoin', appUUID, ilendbooks.private.bitCoin.REMOVE_ONE_BOOK);
+		Meteor.call('addNewBookBookcoin', appUUID, contactParameters.bookCoin);
 	}
 })

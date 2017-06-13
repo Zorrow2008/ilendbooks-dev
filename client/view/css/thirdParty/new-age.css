@@ -30,10 +30,17 @@ a {
   transition: all 0.35s;
   color: #fdcc52;
 }
-a:hover,
+/*a:hover,
 a:focus {
   color: #fcbd20;
+}*/
+
+a:hover,
+a:focus {
+  color: black;
+  text-decoration: none;
 }
+
 hr {
   max-width: 100px;
   margin: 25px auto 0;

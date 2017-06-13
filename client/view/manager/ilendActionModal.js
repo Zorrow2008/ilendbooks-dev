@@ -93,7 +93,8 @@ Template.ilendActionModal.events({
       var contactParameters = PendingTransactions.findOne({
          lenderUserId: Meteor.userId(),  
          ilendbooksId: Session.get('ilendbooksId'),
-         status:ilendbooks.public.status.MATCHED_NOTIFIED
+         statusLend:ilendbooks.public.status.MATCHED_NOTIFIED,
+         statusBorrow:ilendbooks.public.status.MATCHED_NOTIFIED
       }).contactParameters;
 
       console.log("contactParameters =" + contactParameters );  
@@ -104,14 +105,13 @@ Template.ilendActionModal.events({
    'click .lender-lent-declared': function(event) {
       event.preventDefault();
       var appUUID = Session.get('appUUID');
-      var contactParameters = Session.get(ilendbooks.public.other.CONTACT_PARAMETERS);
       ilendbooksId = Session.get('ilendbooksId');
-      borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
-      var contactParameters = {
+      var contactParameters = PendingTransactions.findOne({
+         lenderUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: Meteor.userId(),
-         borrowerUserId: borrowerUserId
-      }
+         statusBorrow: ilendbooks.public.status.MATCHED_ACCEPTED,
+         statusLend: ilendbooks.public.status.MATCHED_ACCEPTED
+      }).contactParameters;
       console.log("contactParameters =" + contactParameters );
       Meteor.call("updateLenderLentDeclared", appUUID, contactParameters);
       Modal.hide('ilendActionModal');
@@ -121,13 +121,12 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var ilendbooksId = Session.get('ilendbooksId');
-      var lenderUserId = PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId;
-      var contactParameters = {
+      var contactParameters = PendingTransactions.findOne({
+         borrowerUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: lenderUserId,
-         borrowerUserId: Meteor.userId()
-      }
-
+         statusBorrow: ilendbooks.public.status.MATCHED_ACCEPTED,
+         statusLend: ilendbooks.public.status.MATCHED_ACCEPTED
+      }).contactParameters;
       Meteor.call("updateBorrowerLentReceived", appUUID, contactParameters);
       Modal.hide('ilendActionModal');
    },
@@ -136,11 +135,26 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       ilendbooksId = Session.get('ilendbooksId');
-      borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
-      var contactParameters = {
+   //   borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
+      var contactParameters;
+      var contactParameters1 = PendingTransactions.findOne({
+         lenderUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: Meteor.userId(),
-         borrowerUserId: borrowerUserId
+         statusBorrow: ilendbooks.public.status.LENDER_LENT_DECLARED,
+         statusLend: ilendbooks.public.status.LENDER_LENT_DECLARED
+      })
+
+      var contactParameters2 = PendingTransactions.findOne({
+         lenderUserId: Meteor.userId(), 
+         ilendbooksId: ilendbooksId,
+         statusBorrow: ilendbooks.public.status.BORROWER_LENT_RECEIVED,
+         statusLend: ilendbooks.public.status.BORROWER_LENT_RECEIVED
+      })
+
+      if(contactParameters1 == null) {
+          contactParameters = contactParameters2.contactParameters;
+      }else {
+         contactParameters = contactParameters1.contactParameters;
       }
       Meteor.call('updateWithBorrower', appUUID, contactParameters);
       Modal.hide('ilendActionModal');
@@ -150,12 +164,29 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var ilendbooksId = Session.get('ilendbooksId');
-      var lenderUserId = PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId;
-      var contactParameters = {
+      var contactParameters;  
+
+      var contactParameters1 = PendingTransactions.findOne({
+         borrowerUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: lenderUserId,
-         borrowerUserId: Meteor.userId()
-      }   
+         statusBorrow: ilendbooks.public.status.LENDER_LENT_DECLARED,
+         statusLend: ilendbooks.public.status.LENDER_LENT_DECLARED
+      })
+
+      var contactParameters2 = PendingTransactions.findOne({
+         borrowerUserId: Meteor.userId(), 
+         ilendbooksId: ilendbooksId,
+         statusBorrow: ilendbooks.public.status.BORROWER_LENT_RECEIVED,
+         statusLend: ilendbooks.public.status.BORROWER_LENT_RECEIVED
+      })
+
+      if(contactParameters1 == null) {
+          contactParameters = contactParameters2.contactParameters;
+      }else {
+         contactParameters = contactParameters1.contactParameters;
+      }
+
+
       Meteor.call('updateBorrowed', appUUID, contactParameters);
       Modal.hide('ilendActionModal');
    },
@@ -164,12 +195,14 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var ilendbooksId = Session.get('ilendbooksId');
-      borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
-      var contactParameters = {
+    //  borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
+
+      var contactParameters = PendingTransactions.findOne({
+         lenderUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: Meteor.userId(),
-         borrowerUserId: borrowerUserId
-      }
+         statusBorrow: ilendbooks.public.status.BORROWED,
+         statusLend: ilendbooks.public.status.WITH_BORROWER
+      }).contactParameters;
       Meteor.call('updateLenderReturnReceived', appUUID, contactParameters);
       Modal.hide('ilendActionModal');
    },
@@ -178,12 +211,12 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var ilendbooksId = Session.get('ilendbooksId');
-      var lenderUserId = PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId;
-      var contactParameters = {
+      var contactParameters = PendingTransactions.findOne({
+         borrowerUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: lenderUserId,
-         borrowerUserId: Meteor.userId()
-      } 
+         statusBorrow: ilendbooks.public.status.BORROWED,
+         statusLend: ilendbooks.public.status.WITH_BORROWER
+      }).contactParameters;
       Meteor.call('updateBorrowerReturnDeclared', appUUID, contactParameters);  
       Modal.hide('ilendActionModal');    
    },
@@ -192,12 +225,12 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var ilendbooksId = Session.get('ilendbooksId');
-      var lenderUserId = PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId;
-      var contactParameters = {
+      var contactParameters = PendingTransactions.findOne({
+         borrowerUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: lenderUserId,
-         borrowerUserId: Meteor.userId()
-      }  
+         statusBorrow: ilendbooks.public.status.LENDER_RETURN_RECEIVED,
+         statusLend: ilendbooks.public.status.LENDER_RETURN_RECEIVED
+      }).contactParameters; 
       Meteor.call('updateTransactionComplete', appUUID, contactParameters);  
     //  Meteor.call('updateAvailable', appUUID, contactParameters);
       Modal.hide('ilendActionModal');
@@ -207,12 +240,12 @@ Template.ilendActionModal.events({
       event.preventDefault();
       var appUUID = Session.get('appUUID');
       var ilendbooksId = Session.get('ilendbooksId');
-      borrowerUserId = PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId;
-      var contactParameters = {
+      var contactParameters = PendingTransactions.findOne({
+         lenderUserId: Meteor.userId(), 
          ilendbooksId: ilendbooksId,
-         lenderUserId: Meteor.userId(),
-         borrowerUserId: borrowerUserId
-      }
+         statusBorrow: ilendbooks.public.status.BORROWER_RETURN_DECLARED,
+         statusLend: ilendbooks.public.status.BORROWER_RETURN_DECLARED
+      }).contactParameters;
      // Meteor.call('updateAvailable', appUUID, contactParameters);
       Meteor.call('updateTransactionCompleteLender', appUUID, contactParameters);
       Modal.hide('ilendActionModal');

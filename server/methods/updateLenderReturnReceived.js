@@ -1,5 +1,8 @@
 Meteor.methods({
 	updateLenderReturnReceived(appUUID, contactParameters) {   
+		contactParameters.appUUID = appUUID;
+		contactParameters.statusLend = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
+		contactParameters.statusBorrow = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
 		console.log(appUUID +':contactParameters='+ contactParameters);
 		for (var contactParametersKey in contactParameters) {
 			console.log( appUUID 
@@ -32,15 +35,15 @@ Meteor.methods({
 		    	+ (Router.routes['myBorrows'].url({_id: 1}))  
 		}
 
-	    var updateStatusInfo = {
-	    	appUUID : appUUID,
-	    	status : ilendbooks.public.status.LENDER_RETURN_RECEIVED,
-	    	ilendbooksId : contactParameters.ilendbooksId,
-	    	lenderUserId : contactParameters.lenderUserId,
-	    	borrowerUserId : contactParameters.borrowerUserId
-	    }
-		Meteor.call("updateStatus", appUUID, updateStatusInfo );
+	    // var updateStatusInfo = {
+	    // 	appUUID : appUUID,
+	    // 	status : ilendbooks.public.status.LENDER_RETURN_RECEIVED,
+	    // 	ilendbooksId : contactParameters.ilendbooksId,
+	    // 	lenderUserId : contactParameters.lenderUserId,
+	    // 	borrowerUserId : contactParameters.borrowerUserId
+	    // }
+		Meteor.call("updateStatus", appUUID, contactParameters);
 		Meteor.call("contact", appUUID, contactParameters);
-		Meteor.call('insertHistory', appUUID, updateStatusInfo );
+		Meteor.call('insertHistory', appUUID, contactParameters);
    	}
 })

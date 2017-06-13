@@ -101,7 +101,9 @@ Meteor.methods({
         }
 
         currentlenderBookInfo.lenderUserId=Meteor.userId();
-        currentlenderBookInfo.status=ilendbooks.public.status.AVAILABLE;
+        currentlenderBookInfo.status=ilendbooks.public.status.AVILABLE;
+        currentlenderBookInfo.statusLend=ilendbooks.public.status.AVAILABLE,
+        currentlenderBookInfo.statusBorrow="",
         currentlenderBookInfo.bookCoin=ilendbooks.private.bitCoin.ADDONE_BOOK;
         // update user lender shelf
         Meteor.call('updateUserLendShelf', appUUID, currentlenderBookInfo);

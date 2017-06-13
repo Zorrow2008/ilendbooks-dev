@@ -1,3 +1,5 @@
+AllowedAccounts = new Mongo.Collection("allowedAccounts");
+
 ILendMetaData = new Mongo.Collection("iLendMetaData");
 
 UserProfile = new Mongo.Collection("userProfile");

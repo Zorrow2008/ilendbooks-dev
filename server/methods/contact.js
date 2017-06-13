@@ -32,6 +32,7 @@ Meteor.methods({
           	console.log(appUUID + ":contact:email sent." + emailResult);
 
 		    contactParameters.contactResult = emailResult;
+		    contactParameters.status = ilendbooks.public.status.SUCCESS;
 		    for(var contactResultKey in contactParameters.contactResult)
 		    {
 		        console.log(appUUID 
@@ -47,7 +48,8 @@ Meteor.methods({
 			}
 			var smsResult = Method.call('sendSMS', appUUID, )
 			contactParameters.contactResult = smsResult;
-			contactParameters.status = smsResult.status;
+			contactParameters.contactStatus = smsResult.status;
+			contactParameters.status = ilendbooks.public.status.SUCCESS;
 		} else {
 				console.log(appUUID + ":contact: Fatal, no good, no contact preference...");
 				contactParameters.status = ilendbooks.public.status.FAILED;

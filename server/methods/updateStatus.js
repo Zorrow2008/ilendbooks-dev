@@ -8,17 +8,28 @@ Meteor.methods({
 
       for ( var updateStatusInfoKey in updateStatusInfo ){
         console.log( appUUID 
-        	+ ":updateStatus:updateStatusInfo." 
+        	+ ":updateStatus:updateStatusInfo:" 
         	+ updateStatusInfoKey +"=" + updateStatusInfo[updateStatusInfoKey]);
       }
 
-	   	switch(updateStatusInfo.status) {
+      //determine who's status to work with
+      var statusSwitch;
+      if(updateStatusInfo.statusLend) {
+      	statusSwitch = updateStatusInfo.statusLend;
+      } else if (updateStatusInfo.statusBorrow) {
+		statusSwitch = updateStatusInfo.statusBorrow;
+      }
+      console.log(appUUID 
+        	+ ":updateStatus:updateStatusInfo" 
+        	+ ":statusSwitch=" + statusSwitch);
+
+	   	switch(statusSwitch) {
 		    case ilendbooks.public.status.AVAILABLE: // this is called on Add Back
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        break;
 		    case ilendbooks.public.status.REMOVED:
@@ -26,7 +37,7 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        break;
 		    case ilendbooks.public.status.DELETE:
@@ -34,7 +45,7 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        break;
 		    case ilendbooks.public.status.MATCHED_NOTIFIED:
@@ -51,20 +62,21 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 		    case ilendbooks.public.status.MATCHED_DECLINED:
@@ -72,7 +84,7 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
@@ -80,33 +92,35 @@ Meteor.methods({
 		        	, updateStatusInfo.lenderUserId
 		        	, ilendbooks.public.status.AVAILABLE
 		        );
-		        break;
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
+		        break;
 		    case ilendbooks.public.status.BORROWER_LENT_RECEIVED:
 		        Meteor.call("updateBorrowerStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.borrowerUserId		        	
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 		    case ilendbooks.public.status.LENDER_LENT_DECLARED:
@@ -114,20 +128,21 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 		    case ilendbooks.public.status.WITH_BORROWER:
@@ -141,14 +156,15 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 		    case ilendbooks.public.status.BORROWED:
@@ -156,7 +172,7 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
@@ -169,7 +185,8 @@ Meteor.methods({
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 		    case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
@@ -177,20 +194,21 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 		    case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
@@ -198,20 +216,21 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updatePendingTransactions"
 		        	, appUUID
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 		    case ilendbooks.public.status.MATCHED:
@@ -222,7 +241,7 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        break;
 		    case ilendbooks.public.status.TRANSACTION_COMPLETE:
@@ -230,7 +249,7 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.borrowerUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateLenderStatus"
 		        	, appUUID
@@ -243,7 +262,8 @@ Meteor.methods({
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );
 		        break;
 	        case ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER:
@@ -251,7 +271,7 @@ Meteor.methods({
 		        	, appUUID
 		        	, updateStatusInfo.ilendbooksId
 		        	, updateStatusInfo.lenderUserId
-		        	, updateStatusInfo.status
+		        	, statusSwitch
 		        );
 		        Meteor.call("updateBorrowerStatus"
 		        	, appUUID
@@ -264,7 +284,8 @@ Meteor.methods({
 		        	, updateStatusInfo.lenderUserId
 		        	, updateStatusInfo.borrowerUserId
 		        	, updateStatusInfo.ilendbooksId
-		        	, updateStatusInfo.status
+		        	, updateStatusInfo.statusLend
+		        	, updateStatusInfo.statusBorrow
 		        );	
 		       	break;	        
 	        case ilendbooks.public.status.PAST_BORROW:
@@ -272,7 +293,7 @@ Meteor.methods({
 	        		, appUUID
 	        		, updateStatusInfo.ilendbooksId
 	        		, updateStatusInfo.borrowerUserId
-	        		, updateStatusInfo.status
+	        		, statusSwitch
         		);
 	    }
 	}

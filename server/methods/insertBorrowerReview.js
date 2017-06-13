@@ -19,15 +19,26 @@ Meteor.methods({
 				keyCount++;
 			}
 		//}
-		console.log("asBorrowerReviews size: " + borrowerReviewDoc.asBorrowerReviews.length)
-		totalBorrowerRatings += userInteractionRating + returnQuality;
-		console.log("totalBorrowerRatings: " + totalBorrowerRatings);
-		averageBorrowerRating = totalBorrowerRatings / ((2 * keyCount).toPrecision(3));
-		averageBorrowerRating = Math.round(averageBorrowerRating * 100)/100;
-		averageUserRating = (borrowerReviewDoc.averageLenderRating + averageBorrowerRating)/2;
-		averageUserRating = Math.round(averageUserRating * 100) / 100;
-		console.log("averageBorrowerRating: " + averageBorrowerRating);
-		Reviews.update({userId: borrowerUserId}, {$set: {averageBorrowerRating: averageBorrowerRating, averageUserRating: averageUserRating}});
-		Reviews.update({userId: borrowerUserId}, {$push: {asBorrowerReviews: borrowerReview}});
+		if(keyCount == 1) {
+			averageBorrowerRating = userInteractionRating + returnQuality;
+			averageBorrowerRating = Math.round(averageBorrowerRating * 100)/100;
+			if(borrowerReviewDoc.averageLenderRating == 0) {
+				averageUserRating =  averageBorrowerRating;
+			}else{
+				averageUserRating = (borrowerReviewDoc.averageLenderRating + averageBorrowerRating)/2;
+			}
+			averageUserRating = Math.round(averageUserRating * 100) / 100;
+		}else{
+			console.log("asBorrowerReviews size: " + borrowerReviewDoc.asBorrowerReviews.length)
+			totalBorrowerRatings += userInteractionRating + returnQuality;
+			console.log("totalBorrowerRatings: " + totalBorrowerRatings);
+			averageBorrowerRating = totalBorrowerRatings / ((2 * keyCount).toPrecision(3));
+			averageBorrowerRating = Math.round(averageBorrowerRating * 100)/100;
+			averageUserRating = (borrowerReviewDoc.averageLenderRating + averageBorrowerRating)/2;
+			averageUserRating = Math.round(averageUserRating * 100) / 100;
+			console.log("averageBorrowerRating: " + averageBorrowerRating);
+			Reviews.update({userId: borrowerUserId}, {$set: {averageBorrowerRating: averageBorrowerRating, averageUserRating: averageUserRating}});
+			Reviews.update({userId: borrowerUserId}, {$push: {asBorrowerReviews: borrowerReview}});
+		}
 	}
 })

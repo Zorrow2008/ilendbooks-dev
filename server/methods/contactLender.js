@@ -41,6 +41,8 @@ Meteor.methods({
           		console.log(appUUID + ":contactLender:email sent." + emailResult);
 
 		        contactParameters.contactResult = emailResult;
+		        contactParameters.status = ilendbooks.public.status.SUCCESS;
+
 		        for(var contactResultKey in contactParameters.contactResult)
 		        {
 		        	console.log(appUUID + ":contactLender:contactResult (email):"+ contactResultKey + "=" + contactParameters.contactResult[contactResultKey]);
@@ -56,15 +58,20 @@ Meteor.methods({
 				}
 				var smsResult = Meteor.call('sendSMS', appUUID, smsParameters);
 				contactParameters.contactResult = smsResult;
-				contactParameters.correspondenceStatus = smsResult.status;
+				contactParameters.contactStatus = smsResult.status;
+				contactParameters.status = ilendbooks.public.status.SUCCESS;
+
 			} else {
 				console.log(appUUID + ":contactLender: Fatal, no good, no contact preference...");
-				contactParameters.correspondenceStatus = ilendbooks.public.status.FAILED;
+				contactParameters.contactStatus = ilendbooks.public.status.FAILED;
+				contactParameters.status = ilendbooks.public.status.FAILED;
+
 				contactParameters.contactResult = "No contact preference for this user " + contactParameters.lenderUserId;
 			}
 
 		} else {
-			contactParameters.correspondenceStatus = ilendbooks.public.status.FAILED;
+			contactParameters.contactStatus = ilendbooks.public.status.FAILED;
+			contactParameters.status = ilendbooks.public.status.FAILED;
 			console.log(appUUID + ":contactLender:************************* Fatal *************************");
 			console.log(appUUID + ":contactLender: Fatal, no good, not all data available");
 			console.log(appUUID + ":contactLender: Fatal: lenderUserProfile = " + lenderUserProfile);
@@ -72,7 +79,7 @@ Meteor.methods({
 			console.log(appUUID + ":contactLender: Fatal: book = " + book);
 			console.log(appUUID + ":contactLender:************************* Fatal *************************");
 		}
-		Meteor.call("insertPendingTransactions", appUUID, contactParameters, ilendbooks.public.status.MATCHED_NOTIFIED);
+		Meteor.call("insertPendingTransactions", appUUID, contactParameters);
 		Meteor.call("insertCorrespondence", appUUID, contactParameters.lenderUserId, contactParameters.ilendbooksId, contactParameters);
 	}
 });

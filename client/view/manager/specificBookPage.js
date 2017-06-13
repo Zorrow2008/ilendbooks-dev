@@ -64,6 +64,13 @@ Template.specificBookPage.helpers({
      // return Session.get('specificBookImage');
    },
 
+   hasLenders: function() {
+    var currentBook = ToLend.findOne({
+      ilendbooksId: Session.get('specificBook-ilendbooksId'), 
+      lender: {$elemMatch:{userId:{$ne: Meteor.userId() }, status:ilendbooks.public.status.AVAILABLE}}
+    });
+    return currentBook != null;
+    },
 
    getLenders: function() {
      // console.log("getLenders called");
@@ -85,17 +92,17 @@ Template.specificBookPage.helpers({
       return UserProfile.findOne({userId: userId}).fName;
    },
 
-   isEmail: function(userId) {
-      var currentPendingTransaction = PendingTransactions.findOne({lenderUserId: userId});
-      for(key in currentPendingTransaction) {
-        console.log(key + "; " + currentPendingTransaction[key]);
-      }
-      var contactMethod = currentPendingTransaction && currentPendingTransaction.contactParameters && currentPendingTransaction.contactParameters.contactMethod;
-      console.log("email: " + contactMethod );
-      console.log("ilendbooks.public.contactPreference.EMAIL:" + ilendbooks.public.contactPreference.EMAIL);
-      console.log("is email: "+ (contactMethod  == ilendbooks.public.contactPreference.EMAIL)); 
-      return contactMethod  == ilendbooks.public.contactPreference.EMAIL;
-   },
+   // isEmail: function(userId) {
+   //    var currentPendingTransaction = PendingTransactions.findOne({lenderUserId: userId});
+   //    for(key in currentPendingTransaction) {
+   //      console.log(key + "; " + currentPendingTransaction[key]);
+   //    }
+   //    var contactMethod = currentPendingTransaction && currentPendingTransaction.contactParameters && currentPendingTransaction.contactParameters.contactMethod;
+   //    console.log("email: " + contactMethod );
+   //    console.log("ilendbooks.public.contactPreference.EMAIL:" + ilendbooks.public.contactPreference.EMAIL);
+   //    console.log("is email: "+ (contactMethod  == ilendbooks.public.contactPreference.EMAIL)); 
+   //    return contactMethod  == ilendbooks.public.contactPreference.EMAIL;
+   // },
 
    // hasClickedBorrow: function() {
    //    var title = Session.get('specificBook-title');
@@ -117,19 +124,15 @@ Template.specificBookPage.helpers({
       var ilendbooksId = Session.get('specificBook-ilendbooksId')
       console.log("title" + title);
       var currentBook = ToBorrow.findOne({title: title, ilendbooksId:ilendbooksId});
-      var userKey;
+      var result = false;
       for(var key in currentBook.borrower) {
-         if(currentBook.borrower[key].userId == Meteor.userId()) {
-            if(currentbook.borrower[key].status == ilendbooks.public.status.PAST_BORROW) {
-                return false;
-            }else{
-                return true;
+         if(currentBook.borrower[key].userId === Meteor.userId()) {
+            if(currentbook.borrower[key].status != ilendbooks.public.status.PAST_BORROW) {
+                result = true;
             }
-            //return true;
          }
       }
-      console.log("false");
-     return false;
+     return result;
    },
 
    getLenderAverageRating: function(userId) {
@@ -138,7 +141,26 @@ Template.specificBookPage.helpers({
       // console.log("currentLender.averageLenderRating: " + currentLender.averageLenderRating);
       // return currentLender.averageLenderRating;
       return Reviews.findOne({userId: this.userId }).averageLenderRating;
+   },
+
+   hasBookCondition: function(bookCondition){
+      if(bookCondition) {
+        return true;
+      } else {
+        return false;
+      }
+
+   },
+
+   hasBookDescription: function (bookDescription) {
+      if(bookDescription) {
+        return true;
+      } else {
+        return false;
+      }
+
    }
+
 })
 
 Template.specificBookPage.events({
@@ -173,5 +195,17 @@ Template.specificBookPage.events({
       console.log("updateToBorrowAndContactLender finished");
       Router.go("myBorrows");
 
+   },
+   'click .borrow-request-in-process': function(event) {
+      event.preventDefault();
+      var modalTitle = "In Process";
+      var modalBody =  ["Your earlier request for this book is in process. Thank you!"];
+      
+
+      Session.set(ilendbooks.public.modal.TITLE, modalTitle);
+      Session.set(ilendbooks.public.modal.BODY_ARRAY, modalBody);
+
+      Modal.show('ilendInfoModal');
    }
+
 })

@@ -1,6 +1,6 @@
 
 Meteor.methods({
-	insertPendingTransactions(appUUID, contactParameters, status){
+	insertPendingTransactions(appUUID, contactParameters){
 
 		for (var contactParametersKey in contactParameters) {
 			console.log( appUUID 
@@ -8,12 +8,12 @@ Meteor.methods({
 				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
 			);
 		}
-		console.log(appUUID + + ":insertPendingTransactions:status="+ status);
 		PendingTransactions.insert({
 			lenderUserId: contactParameters.lenderUserId,
 			borrowerUserId: contactParameters.borrowerUserId,
 			ilendbooksId: contactParameters.ilendbooksId,
-			status:status,
+			statusLend:contactParameters.statusLend,
+			statusBorrow:contactParameters.statusBorrow,
 			contactParameters: contactParameters
 		});
 	}
