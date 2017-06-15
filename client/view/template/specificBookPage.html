@@ -45,11 +45,16 @@
                           &nbsp;
                         </div>
                         <div class="text-center">
-                           {{#if hasClickedBorrowAndNotPastBorrow}}
-                              <button id="requestbook-inprocess" name="equestbook-inprocess" class="btn btn-primary btn-sm borrow-request-in-process" >&nbsp;Request a lend!&nbsp;</button>
-                           {{else}}
-                              <button id="requestbook" name="requestbook" class="btn btn-primary btn-sm borrow">&nbsp;Request a lend!&nbsp;</button> 
-                           {{/if}}
+                           <!-- {{#if hasClickedBorrowAndNotPastBorrow}} -->
+                         <!--      <button id="requestbook-inprocess" name="equestbook-inprocess" class="btn btn-primary btn-sm borrow-request-in-process" >&nbsp;Request a lend!&nbsp;</button> -->
+                           <!-- {{else}} -->
+                              {{#if isMatchedDeclined userId}}
+                                <button type="button" class="btn btn-sm btn-primary" disabled>Request declined.</button>
+
+                              {{else}}
+                                 <button id="requestbook" name="requestbook" class="btn btn-primary btn-sm borrow">&nbsp;Request a lend!&nbsp;</button> 
+                              {{/if}}
+                           <!-- {{/if}} -->
                         </div>
                         <div>
                         &nbsp;

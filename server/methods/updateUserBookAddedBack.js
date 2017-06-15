@@ -7,7 +7,20 @@ Meteor.methods({
 		var contactParameters = {};
 		contactParameters.appUUID = appUUID;
 		contactParameters.toUserId = Meteor.userId();
+	    contactParameters.ilendbooksId=ilendbooksId;
+	    contactParameters.lenderUserId=Meteor.userId();
+	    contactParameters.statusLend = ilendbooks.public.status.AVAILABLE;
+	    contactParameters.statusBorrow = "";
+	    contactParameters.bookCoin = ilendbooks.private.bitCoin.ADDONE_BOOK;
 		contactParameters.emailSubject =  "Book added back to  shelf!";
+
+		for (var contactParametersKey in contactParameters) {
+		
+			console.log(appUUID 
+				+ ":updateUserBookAddedBack:"
+				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
+				);
+		}
 
 		if(ilendbooks.public.contactPreference.EMAIL === userProfile.contactPreference) {
 
@@ -25,15 +38,11 @@ Meteor.methods({
 		    	+ book.ItemAttributes[0].Title[0]; 
 		}
 
-	    contactParameters.ilendbooksId=ilendbooksId;
-	    contactParameters.lenderUserId=Meteor.userId();
-	    contactParameters.statusLend = ilendbooks.public.status.AVAILABLE;
-	    contactParameters.statusBorrow = "";
-	    contactParameters.bookCoin = ilendbooks.private.bitCoin.ADDONE_BOOK;
+
 	    
 		Meteor.call('updateStatus', appUUID, contactParameters);
 		Meteor.call('contact', appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters);
-		Meteor.call('addNewBookBookcoin', appUUID, contactParameters.bookCoin);
+		Meteor.call('addBookcoin', appUUID, contactParameters.lenderUserId, contactParameters.bookCoin);
 	}
 })

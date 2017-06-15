@@ -1,8 +1,8 @@
 Meteor.methods({
 	updateLenderStatus(appUUID, ilendbooksId, lenderUserId, status ) {
-	     console.log( appUUID + ":updateLenderStatus:" + ilendbooksId +"=" + ilendbooksId);
-	     console.log( appUUID + ":updateLenderStatus:" + lenderUserId +"=" + lenderUserId);
-	     console.log( appUUID + ":updateLenderStatus:" + status +"=" + status);
+	     console.log( appUUID + ":updateLenderStatus:ilendbooksId=" + ilendbooksId);
+	     console.log( appUUID + ":updateLenderStatus:lenderUserId=" + lenderUserId);
+	     console.log( appUUID + ":updateLenderStatus:status=" + status);
 	    
 	    ToLend.update({
 	        "ilendbooksId": ilendbooksId,

@@ -5,11 +5,6 @@ Template.clickedLendModal.events({
       var description = event.target.bookDescription.value;
       var ilendbooksId = Session.get('condition-lendBook-ilendbooksId');
       var title = Session.get('condition-lendBook-title');
-      console.log("clickedLendModal::submit:condition=" + condition);
-      console.log("clickedLendModal::submit:description=" + description);
-      console.log("clickedLendModal::submit:title=" + title);
-      console.log("clickedLendModal::submit:ilendbooksId=" + ilendbooksId);
-
       var currentlenderBookInfo = {
          title: title,
          ilendbooksId: ilendbooksId,

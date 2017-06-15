@@ -1,5 +1,13 @@
 Meteor.methods({
 	updateUserBookDelete: function(appUUID, contactParameters) {
+		contactParameters.statusLend = ilendbooks.public.status.DELETE;
+		contactParameters.lenderUserId = Meteor.userId();
+		var userProfile = UserProfile.findOne({userId: Meteor.userId()});
+		var book = Books.findOne({"_id":contactParameters.ilendbooksId});
+		contactParameters.appUUID = appUUID;
+		contactParameters.toUserId = Meteor.userId();
+		contactParameters.emailSubject =  "Book deleted from your shelf!";
+
 		for (var contactParametersKey in contactParameters) {
 		
 			console.log(appUUID 
@@ -7,11 +15,6 @@ Meteor.methods({
 				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
 				);
 		}
-		var userProfile = UserProfile.findOne({userId: Meteor.userId()});
-		var book = Books.findOne({"_id":contactParameters.ilendbooksId});
-		contactParameters.appUUID = appUUID;
-		contactParameters.toUserId = Meteor.userId();
-		contactParameters.emailSubject =  "Book deleted from your shelf!";
 
 		if(ilendbooks.public.contactPreference.EMAIL === userProfile.contactPreference) {
 
@@ -29,13 +32,7 @@ Meteor.methods({
 		    	+ book.ItemAttributes[0].Title[0]; 
 		}
 
-	    var updateStatusInfo = {
-	    	statusLend : ilendbooks.public.status.DELETE,
-	    	ilendbooksId : contactParameters.ilendbooksId ,
-	    	lenderUserId : Meteor.userId(),
-	    }
-
-		Meteor.call('updateStatus', appUUID, updateStatusInfo);
+		Meteor.call('updateStatus', appUUID, contactParameters);
 		Meteor.call('contact', appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters);
 		

@@ -1,11 +1,6 @@
 Meteor.methods({
 	updateMatchDeclined(appUUID, contactParameters) {   
-		for (var contactParametersKey in contactParameters) {
-			console.log( appUUID 
-				+ ":updateMatchDeclined-received:" 
-				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
-			);
-		}
+
 		var lenderUserProfile = UserProfile.findOne({userId: contactParameters.lenderUserId});
 		var borrowerUserProfile = UserProfile.findOne({userId: contactParameters.borrowerUserId});
 		contactParameters.appUUID = appUUID;
@@ -15,7 +10,7 @@ Meteor.methods({
    		contactParameters.statusBorrow=ilendbooks.public.status.MATCHED_DECLINED;
 		for (var contactParametersKey in contactParameters) {
 			console.log( appUUID 
-				+ ":updateMatchDeclined-after-build:" 
+				+ ":updateMatchDeclined:" 
 				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
 			);
 		}
@@ -37,14 +32,7 @@ Meteor.methods({
 		    	+ (Router.routes['userHome'].url({_id: 1}))  
 		    	+ " to search for another lender." 
 		}
-
-	    // var updateStatusInfo = {
-	    // 	appUUID : appUUID,
-	    // 	status : ilendbooks.public.status.MATCHED_DECLINED,
-	    // 	ilendbooksId : contactParameters.ilendbooksId,
-	    // 	lenderUserId : contactParameters.lenderUserId,
-	    // 	borrowerUserId : contactParameters.borrowerUserId
-	    // }
+		
 		Meteor.call("updateStatus", appUUID, contactParameters );
 		Meteor.call("contact", appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters );

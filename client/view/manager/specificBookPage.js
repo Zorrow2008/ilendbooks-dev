@@ -159,6 +159,29 @@ Template.specificBookPage.helpers({
         return false;
       }
 
+   },
+
+   isMatchedDeclined: function(userId) {
+    console.log("isMatchedDeclined called");
+    console.log("userId: " + userId);
+    //console.log("ilendbooksId: " + ilendbooksId);
+      var PendingTransactionsDoc = PendingTransactions.findOne({
+          lenderUserId: userId,
+          borrowerUserId: Meteor.userId(),
+          ilendbooksId: Session.get('specificBook-ilendbooksId')
+      })
+      for(var key in PendingTransactionsDoc) {
+        console.log("PendingTransactionsDocKey: " + key + "; PendingTransactionsDocValue: " + PendingTransactionsDoc[key]);
+      }
+      if(PendingTransactionsDoc != null) {
+        if(PendingTransactionsDoc.statusLend == ilendbooks.public.status.MATCHED_DECLINED
+          && PendingTransactionsDoc.statusBorrow == ilendbooks.public.status.MATCHED_DECLINED) {
+            console.log("true");
+            return true;
+        }
+      }
+      console.log("false")
+      return false;
    }
 
 })

@@ -2,10 +2,12 @@ Meteor.startup(function() {
 
     if (Meteor.isServer) {
         /**************** Allowed accounts **********************/
-         AllowedAccounts.upsert ({"name" : "Jay", "email":"jayjo7@hotmail.com"}, 
-                                  {$set:{"name" : "Jay", "email":"jayjo7@hotmail.com"}});
-         AllowedAccounts.upsert ({"name" : "JayJoe", "email":"jayjoester@gmail.com"},
-                                  {$set:{"name" : "JayJoe", "email":"jayjoester@gmail.com"}});
+        var allowedAccounts = getAllowedAccounts();
+        for (accKey in allowedAccounts)
+        {
+          AllowedAccounts.upsert ({"name" : allowedAccounts[accKey].name, "email":allowedAccounts[accKey].email}, 
+                                  {$set:{"name" :allowedAccounts[accKey].name, "email":allowedAccounts[accKey].email}});
+        }
 
         /********************* start ****************************/
         var statusMeta = [{
@@ -363,7 +365,7 @@ Meteor.startup(function() {
         });
         /********************************************************/
         var statusMeta = [{
-               "nextStatus": ilendbooks.public.status.AVAILABLE,
+               "nextStatus": ilendbooks.public.status.PAST_LEND,
                "prompt": "Review borrower?",
         }]
 
@@ -384,6 +386,19 @@ Meteor.startup(function() {
          ILendMetaData.upsert({
           "status": ilendbooks.public.status.TRANSACTION_COMPLETE,
           "forWho": ilendbooks.public.userType.BORROWER
+        }, {
+           $set: {
+             statusMeta :   statusMeta
+           }
+        }); 
+        /********************************************************/
+        var statusMeta = [{
+               "nextStatus": ilendbooks.public.status.AVAILABLE,
+               "prompt": "Place book back onto shelf?",
+        }]
+        ILendMetaData.upsert({
+          "status": ilendbooks.public.status.PAST_LEND,
+          "forWho": ilendbooks.public.userType.LENDER
         }, {
            $set: {
              statusMeta :   statusMeta

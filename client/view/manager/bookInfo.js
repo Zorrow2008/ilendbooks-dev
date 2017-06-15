@@ -156,17 +156,29 @@ Template.bookInfo.events({
 			      Meteor.call("updateMatchAcceptedAndContactBorrower", appUUID, contactParameters);
 		        break;
 	        case ilendbooks.public.status.PAST_BORROW:
-		      var contactParameters = PendingTransactions.findOne({
+		        var contactParameters = PendingTransactions.findOne({
 			         borrowerUserId: Meteor.userId(),  
 			         ilendbooksId: ilendbooksId,
-			         statusLend:ilendbooks.public.status.TRANSACTION_COMPLETE,
+			         statusLend:ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
                      statusBorrow:ilendbooks.public.status.TRANSACTION_COMPLETE
-			      }).contactParameters;	        	
-				Session.setAuth('ilendbooksId', this.ilendbooksId);
-				Session.setAuth('lenderId', contactParameters.lenderUserId);
-				Session.setAuth('borrowerId', Meteor.userId());
-				console.log("myBorrows ilendbooksId set");
+			      }).contactParameters;	  
+			    console.log("bookInfo:contactParameters.lenderUserId=" + contactParameters.lenderUserId);  	
+				Session.set('ilendbooksId', ilendbooksId);
+				Session.set('lenderUserId', contactParameters.lenderUserId);
+				Session.set('borrowerUserId', Meteor.userId());
 				Modal.show("lenderReview");
+				break;
+			case ilendbooks.public.status.PAST_LEND:
+		        var contactParameters = PendingTransactions.findOne({
+			         lenderUserId: Meteor.userId(),  
+			         ilendbooksId: ilendbooksId,
+			         statusLend:ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
+                     statusBorrow:ilendbooks.public.status.TRANSACTION_COMPLETE
+			      }).contactParameters;	
+			      Session.set('ilendbooksId', ilendbooksId);
+			      Session.set('lenderUserId', Meteor.userId());
+			      Session.set('borrowerUserId', contactParameters.borrowerUserId);
+			      Modal.show("borrowerReview");		
 				break;
 
 	        // case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
@@ -266,7 +278,11 @@ Template.bookInfo.events({
 		        break;
 		    case ilendbooks.public.status.TRANSACTION_COMPLETE:
 		        modalTitle = "Transaction Complete";
-		        modalBodyArray = ["Transaction Complete, borrower returned the book back to lender"];
+		        modalBodyArray = ["Transaction Complete, borrower returned the book back to lender."];
+		        break;
+		    case ilendbooks.public.status.PAST_BORROW:
+		        modalTitle = "Past Borrow";
+		        modalBodyArray = ["You have enjoyed this book in the past."];
 		        break;
 	    }
 	    Session.set(ilendbooks.public.modal.TITLE, modalTitle);

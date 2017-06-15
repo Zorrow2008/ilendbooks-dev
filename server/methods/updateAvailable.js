@@ -35,7 +35,6 @@ Meteor.methods({
 	    	borrowerUserId : contactParameters.borrowerUserId
 	    }
 		Meteor.call("updateStatus", appUUID, updateStatusInfo );
-		//Meteor.call("contact", appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, updateStatusInfo );
 	}
 })

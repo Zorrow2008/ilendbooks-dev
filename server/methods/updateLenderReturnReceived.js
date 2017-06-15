@@ -3,20 +3,19 @@ Meteor.methods({
 		contactParameters.appUUID = appUUID;
 		contactParameters.statusLend = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
 		contactParameters.statusBorrow = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
-		console.log(appUUID +':contactParameters='+ contactParameters);
-		for (var contactParametersKey in contactParameters) {
-			console.log( appUUID 
-				+ ":updateLenderReturnReceived:" 
-				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
-			);
-		}
-	
 
 		var lenderUserProfile = UserProfile.findOne({userId: contactParameters.lenderUserId});
 		var borrowerUserProfile = UserProfile.findOne({userId: contactParameters.borrowerUserId});
 		contactParameters.appUUID = appUUID;
 		contactParameters.toUserId = contactParameters.lenderUserId;
 		contactParameters.emailSubject =  "Borrower received book";
+
+		for (var contactParametersKey in contactParameters) {
+			console.log( appUUID 
+				+ ":updateLenderReturnReceived:" 
+				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
+			);
+		}
 
 		if(ilendbooks.public.contactPreference.EMAIL === borrowerUserProfile.contactPreference) {
 
@@ -35,13 +34,6 @@ Meteor.methods({
 		    	+ (Router.routes['myBorrows'].url({_id: 1}))  
 		}
 
-	    // var updateStatusInfo = {
-	    // 	appUUID : appUUID,
-	    // 	status : ilendbooks.public.status.LENDER_RETURN_RECEIVED,
-	    // 	ilendbooksId : contactParameters.ilendbooksId,
-	    // 	lenderUserId : contactParameters.lenderUserId,
-	    // 	borrowerUserId : contactParameters.borrowerUserId
-	    // }
 		Meteor.call("updateStatus", appUUID, contactParameters);
 		Meteor.call("contact", appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters);

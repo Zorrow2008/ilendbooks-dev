@@ -295,6 +295,14 @@ Meteor.methods({
 	        		, updateStatusInfo.borrowerUserId
 	        		, statusSwitch
         		);
+        		break;
+    		case ilendbooks.public.status.PAST_LEND:
+ 		        Meteor.call("updateLenderStatus"
+		        	, appUUID
+		        	, updateStatusInfo.ilendbooksId
+		        	, updateStatusInfo.lenderUserId
+		        	, statusSwitch
+		        );   			
 	    }
 	}
 })

@@ -1,5 +1,17 @@
 Meteor.methods({
 	updateUserBookRemoved: function(appUUID, contactParameters) {
+
+		var userProfile = UserProfile.findOne({userId: Meteor.userId()});
+		var book = Books.findOne({"_id":contactParameters.ilendbooksId });
+
+		contactParameters.appUUID = appUUID;
+		contactParameters.toUserId = Meteor.userId();
+	    contactParameters.lenderUserId=Meteor.userId();
+	    contactParameters.statusLend = ilendbooks.public.status.REMOVED;
+	    contactParameters.statusBorrow = "";
+	    contactParameters.bookCoin = ilendbooks.private.bitCoin.REMOVE_ONE_BOOK;
+		contactParameters.emailSubject =  "Book removed from your shelf!";
+
 		for (var contactParametersKey in contactParameters) {
 		
 			console.log(appUUID 
@@ -7,11 +19,6 @@ Meteor.methods({
 				+ contactParametersKey + "=" + contactParameters[contactParametersKey]
 				);
 		}
-		var userProfile = UserProfile.findOne({userId: Meteor.userId()});
-		var book = Books.findOne({"_id":contactParameters.ilendbooksId });
-		contactParameters.appUUID = appUUID;
-		contactParameters.toUserId = Meteor.userId();
-		contactParameters.emailSubject =  "Book removed from your shelf!";
 
 		if(ilendbooks.public.contactPreference.EMAIL === userProfile.contactPreference) {
 
@@ -29,19 +36,9 @@ Meteor.methods({
 		    	+ book.ItemAttributes[0].Title[0]; 
 		}
 
-	    // var updateStatusInfo = {
-	    // 	status : ilendbooks.public.status.REMOVED,
-	    // 	ilendbooksId : contactParameters.ilendbooksId ,
-	    // 	lenderUserId : Meteor.userId(),
-	    // }
-	    contactParameters.lenderUserId=Meteor.userId();
-	    contactParameters.statusLend = ilendbooks.public.status.REMOVED;
-	    contactParameters.statusBorrow = "";
-	    contactParameters.bookCoin = ilendbooks.private.bitCoin.REMOVE_ONE_BOOK;
-
 		Meteor.call('updateStatus', appUUID, contactParameters);
 		Meteor.call('contact', appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters);
-		Meteor.call('addNewBookBookcoin', appUUID, contactParameters.bookCoin);
+		Meteor.call('addBookcoin', appUUID, contactParameters.lenderUserId, contactParameters.bookCoin);
 	}
 })

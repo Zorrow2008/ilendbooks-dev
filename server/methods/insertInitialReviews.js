@@ -7,7 +7,11 @@ Meteor.methods({
 	         asBorrowerReviews: [],
 	         averageLenderRating: 0,
 	         averageBorrowerRating: 0,
-	         averageUserRating: 0
+	         averageUserRating: 0,
+	         totalLenderRatings: 0,
+	         totalBorrowerRatings: 0,
+	         countLenderRatings: 0,
+	         countBorrowerRatings: 0
 	    });
 	}
 
