@@ -142,7 +142,7 @@ Meteor.startup(function() {
         // Lender POV
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.WITH_BORROWER,
-            "prompt": "You lent your book.",
+            //"prompt": "You lent your book.",
         }]
 
         ILendMetaData.upsert({
@@ -201,7 +201,7 @@ Meteor.startup(function() {
         // Borrower POV
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.BORROWED,
-            "prompt": "You received the lender's book.",
+            //"prompt": "You received the lender's book.",
         }]
 
         ILendMetaData.upsert({
@@ -294,7 +294,7 @@ Meteor.startup(function() {
        // LENDER CONFIRMS HE GOT BOOK BACK FIRST
        var statusMeta = [{
                "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
-               "prompt": "You have confirmed that you have received your book back.",
+              // "prompt": "You have confirmed that you have received your book back.",
         }]
 
          ILendMetaData.upsert({
@@ -332,7 +332,7 @@ Meteor.startup(function() {
        //WHEN BORROWER SAYS HE RETURNED IT FIRST
         var statusMeta = [{
                "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE,
-               "prompt": "You have confirmed that you have returned the book.",
+              // "prompt": "You have confirmed that you have returned the book.",
         }]
 
          ILendMetaData.upsert({

@@ -33,6 +33,10 @@ Template.signup.events({
          Bert.alert('Your two password values didnt match or you did not enter a UW email.', 'danger');
       }
       
+   },
+
+   'click .terms':function() {
+      Modal.show('termsAndConditions');
    }
 });
 //Make it only for UW email ----> should display an error when non-uw.edu signs up

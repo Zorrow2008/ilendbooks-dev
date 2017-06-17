@@ -78,19 +78,6 @@ Meteor.methods({
 
 
         Meteor.call('updateUserBorrowShelf', appUUID, borrowerInfoBook);
-        //Currently logged user is the borrower 
-        //matchedUserId is lender
-        // var transactionInfo = {
-        //     appUUID: appUUID,
-        //     ilendbooksId: currentBorrowerInfo.ilendbooksId,
-        //     borrowerUserId: currentBorrowerInfo.userId,
-        //     lenderUserId: currentBorrowerInfo.matchedUserId,
-        //     statusLend: ilendbooks.public.status.MATCHED_NOTIFIED
-
-        // }
-        // for (var key in transactionInfo) {
-        //     console.log(appUUID + "updateToBorrowt:" + key + "transactionInfoValue: " + transactionInfo[key]);
-        // }
         Meteor.call('updateLenderStatusAndMatchedUserId', appUUID, borrowerInfoBook);
         Meteor.call("updateStatus", appUUID, borrowerInfoBook);
         Meteor.call('insertHistory', appUUID, borrowerInfoBook);

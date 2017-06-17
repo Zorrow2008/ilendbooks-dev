@@ -1,7 +1,7 @@
 Template.myNotifications.helpers({
 	getPendingTransactions: function() {
 		return PendingTransactions.find({lenderUserId: Meteor.userId()
-			, status:ilendbooks.public.status.MATCHED_NOTIFIED
+			, statusLend:ilendbooks.public.status.MATCHED_NOTIFIED, statusBorrow:ilendbooks.public.status.MATCHED_NOTIFIED
 		});
 	},
 

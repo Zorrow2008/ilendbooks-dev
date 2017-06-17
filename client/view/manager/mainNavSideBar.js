@@ -1,7 +1,7 @@
 Template.mainNavSideBar.helpers({
 	getNotificationCount: function() {
 		var pendingTransactions = PendingTransactions.find({lenderUserId: Meteor.userId()
-			, status:ilendbooks.public.status.MATCHED_NOTIFIED});
+			, statusLend:ilendbooks.public.status.MATCHED_NOTIFIED, statusBorrow:ilendbooks.public.status.MATCHED_NOTIFIED});
 		console.log("length: " + pendingTransactions.count())
 		return pendingTransactions.count();
 	},
