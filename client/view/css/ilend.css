@@ -49,6 +49,14 @@
     background-color: white;
   }
 
+.error-mesage-display {
+  color: #fdcc52; 
+}
+
+.error-mesage-display-none {
+  display: none;
+}
+
 /*@media (max-width: 768px) {
 	.button_for_badge {
   		color: black;
