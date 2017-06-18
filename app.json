@@ -1,0 +1,26 @@
+{
+  "name": "ilendbooks-dev",
+  "scripts": {
+  },
+  "env": {
+    "METEOR_SETTINGS": {
+      "required": true
+    },
+    "MONGO_URL": {
+      "required": true
+    },
+    "ROOT_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/AdmitHub/meteor-buildpack-horse.git"
+    }
+  ]
+}
