@@ -216,43 +216,39 @@ Template.bookInfo.events({
 	   	switch(this.status) {
 		    case ilendbooks.public.status.AVAILABLE:
 		        modalTitle = "Available";
-		        modalBodyArray =  ["This book is available for lending ..."];
+		        modalBodyArray =  ["This book is available for lending."];
 		        break;
 		    case ilendbooks.public.status.REMOVED:
 		        modalTitle = "Removed";
-		        modalBodyArray =  ["This book has been removed from your shelf ..."];
+		        modalBodyArray =  ["This book has been removed from your shelf."];
 		        break;
 		    case ilendbooks.public.status.MATCHED_NOTIFIED:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "Lender Notified";
-		        modalBodyArray =  ["Lender  " + matchedUserName + " is notified of borrower request to borrow this book"];
+		        modalBodyArray =  [" The Lender has been notified of the borrower's request."];
 		        break;
 		    case ilendbooks.public.status.MATCHED_ACCEPTED:
-		        modalTitle = "Lender Accepted the Borrowe Request";
-		        modalBodyArray =  ["Lender  " 
-		        					+ matchedUserName 
-		        					+ " accepted the borrower's request to borrow this book. Please arrange a meet up for exchange."
+		        modalTitle = "Borrow Request Accepted";
+		        modalBodyArray =  ["The lender has accepted the borrow reqeust. Please arrange a meeting to exchange the book."
 		        				  ];
 		        break;
 			case ilendbooks.public.status.MATCHED_DECLINED:
-		        modalTitle = "Lender Declined the Borrow Request";
-		        modalBodyArray =  ["Lender  " 
-		        					+ matchedUserName 
-		        					+ " declined the borrower's request to borrow this book. Please search for another lender."
+		        modalTitle = "Borrow Request Declined";
+		        modalBodyArray =  ["The lender has declined the borrower's request."
 		        				   ];
 		        break;
 		    case ilendbooks.public.status.BORROWER_LENT_RECEIVED:
 		        modalTitle = "Borrower received the book";
-		        modalBodyArray =  ["The borrower indicated that received the book from the lender,  lender yet to confirm."];
+		        modalBodyArray =  ["The borrower has indicated that they have received the book from the lender. The lender has yet to confirm"];
 		        break;
 		    case ilendbooks.public.status.LENDER_LENT_DECLARED:
-		        modalTitle = "Lender gave the book";
-		        modalBodyArray =  ["The lender indicated that gave the book to borrower,  borrower yet to confirm."];
+		        modalTitle = "Lender lent the book";
+		        modalBodyArray =  ["The lender indicated that they gave the book to the borrower. The borrower has yet to confirm."];
 		        break;
 		    case ilendbooks.public.status.WITH_BORROWER:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
 		        modalTitle = "With Borrower";
-		        modalBodyArray = ["This book is with your friend " + matchedUserName];
+		        modalBodyArray = ["This book is with " + matchedUserName];
 		        break;
 		    case ilendbooks.public.status.BORROWED:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
@@ -261,11 +257,11 @@ Template.bookInfo.events({
 		        break;
 		    case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
 		        modalTitle = "Lender got the book back";
-		        modalBodyArray =  ["The lender indicated that received the book back from the borrower, borrower yet to confirm."];
+		        modalBodyArray =  ["The lender has indicated that they have received the book back from the borrower. The borrower has yet to confirm."];
 		        break;
 		    case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
 		        modalTitle = "Borrower returned the book";
-		        modalBodyArray =  ["The Borrower indicated that returned the book back to the lender, lender yet to confirm."];
+		        modalBodyArray =  ["The Borrower has indicated that they returned the book back to the lender. The lender has yet to confirm."];
 		        break;
 		    case ilendbooks.public.status.MATCHED:
 		        matchedUserName= UserProfile.findOne({userId: this.matchedUserId}).fName;
@@ -274,7 +270,7 @@ Template.bookInfo.events({
 		        break;
 		    case ilendbooks.public.status.NO_LENDER:
 		        modalTitle = "No Lender";
-		        modalBodyArray =  ["You don't worry! we are working hard to find a lender will contact you as soon as we find one."];
+		        modalBodyArray =  ["Don't worry! we are working hard to find a lender will contact you as soon as we find one."];
 		        break;
 		    case ilendbooks.public.status.TRANSACTION_COMPLETE:
 		        modalTitle = "Transaction Complete";

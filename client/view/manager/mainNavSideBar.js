@@ -35,6 +35,10 @@ Template.mainNavSideBar.events({
         }
         $('#wrapper').toggleClass('toggled');
 
-	}
+	},
+
+  'click .feedback': function() {
+    Modal.show('feedback');
+  }
 
 });
