@@ -1,4 +1,17 @@
 Template.searchResult.helpers({
+   hasLender: function(ilendbooksId) {
+      if( ToLend.findOne({
+         ilendbooksId:this.ilendbooksId
+         , title: this.ItemAttributes[0].Title[0]
+         , lender: {$elemMatch:{userId:{$ne: Meteor.userId() } 
+               , status:{$nin:[ilendbooks.public.status.REMOVED, ilendbooks.public.status.DELETE ]}}}
+
+      })) {
+         return true;
+      }else {
+         return false;
+      }
+   },
    hasClickedBorrow: function() {
       var title = this.ItemAttributes[0].Title[0];
       console.log("title" + title);
@@ -23,34 +36,18 @@ Template.searchResult.helpers({
    },
    
    hasClickedLend: function() {
-      var title = this.ItemAttributes[0].Title[0];
-      console.log("title" + title);
-      var lenderBookInfo = {};
-      lenderBookInfo.title = title;
-      lenderBookInfo.users = [];
-      var currentBook = ToLend.findOne({title: lenderBookInfo.title});
-      var lenderInfo = {};
-      var clickedLend = false;
-      for(key in currentBook.lender) {
-         if(currentBook.lender[key].userId == Meteor.userId()) {
-            if(currentBook.lender[key].status == ilendbooks.public.status.REMOVED 
-               || currentBook.lender[key].status == ilendbooks.public.status.DELETE) {
-               clickedLend = false;
-            }else{
-               clickedLend = true;
-            }
-         }
-      }
 
-     // for(key in currentBook.lender) {
-     //     if(currentBook.lender[key].userId == Meteor.userId()) {
-     //        clickedLend = true;
-     //     } else {
-     //         clickedLend = false;
-     //     }
-     //  }
-     
-      return clickedLend;
+      if( ToLend.findOne({
+         ilendbooksId:this.ilendbooksId
+         , title: this.ItemAttributes[0].Title[0]
+         , lender: {$elemMatch:{userId: Meteor.userId() 
+               , status:{$nin:[ilendbooks.public.status.REMOVED, ilendbooks.public.status.DELETE ]}}}
+
+      })) {
+         return true;
+      }else {
+         return false;
+      }
    },
    
    getSearchAuthor: function() {
