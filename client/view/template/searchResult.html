@@ -3,6 +3,9 @@
       <div class="row">&nbsp;<br>&nbsp;<br>&nbsp;</div>
       <div class="row">
          <div class="col-sm-3">
+            {{#if hasLender}}
+               <span class="cardd-banner"></span>
+            {{/if}}   
             <img class="img-responsive img-border  center-block" src="{{getMediumImage MediumImage}}" alt=""><br>
          </div>
 
@@ -18,15 +21,30 @@
          <div class="col-sm-3">
             {{#if currentUser.emails.[0].verified}}   
                {{#if hasClickedLend}} 
-                  <a class="btn btn-info btn-sm  center-block  ownThisBook" role="button">You own this book!!!</a> <br>
-                  <a id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-sm center-block notNewLender"  role="button">In your shelf to lend!!!</a><br>
-
+                  <div>
+                     <a class="btn btn-info btn-sm  center-block  ownThisBook" role="button">You own this book</a> <br>
+                  </div>
+                  <div>
+                     <a id="not-new-lender-{{ilendbooksId}}" class="btn btn-warning btn-sm center-block notNewLender"  role="button">In your shelf</a><br>
+                  </div>
                {{else}}
-                  <a id="borrow-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a><br>
+               <div >
+                  {{#if hasLender}}
+                     <div class="text-right" >
+                        <span class="lend-lender-available">☆ Lender Available </span>
+                     </div>
+                  {{/if}}
+                  <div>
+                     <a id="borrow-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> I want to borrow</a><br>
+                  </div>
+               </div>
+               <div>
                   <a id="lend-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block lend"  role="button">I want to lend</a><br>
-
+               </div>   
                {{/if}}
+               <div>
                   <a id="{{ilendbooksId}}" class="btn btn-outline btn-sm center-block toAmazon" href="{{DetailPageURL}}" role="button">Buy on Amazon</a><br>
+               </div>
 
             {{else}}
                <a class="btn btn-info btn-sm center-block ilend-disabled-btn" role="button">I want to borrow</a><br>
