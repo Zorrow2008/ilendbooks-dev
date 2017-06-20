@@ -36,6 +36,6 @@ dispatch:twilio
 peppelg:bootstrap-3-modal
 momentjs:moment
 fortawesome:fontawesome
-nahue:simple-line-icons
+##nahue:simple-line-icons
 mrt:jquery-easing
 barbatus:stars-rating
