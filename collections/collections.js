@@ -29,3 +29,5 @@ Correspondence = new Mongo.Collection("correspondence");
 History = new Mongo.Collection("history");
 
 Reviews = new Mongo.Collection("reviews");
+
+BorrowWishList = new Mongo.Collection("borrowWishList");
