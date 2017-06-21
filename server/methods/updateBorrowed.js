@@ -34,7 +34,7 @@ Meteor.methods({
 		Meteor.call("updateStatus", appUUID, contactParameters );
 		Meteor.call("contact", appUUID, contactParameters);
 		Meteor.call('insertHistory', appUUID, contactParameters );
-    	Meteor.call('addBookcoin', appUUID, contactParameters.lenderUserId, -5)
-		Meteor.call('addBookcoin', appUUID, contactParameters.borrowerUserId, 5)
+		Meteor.call('addBookcoin', appUUID, contactParameters.lenderUserId, ilendbooks.private.bitCoin.LEND_BOOK)
+		Meteor.call('addBookcoin', appUUID, contactParameters.borrowerUserId, ilendbooks.private.bitCoin.BORROW_BOOK)
 	}
 })
