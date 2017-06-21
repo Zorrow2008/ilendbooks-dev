@@ -27,7 +27,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.AVAILABLE,
-            "forWho": ilendbooks.public.userType.LENDER
+            "forWho": ilendbooks.public.userType.LENDER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -57,7 +58,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.REMOVED,
-            "forWho": ilendbooks.public.userType.LENDER
+            "forWho": ilendbooks.public.userType.LENDER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -86,7 +88,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.MATCHED_NOTIFIED,
-            "forWho": ilendbooks.public.userType.LENDER
+            "forWho": ilendbooks.public.userType.LENDER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -109,7 +112,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.MATCHED_ACCEPTED,
-            "forWho": ilendbooks.public.userType.LENDER
+            "forWho": ilendbooks.public.userType.LENDER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -131,7 +135,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.MATCHED_ACCEPTED,
-            "forWho": ilendbooks.public.userType.BORROWER
+            "forWho": ilendbooks.public.userType.BORROWER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -147,7 +152,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.LENDER_LENT_DECLARED,
-            "forWho": ilendbooks.public.userType.LENDER
+            "forWho": ilendbooks.public.userType.LENDER,
+            "action": false
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -169,7 +175,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.LENDER_LENT_DECLARED,
-            "forWho": ilendbooks.public.userType.BORROWER
+            "forWho": ilendbooks.public.userType.BORROWER,
+            "action": true            
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -192,7 +199,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.BORROWER_LENT_RECEIVED,
-            "forWho": ilendbooks.public.userType.LENDER
+            "forWho": ilendbooks.public.userType.LENDER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -206,7 +214,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.BORROWER_LENT_RECEIVED,
-            "forWho": ilendbooks.public.userType.BORROWER
+            "forWho": ilendbooks.public.userType.BORROWER,
+            "action": false
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -231,7 +240,8 @@ Meteor.startup(function() {
 
          ILendMetaData.upsert({
           "status": ilendbooks.public.status.WITH_BORROWER,
-          "forWho": ilendbooks.public.userType.LENDER
+          "forWho": ilendbooks.public.userType.LENDER,
+          "action": true
         }, {
            $set: {
              statusMeta :   statusMeta
@@ -268,7 +278,8 @@ Meteor.startup(function() {
 
          ILendMetaData.upsert({
           "status": ilendbooks.public.status.BORROWED ,
-          "forWho": ilendbooks.public.userType.BORROWER
+          "forWho": ilendbooks.public.userType.BORROWER,
+          "action": true
         }, {
            $set: {
              statusMeta :   statusMeta
@@ -299,7 +310,8 @@ Meteor.startup(function() {
 
          ILendMetaData.upsert({
           "status": ilendbooks.public.status.LENDER_RETURN_RECEIVED,
-          "forWho": ilendbooks.public.userType.LENDER
+          "forWho": ilendbooks.public.userType.LENDER,
+          "action": false
         }, {
            $set: {
              statusMeta :   statusMeta
@@ -320,7 +332,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.LENDER_RETURN_RECEIVED,
-            "forWho": ilendbooks.public.userType.BORROWER
+            "forWho": ilendbooks.public.userType.BORROWER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -337,7 +350,8 @@ Meteor.startup(function() {
 
          ILendMetaData.upsert({
           "status": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
-          "forWho": ilendbooks.public.userType.BORROWER
+          "forWho": ilendbooks.public.userType.BORROWER,
+          "action": false
         }, {
            $set: {
              statusMeta :   statusMeta
@@ -357,7 +371,8 @@ Meteor.startup(function() {
 
         ILendMetaData.upsert({
             "status": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
-            "forWho": ilendbooks.public.userType.LENDER
+            "forWho": ilendbooks.public.userType.LENDER,
+            "action": true
         }, {
             $set: {
                 statusMeta: statusMeta
@@ -371,7 +386,8 @@ Meteor.startup(function() {
 
          ILendMetaData.upsert({
           "status": ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
-          "forWho": ilendbooks.public.userType.LENDER
+          "forWho": ilendbooks.public.userType.LENDER,
+          "action": true
         }, {
            $set: {
              statusMeta :   statusMeta
@@ -385,7 +401,8 @@ Meteor.startup(function() {
 
          ILendMetaData.upsert({
           "status": ilendbooks.public.status.TRANSACTION_COMPLETE,
-          "forWho": ilendbooks.public.userType.BORROWER
+          "forWho": ilendbooks.public.userType.BORROWER,
+          "action": true,
         }, {
            $set: {
              statusMeta :   statusMeta
@@ -398,7 +415,8 @@ Meteor.startup(function() {
         }]
         ILendMetaData.upsert({
           "status": ilendbooks.public.status.PAST_LEND,
-          "forWho": ilendbooks.public.userType.LENDER
+          "forWho": ilendbooks.public.userType.LENDER,
+          "action": true
         }, {
            $set: {
              statusMeta :   statusMeta

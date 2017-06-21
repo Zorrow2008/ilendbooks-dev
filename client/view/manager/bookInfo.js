@@ -70,7 +70,12 @@ Template.bookInfo.helpers({
 				]
 			}
 		)
-		return iLendMetaData.statusMeta;
+		console.log("iLendMetaData.action=" + iLendMetaData.action);
+		if(iLendMetaData.action) {
+			return iLendMetaData.statusMeta;
+		} else {
+			return;
+		}
 
 
 
