@@ -21,7 +21,7 @@ Template.bookInfo.helpers({
 	getImage: function(ilendbooksId) {
 		//var currentLentBook = Session.get('currentLentBook');
 		var currentLentBook = Books.findOne({_id: ilendbooksId});
-		return currentLentBook.MediumImage[0].URL[0];
+		return currentLentBook.LargeImage[0].URL[0];
 	},
 
 	getPublisher: function(ilendbooksId) {
@@ -70,7 +70,12 @@ Template.bookInfo.helpers({
 				]
 			}
 		)
-		return iLendMetaData.statusMeta;
+		console.log("iLendMetaData.action=" + iLendMetaData.action);
+		if(iLendMetaData.action) {
+			return iLendMetaData.statusMeta;
+		} else {
+			return;
+		}
 
 
 

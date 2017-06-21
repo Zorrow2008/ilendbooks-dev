@@ -1,5 +1,18 @@
 Template.searchResult.helpers({
-   hasLender: function(ilendbooksId) {
+   isInBorrowWishList: function() {
+      if( BorrowWishList.findOne({
+         ilendbooksId:this.ilendbooksId
+         , title: this.ItemAttributes[0].Title[0]
+         , borrower: {$elemMatch:{userId: Meteor.userId() 
+               , status:{$in:[ilendbooks.public.status.WISH_LISTED]}}}
+
+      })) {
+         return true;
+      }else {
+         return false;
+      }
+   },
+   hasLender: function() {
       if( ToLend.findOne({
          ilendbooksId:this.ilendbooksId
          , title: this.ItemAttributes[0].Title[0]
@@ -125,6 +138,18 @@ Template.searchResult.helpers({
 })
 
 Template.searchResult.events({
+   'click .inBorrowWishList' : function(event) {
+      event.preventDefault();
+      Meteor.call("updateRemoveFromBorrowWishList" , Session.get('appUUID'), 
+            {title:this.ItemAttributes[0].Title[0], ilendbooksId : this.ilendbooksId});
+   },
+
+   'click .addToBorrowWishList' : function(event) {
+      event.preventDefault();
+      Meteor.call("updateAddToBorrowWishList" , Session.get('appUUID'), 
+            {title:this.ItemAttributes[0].Title[0], ilendbooksId : this.ilendbooksId});
+   },
+
    'click .lend' : function(event) {
       event.preventDefault();
       var title = this.ItemAttributes[0].Title[0];
