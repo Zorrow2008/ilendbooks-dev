@@ -17,7 +17,7 @@ Meteor.methods({
 			);
 		}
 
-		if(ilendbooks.public.contactPreference.EMAIL === borrowerUserProfile.contactPreference) {
+		//if(ilendbooks.public.contactPreference.EMAIL === borrowerUserProfile.contactPreference) {
 
 			contactParameters.email = borrowerUserProfile.email;
 			contactParameters.contactPreference = borrowerUserProfile.contactPreference;
@@ -26,7 +26,7 @@ Meteor.methods({
 		    	+ (Router.routes['myBorrows'].url({_id: 1})) 
 
 
-		} else if (ilendbooks.public.contactPreference.CELL === borrowerUserProfile.contactPreference){
+		if (ilendbooks.public.contactPreference.CELL === borrowerUserProfile.contactPreference){
 			contactParameters.phoneNumber = borrowerUserProfile.phoneNumber;
 			contactParameters.contactPreference = borrowerUserProfile.contactPreference;
 			contactParameters.smsMessage = lenderUserProfile.fName 

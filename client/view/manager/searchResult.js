@@ -12,6 +12,13 @@ Template.searchResult.helpers({
          return false;
       }
    },
+
+   hasEnoughBookCoin: function() {
+      var user = UserProfile.findOne({userId: Meteor.userId()});
+      console.log("bookcoin amt: " + user.bookcoin)
+      return user.bookcoin >= 5;
+   },
+
    hasLender: function() {
       if( ToLend.findOne({
          ilendbooksId:this.ilendbooksId

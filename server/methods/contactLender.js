@@ -17,7 +17,7 @@ Meteor.methods({
 				console.log(appUUID + ":contactLender:userProfile(lender):"+ lenderUserProfileKey + "=" + lenderUserProfile[lenderUserProfileKey]);
 			}
 			
-			if(ilendbooks.public.contactPreference.EMAIL === lenderUserProfile.contactPreference) {
+			//if(ilendbooks.public.contactPreference.EMAIL === lenderUserProfile.contactPreference) {
 				// email the lender that someone is intrested in borrowing the book
 				contactParameters.contactPreference = lenderUserProfile.contactPreference;
 				contactParameters.email = lenderUserProfile.email;
@@ -48,7 +48,7 @@ Meteor.methods({
 		        	console.log(appUUID + ":contactLender:contactResult (email):"+ contactResultKey + "=" + contactParameters.contactResult[contactResultKey]);
 		        }
 
-			} else if (ilendbooks.public.contactPreference.PHONE=== lenderUserProfile.contactPreference){ 
+			if (ilendbooks.public.contactPreference.PHONE=== lenderUserProfile.contactPreference){ 
 				contactParameters.contactPreference = lenderUserProfile.contactPreference;
 				contactParameters.phoneNumber = lenderUserProfile.phoneNumber
 				contactParameters.smsMessage = 'TO-DO: improve this message  - A borrower would like to borrow the book ' + contactParameters.title+'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));

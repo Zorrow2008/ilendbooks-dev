@@ -16,7 +16,7 @@ Meteor.methods({
 				);
 		}
 
-		if(ilendbooks.public.contactPreference.EMAIL === userProfile.contactPreference) {
+		//if(ilendbooks.public.contactPreference.EMAIL === userProfile.contactPreference) {
 
 			contactParameters.email = userProfile.email;
 			contactParameters.contactPreference = userProfile.contactPreference;
@@ -24,7 +24,7 @@ Meteor.methods({
 		    	+ "\n"
 		    	+ book.ItemAttributes[0].Title[0]; 
 
-		} else if (ilendbooks.public.contactPreference.CELL === userProfile.contactPreference){
+		 if (ilendbooks.public.contactPreference.CELL === userProfile.contactPreference){
 			contactParameters.phoneNumber = userProfile.phoneNumber;
 			contactParameters.contactPreference = userProfile.contactPreference;
 			contactParameters.smsMessage = "Would like let you know that the below book is deleted from your shelf:"

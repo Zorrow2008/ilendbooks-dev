@@ -88,7 +88,7 @@ Meteor.methods({
         currentlenderBookInfo.toUserId = Meteor.userId();
         currentlenderBookInfo.emailSubject = "Book added to your shelf!";
 
-        if (ilendbooks.public.contactPreference.EMAIL === userProfile.contactPreference) {
+       // if (ilendbooks.public.contactPreference.EMAIL === userProfile.contactPreference) {
 
             currentlenderBookInfo.email = userProfile.email;
             currentlenderBookInfo.contactPreference = userProfile.contactPreference;
@@ -96,7 +96,7 @@ Meteor.methods({
                 "\n" +
                 book.ItemAttributes[0].Title[0];
 
-        } else if (ilendbooks.public.contactPreference.CELL === userProfile.contactPreference) {
+         if (ilendbooks.public.contactPreference.CELL === userProfile.contactPreference) {
             currentlenderBookInfo.phoneNumber = userProfile.phoneNumber;
             currentlenderBookInfo.contactPreference = userProfile.contactPreference;
             currentlenderBookInfo.smsMessage = "Would like let you know that the below book is added to your shelf:" +

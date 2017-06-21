@@ -20,7 +20,7 @@ Meteor.methods({
             contactParameters.fromEmail = ilendbooks.private.generic.FROM_EMAIL;
         }
 
-        if (ilendbooks.public.contactPreference.EMAIL === contactParameters.contactPreference) {
+      //  if (ilendbooks.public.contactPreference.EMAIL === contactParameters.contactPreference) {
 
             var emailResult = Email.send({
                 to: contactParameters.email,
@@ -39,7 +39,7 @@ Meteor.methods({
                     contactResultKey + "=" + contactParameters.contactResult[contactResultKey]);
             }
 
-        } else if (ilendbooks.public.contactPreference.CELL === contactParameters.contactPreference) {
+         if (ilendbooks.public.contactPreference.CELL === contactParameters.contactPreference) {
             var smsParameters = {
                 to: contactParameters.phoneNumber,
                 message: contactParameters.smsMessage

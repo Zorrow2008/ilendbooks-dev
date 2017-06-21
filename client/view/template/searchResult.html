@@ -34,7 +34,11 @@
                         <span class="lend-lender-available">☆ Lender Available</span>
                      </div>
                      <div>
+                     {{#if hasEnoughBookCoin}}
                         <a id="borrow-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block borrow" href="{{pathFor 'specificBookPage'}}"  role="button"> <i class="fa fa-heart" aria-hidden="true"></i> to borrow</a><br>
+                     {{else}}
+                     <a id="lend-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block lend disabled"  role="button">Not enough BookCoin.</a><br>
+                     {{/if}}
                      </div>
                   {{else}}   
                      {{#if isInBorrowWishList}}
@@ -46,14 +50,20 @@
                         </div>
                      {{else}}
                         <div>
+                        {{#if hasEnoughBookCoin}}
                            <a id="borrow-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block addToBorrowWishList" role="button"> Add to <i class="fa fa-heart" aria-hidden="true"></i></a><br>
+                         {{else}}
+                        <a id="lend-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block lend disabled"  role="button">Not enough BookCoin.</a><br>
+                        {{/if}}
                         </div>
                      {{/if}}
 
                   {{/if}}
                </div>
                <div>
+                  
                   <a id="lend-{{ilendbooksId}}" class="btn btn-outline btn-sm center-block lend"  role="button"><i class="fa fa-heart" aria-hidden="true"></i> to lend</a><br>
+
                </div>   
                {{/if}}
                <div>
