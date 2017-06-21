@@ -30,4 +30,8 @@ History = new Mongo.Collection("history");
 
 Reviews = new Mongo.Collection("reviews");
 
+
 BorrowWishList = new Mongo.Collection("borrowWishList");
+
+Feedback = new Mongo.Collection("feedback");
+
