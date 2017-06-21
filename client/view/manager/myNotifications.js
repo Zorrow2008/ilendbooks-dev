@@ -1,12 +1,93 @@
 Template.myNotifications.helpers({
 	getPendingTransactions: function() {
-		return PendingTransactions.find({lenderUserId: Meteor.userId()
-			, statusLend:ilendbooks.public.status.MATCHED_NOTIFIED, statusBorrow:ilendbooks.public.status.MATCHED_NOTIFIED
+		return PendingTransactions.find({
+			$or: [{lenderUserId: Meteor.userId()},
+				 {borrowerUserId: Meteor.userId()}],
+		   	statusBorrow: {$ne: ilendbooks.public.status.TRANSACTION_COMPLETE},
+		   	statusLend: {$ne: ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER}
+
 		});
 	},
 
 	hasPendingTransactions: function() {
-		return ( PendingTransactions.findOne({lenderUserId: Meteor.userId()}) != null);
+		return ( PendingTransactions.findOne({lenderUserId: Meteor.userId()}) != null)
+		||  (PendingTransactions.findOne({borrowerUserId: Meteor.userId()}) != null)
+	},
+
+	placeMessageInSession: function(statusLend, statusBorrow, contactParameters) {
+		var message = "";
+		var lenderMessage;
+		var borrowerMessage;
+		var lenderName;
+		var borrowerName;
+		var booktitle = contactParameters.title;
+		if(contactParameters.lenderUserId == Meteor.userId()) {
+			lenderName = UserProfile.findOne({userId: Meteor.userId()}).fName;
+			borrowerName = UserProfile.findOne({userId: contactParameters.borrowerUserId}).fName;
+		}else{
+			borrowerName = UserProfile.findOne({userId: Meteor.userId()}).fName;
+			lenderName = UserProfile.findOne({userId: contactParameters.lenderUserId}).fName;			
+		}
+		switch(statusLend) {
+		    case ilendbooks.public.status.MATCHED_NOTIFIED:
+		        lenderMessage = borrowerName + " has sent you a borrow request for the book " + booktitle;
+		        break;
+		    case ilendbooks.public.status.MATCHED_ACCEPTED:
+		       	borrowerMessage = lenderName + " has accepted your borrow request for the book " + booktitle;
+		        break;
+			case ilendbooks.public.status.MATCHED_DECLINED:
+				lenderMessage = lenderName + " has declined your borrow request for the book " + booktitle;
+		        break;
+		    case ilendbooks.public.status.BORROWER_LENT_RECEIVED:
+				lenderMessage = borrowerName + " has said that they have received your book " + booktitle + 
+				". Go to your shelf to confirm";
+			    break;
+		    case ilendbooks.public.status.LENDER_LENT_DECLARED:
+			  	borrowerMessage = lenderName + " has said that they have lent their book " + booktitle +
+			  	". Go to your borrows to confirm.";
+			    break;
+		    case ilendbooks.public.status.WITH_BORROWER:
+		    	borrowerMessage = lenderName + "'s book " + booktitle + " is with you.";
+		    	lenderMessage = borrowerName + " has your book " + booktitle;
+		        break;
+		    case ilendbooks.public.status.BORROWED:
+		    	borrowerMessage = lenderName + "'s book " + booktitle + "is with you.";
+		    	lenderMessage = borrowerName + " has your book " + booktitle;		    
+		        break;
+		    case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
+		    	borrowerMessage = lenderName +" has said that they have received their book " 
+		    	+ booktitle + " back from you. Go to your borrows to confirm.";
+		        break;
+		    case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
+		    	lenderMessage = borrowerName + " has said that they have returned the book "
+		    	+ booktitle +" to you. Go to your shelf to confirm.";
+			    break;
+		    case ilendbooks.public.status.TRANSACTION_COMPLETE:
+		    	lenderMessage = "Your transaction with " + borrowerName + " for the book " + booktitle +" is completed.";
+			    borrowerMessage = "Your transaction with " + lenderName + " for the book " + booktitle +" is completed.";
+			    break;
+		    case ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER:
+		    	lenderMessage = "Your transaction with " + borrowerName + " for the book " + booktitle +" is completed.";
+			    borrowerMessage = "Your transaction with " + lenderName + " for the book " + booktitle +" is completed.";
+		}
+		Session.set('lenderMessage', lenderMessage );
+		Session.set('borrowerMessage', borrowerMessage);
+	},
+
+	getLenderMessage: function() {
+		return Session.get('lenderMessage');
+	},
+
+	getBorrowerMessage: function() {
+		return Session.get('borrowerMessage');
+	},
+
+	isLender: function(contactParameters) {
+		return contactParameters.lenderUserId == Meteor.userId();
+	},
+
+	isBorrower: function(contactParameters) {
+		return contactParameters.borrowerUserId == Meteor.userId();
 	},
 
 	getBorrowerName: function(contactParameters) {
