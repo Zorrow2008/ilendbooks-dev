@@ -14,6 +14,7 @@ Meteor.methods({
 	        status: currentborrowerBookInfo.statusBorrow,
 	        matchedUserId: currentborrowerBookInfo.matchedUserId
 	    };
+
 		if(currentUserFromUserBorrowSheldDB==null) {
 		    UserBorrowShelf.upsert(
 		    	{

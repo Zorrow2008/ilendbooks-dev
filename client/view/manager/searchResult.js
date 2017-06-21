@@ -1,16 +1,45 @@
 Template.searchResult.helpers({
    isInBorrowWishList: function() {
-      if( BorrowWishList.findOne({
-         ilendbooksId:this.ilendbooksId
-         , title: this.ItemAttributes[0].Title[0]
-         , borrower: {$elemMatch:{userId: Meteor.userId() 
-               , status:{$in:[ilendbooks.public.status.WISH_LISTED]}}}
+      // if( BorrowWishList.findOne({
+      //    ilendbooksId:this.ilendbooksId
+      //    , title: this.ItemAttributes[0].Title[0]
+      //    , borrower: {$elemMatch:{userId: Meteor.userId() 
+      //          , status:{$in:[ilendbooks.public.status.WISH_LISTED]}}}
 
-      })) {
-         return true;
-      }else {
-         return false;
+      // })) {
+      //    return true;
+      // }else {
+      //    return false;
+      // }
+      // var inWishList = false;
+      // if(UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
+      //    var inWishListDoc = UserBorrowShelf.findOne({
+      //       "userId": Meteor.userId(),
+      //       "bookInfo.ilendbooksId": this.ilendbooksId,
+      //       "bookInfo.status": ilendbooks.public.status.WISH_LISTED
+      //    })
+      //    for(var inWishListDocKey in inWishListDoc) {
+      //       console.log("inWishListDocKey: " + inWishListDocKey + "value; " + inWishListDoc[inWishListDocKey]);
+      //    }
+      //   if(inWishListDoc != null) {
+      //       inWishList = true;
+      //   }
+      // }
+      var currentBook = false;
+      if(UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
+         var wishListDoc = UserBorrowShelf.findOne({
+            userId: Meteor.userId()
+         });
+         var arr = wishListDoc.bookInfo;      
+         for(var key in arr) {
+            if(arr[key].ilendbooksId == this.ilendbooksId) {
+               currentBook = arr[key];
+            }
+         }
+         return currentBook.status == ilendbooks.public.status.WISH_LISTED;     
       }
+      return false;
+
    },
 
    hasEnoughBookCoin: function() {
@@ -216,7 +245,8 @@ Template.searchResult.events({
          url: myURL,
          dateTimeStamp: dateTime,
       }
-      ToAmazon.insert(data);
+      //ToAmazon.insert(data);
+      Meteor.call('insertAmazonData', data);
    },
    
    'click .borrow': function(event) {

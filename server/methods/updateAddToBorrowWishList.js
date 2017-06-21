@@ -5,41 +5,88 @@ Meteor.methods({
             console.log(appUUID + ":updateAddToBorrowWishList:currentBorrowBookInfo." + currentBorrowBookInfoKey + "=" + currentBorrowBookInfo[currentBorrowBookInfoKey]);
         }
 
-        var currentBookFromBorrowWishListDB = BorrowWishList.findOne({
-         ilendbooksId:currentBorrowBookInfo.ilendbooksId
-         , title: currentBorrowBookInfo.title
-         , borrower: {$elemMatch:{userId: Meteor.userId() 
-               , status:{$in:[ilendbooks.public.status.WISH_LISTED]}}}
+        // var currentBookFromBorrowWishListDB = BorrowWishList.findOne({
+        //  ilendbooksId:currentBorrowBookInfo.ilendbooksId
+        //  , title: currentBorrowBookInfo.title
+        //  , borrower: {$elemMatch:{userId: Meteor.userId() 
+        //        , status:{$in:[ilendbooks.public.status.WISH_LISTED]}}}
 
-        })
+        // })
 
-        if (currentBookFromBorrowWishListDB ) {
-            console.log(appUUID + ":updateAddToBorrowWishList:ilendbooksId "
-                + "'" + currentBookFromBorrowWishListDB.ilendbooksId + "'"
-                + " is in user's "
-                + "'" +currentBookFromBorrowWishListDB.borrower[0].userId + "'"
-                +" wish list" 
-            )
+        if(UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
+            var currentBookFromUserBorrowShelf = UserBorrowShelf.findOne({
+                "userId": Meteor.userId(),
+                "bookInfo.ilendbooksId": currentBorrowBookInfo.ilendbooksId
+            });
+            var bookInWishList = false;
+            if(currentBookFromUserBorrowShelf != null){
+            for(var key in currentBookFromUserBorrowShelf.bookInfo) {
+                if(currentBookFromUserBorrowShelf.bookInfo[key].ilendbooksId
+                 == currentBorrowBookInfo.ilendbooksId) {
+                    if(currentBookFromUserBorrowShelf.bookInfo[key].status
+                        == ilendbooks.public.status.WISH_LISTED){
+                    bookInWishList = true;
+                  }
+                }
+            }
+          }
+        }
+
+        // if (currentBookFromBorrowWishListDB ) {
+        //     console.log(appUUID + ":updateAddToBorrowWishList:ilendbooksId "
+        //         + "'" + currentBookFromBorrowWishListDB.ilendbooksId + "'"
+        //         + " is in user's "
+        //         + "'" +currentBookFromBorrowWishListDB.borrower[0].userId + "'"
+        //         +" wish list" 
+        //     )
+        if(bookInWishList) {
+            console.log("book already in wish list");
         } else {
+            // var currentBookFromBorrowWishListRemoved = BorrowWishList.findOne({
+            //  ilendbooksId:currentBorrowBookInfo.ilendbooksId
+            //  , title: currentBorrowBookInfo.title
+            //  , borrower: {$elemMatch:{userId: Meteor.userId() 
+            //        , status:{$in:[ilendbooks.public.status.WISH_LISTED_REMOVED]}}}
 
-            var currentBookFromBorrowWishListRemoved = BorrowWishList.findOne({
-             ilendbooksId:currentBorrowBookInfo.ilendbooksId
-             , title: currentBorrowBookInfo.title
-             , borrower: {$elemMatch:{userId: Meteor.userId() 
-                   , status:{$in:[ilendbooks.public.status.WISH_LISTED_REMOVED]}}}
+            // })
+            var bookInWishListRemoved;
+            if(UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
+                var currentBookFromUserBorrowShelfRemoved = UserBorrowShelf.findOne({
+                    "userId": Meteor.userId(),
+                    "bookInfo.ilendbooksId": currentBorrowBookInfo.ilendbooksId
+                });
+                 bookInWishListRemoved = false;
+                 if(currentBookFromUserBorrowShelfRemoved !=null) {
+                for(var key in currentBookFromUserBorrowShelf.bookInfo) {
+                    if(currentBookFromUserBorrowShelf.bookInfo[key].status
+                     == ilendbooks.public.status.WISH_LISTED_REMOVED) {
+                        bookInWishListRemoved = true;
+                    }
+                }
+                 }
+             }
 
-            })
-
-            if(currentBookFromBorrowWishListRemoved){
-                BorrowWishList.update({
-                    "ilendbooksId":currentBorrowBookInfo.ilendbooksId,
-                    "title": currentBorrowBookInfo.title,
-                    "borrower.userId": Meteor.userId()
+            // if(currentBookFromBorrowWishListRemoved){
+            //     BorrowWishList.update({
+            //         "ilendbooksId":currentBorrowBookInfo.ilendbooksId,
+            //         "title": currentBorrowBookInfo.title,
+            //         "borrower.userId": Meteor.userId()
+            //     }, {
+            //         "$set": {
+            //             "borrower.$.status": ilendbooks.public.status.WISH_LISTED
+            //         }
+            //     });
+            if(bookInWishListRemoved) {   
+                UserBorrowShelf.update({
+                    "userId": Meteor.userId(),
+                    "bookInfo.ilendbooksId": currentBorrowBookInfo.ilendbooksId
                 }, {
                     "$set": {
-                        "borrower.$.status": ilendbooks.public.status.WISH_LISTED
+                        "bookInfo.$.status": ilendbooks.public.status.WISH_LISTED
+                       
                     }
-                });
+                })
+
             } else {
 
                 var borrowerInfo = {
@@ -48,25 +95,48 @@ Meteor.methods({
                     status: ilendbooks.public.status.WISH_LISTED,
                 };
 
-                BorrowWishList.upsert({
-                    title: currentBorrowBookInfo.title,
-                    ilendbooksId: currentBorrowBookInfo.ilendbooksId
+                // BorrowWishList.upsert({
+                //     title: currentBorrowBookInfo.title,
+                //     ilendbooksId: currentBorrowBookInfo.ilendbooksId
+                // }, {
+                //     $set: {
+                //         title: currentBorrowBookInfo.title,
+                //         ilendbooksId: currentBorrowBookInfo.ilendbooksId
+                //     }
+                // });
+
+                // BorrowWishList.upsert({
+                //     title: currentBorrowBookInfo.title,
+                //     ilendbooksId: currentBorrowBookInfo.ilendbooksId
+                // }, {
+                //     $push: {
+                //         borrower: borrowerInfo
+                //     }
+                // });
+                var bookInfo = {
+                    ilendbooksId: currentBorrowBookInfo.ilendbooksId,
+                    dateTime: Meteor.call('getLocalTime'),
+                    status: ilendbooks.public.status.WISH_LISTED, 
+                    matchedUserId: null 
+                };
+                UserBorrowShelf.upsert({
+                    userId: Meteor.userId()
                 }, {
                     $set: {
-                        title: currentBorrowBookInfo.title,
-                        ilendbooksId: currentBorrowBookInfo.ilendbooksId
+                        userId: Meteor.userId()
                     }
                 });
 
-                BorrowWishList.upsert({
-                    title: currentBorrowBookInfo.title,
-                    ilendbooksId: currentBorrowBookInfo.ilendbooksId
+                UserBorrowShelf.upsert({
+                    userId: Meteor.userId()
                 }, {
                     $push: {
-                        borrower: borrowerInfo
+                        bookInfo: bookInfo
                     }
-                });
+                });  
+            
             }
+        }
             //Communicate to the user
             var userProfile = UserProfile.findOne({
                 userId: Meteor.userId()
@@ -98,6 +168,7 @@ Meteor.methods({
             // update user borrower shelf
             Meteor.call('contact', appUUID, currentBorrowBookInfo);
             Meteor.call('insertHistory', appUUID, currentBorrowBookInfo);
-        } 
+            
+        
     }})
 

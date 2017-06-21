@@ -6,15 +6,24 @@ Meteor.methods({
         }
 
 
-        BorrowWishList.update({
-            "ilendbooksId":currentBorrowBookInfo.ilendbooksId,
-            "title": currentBorrowBookInfo.title,
-            "borrower.userId": Meteor.userId()
-        }, {
-            "$set": {
-                "borrower.$.status": ilendbooks.public.status.WISH_LISTED_REMOVED
-            }
-        });
+        // BorrowWishList.update({
+        //     "ilendbooksId":currentBorrowBookInfo.ilendbooksId,
+        //     "title": currentBorrowBookInfo.title,
+        //     "borrower.userId": Meteor.userId()
+        // }, {
+        //     "$set": {
+        //         "borrower.$.status": ilendbooks.public.status.WISH_LISTED_REMOVED
+        //     }
+        // });
+            UserBorrowShelf.update({
+                "userId": Meteor.userId(),
+                "bookInfo.ilendbooksId": currentBorrowBookInfo.ilendbooksId
+            }, {
+                "$set": {
+                    "bookInfo.$.status": ilendbooks.public.status.WISH_LISTED_REMOVED
+                   
+                }
+            })
 
             //Communicate to the user
             var userProfile = UserProfile.findOne({
