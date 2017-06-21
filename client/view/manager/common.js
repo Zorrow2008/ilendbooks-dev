@@ -22,6 +22,14 @@ Template.registerHelper('imageFormatter', function(){
 	return Meteor.settings.public.imageFormatter;
 });
 
+Template.registerHelper('imageFormatterOne', function(){
+	return Meteor.settings.public.imageFormatter_one;
+});
+
+Template.registerHelper('imageFormatter', function(){
+	return Meteor.settings.public.imageFormatter;
+});
+
 Template.registerHelper('getFacebookUrl', function() {
 	return Meteor.settings.public.socialMedia.facebookUrl;
 });

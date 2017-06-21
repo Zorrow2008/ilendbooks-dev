@@ -97,7 +97,7 @@ Meteor.startup(function() {
         // Lender's point of view
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.LENDER_LENT_DECLARED,
-            "prompt": "Did you lend your book to the borrower?",
+            "prompt": "Lent the book?",
             "actionModalNext": true,
             "option": ilendbooks.public.option.ONE,
             "modalTitle": "You successfully lent the book! ",
@@ -119,7 +119,7 @@ Meteor.startup(function() {
         // Borrower's point of view
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.BORROWER_LENT_RECEIVED,
-            "prompt": "Did you receive the book from the lender?",
+            "prompt": "Received the book?",
             "actionModalNext": true,
             "option": ilendbooks.public.option.ONE,
             "modalTitle": "You successfully borrowed a book! ",
@@ -157,7 +157,7 @@ Meteor.startup(function() {
         // Borrower POV
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.BORROWED,
-            "prompt": "Confirm you got the book?",
+            "prompt": "Got the book?",
             "actionModalNext": true,
             "option": ilendbooks.public.option.ONE,
             "modalTitle": "You successfully borrowed a book! ",
@@ -180,7 +180,7 @@ Meteor.startup(function() {
         // Lender POV 
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.WITH_BORROWER,
-            "prompt": "Did you lend your book to the borrower?",
+            "prompt": "Lent the book?",
             "actionModalNext": true,
             "option": ilendbooks.public.option.ONE,
             "modalTitle": "You successfully lent the book! ",
@@ -219,7 +219,7 @@ Meteor.startup(function() {
         //Lender's point of view
         var statusMeta = [{
                "nextStatus": ilendbooks.public.status.LENDER_RETURN_RECEIVED,
-               "prompt": "Have you received your book back?",
+               "prompt": "Received book back?",
                "actionModalNext": true,
                "option": ilendbooks.public.option.ONE,
                "modalTitle": "Congratulations!",
@@ -256,7 +256,7 @@ Meteor.startup(function() {
         //Borrower's point of view           
          var statusMeta = [{
                "nextStatus": ilendbooks.public.status.BORROWER_RETURN_DECLARED,
-               "prompt": "Have you returned the lender's book?",
+               "prompt": "Returned the book?",
                "actionModalNext": true,
                "option": ilendbooks.public.option.ONE,
                "modalTitle": "Congratulations!",
@@ -308,7 +308,7 @@ Meteor.startup(function() {
 
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE,
-            "prompt": "Confirm that you returned the book?",
+            "prompt": "Returned the book?",
             "actionModalNext": true,
             "option": ilendbooks.public.option.ONE,
             "modalTitle": "Congratulations!",
@@ -345,7 +345,7 @@ Meteor.startup(function() {
         }); 
         var statusMeta = [{
             "nextStatus": ilendbooks.public.status.TRANSACTION_COMPLETE_LENDER,
-            "prompt": "Confirm that you received your book?",
+            "prompt": "Received book back?",
             "actionModalNext": true,
             "option": ilendbooks.public.option.ONE,
             "modalTitle": "Congratulations!",
@@ -394,7 +394,7 @@ Meteor.startup(function() {
         /********************************************************/
         var statusMeta = [{
                "nextStatus": ilendbooks.public.status.AVAILABLE,
-               "prompt": "Place book back onto shelf?",
+               "prompt": "Add to shelf?",
         }]
         ILendMetaData.upsert({
           "status": ilendbooks.public.status.PAST_LEND,
