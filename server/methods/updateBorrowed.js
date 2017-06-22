@@ -24,7 +24,7 @@ Meteor.methods({
 		    + "'s status has changed to \"Borrowed\""; 
 
 
-		 if (ilendbooks.public.contactPreference.CELL === lenderUserProfile.contactPreference){
+		 if (ilendbooks.public.contactPreference.PHONE === lenderUserProfile.contactPreference){
 			contactParameters.phoneNumber = lenderUserProfile.phoneNumber;
 			contactParameters.contactPreference = lenderUserProfile.contactPreference;
 			contactParameters.smsMessage = borrowerUserProfile.fName 

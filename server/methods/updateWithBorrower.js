@@ -23,7 +23,7 @@ Meteor.methods({
 		 	contactParameters.contactPreference = borrowerUserProfile.contactPreference;
 		 	contactParameters.emailBody = lenderUserProfile.fName 
 		     	+ "'s status has changed to \"With Borrower\"";
-     	 if (ilendbooks.public.contactPreference.CELL === borrowerUserProfile.contactPreference){
+     	 if (ilendbooks.public.contactPreference.PHONE === borrowerUserProfile.contactPreference){
 		 	contactParameters.phoneNumber = borrowerUserProfile.phoneNumber;
 			contactParameters.contactPreference = borrowerUserProfile.contactPreference;
 		 	contactParameters.smsMessage = lenderUserProfile.fName 
