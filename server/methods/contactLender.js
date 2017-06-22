@@ -23,7 +23,7 @@ Meteor.methods({
 				contactParameters.email = lenderUserProfile.email;
 				contactParameters.fromEmail = ilendbooks.private.generic.FROM_EMAIL;
 				contactParameters.emailSubject = 'Intrested Borrower...',
-				contactParameters.emailBody = 'TO-DO: improve this message  - A borrower would like to borrow the book ' + contactParameters.title +'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
+				contactParameters.emailBody = 'A borrower would like to borrow the book ' + contactParameters.title +'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
 				for(var contactParametersKey in contactParameters) {
 					console.log(appUUID + ":contactLender(email):"+ contactParametersKey + "=" + contactParameters[contactParametersKey]);
 				}
@@ -51,7 +51,7 @@ Meteor.methods({
 			if (ilendbooks.public.contactPreference.PHONE=== lenderUserProfile.contactPreference){ 
 				contactParameters.contactPreference = lenderUserProfile.contactPreference;
 				contactParameters.phoneNumber = lenderUserProfile.phoneNumber
-				contactParameters.smsMessage = 'TO-DO: improve this message  - A borrower would like to borrow the book ' + contactParameters.title+'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
+				contactParameters.smsMessage = 'A borrower would like to borrow the book ' + contactParameters.title+'. Go to ' + (Router.routes['myNotifications'].url({_id: 1}));
 				var smsParameters = {
 					to:contactParameters.phoneNumber,
 					message: contactParameters.smsMessage 

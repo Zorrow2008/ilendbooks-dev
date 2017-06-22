@@ -28,7 +28,7 @@ Meteor.methods({
 		    	+ (Router.routes['myShelf'].url({_id: 1}))  
 
 
-		if (ilendbooks.public.contactPreference.CELL === lenderUserProfile.contactPreference){
+		if (ilendbooks.public.contactPreference.PHONE === lenderUserProfile.contactPreference){
 			contactParameters.phoneNumber = lenderUserProfile.phoneNumber;
 			contactParameters.contactPreference = lenderUserProfile.contactPreference;
 			contactParameters.smsMessage = borrowerUserProfile.fName 

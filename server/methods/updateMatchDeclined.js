@@ -24,7 +24,7 @@ Meteor.methods({
 		    	+ (Router.routes['userHome'].url({_id: 1}))  
 		    	+ " to search for another lender." 
 
-		if (ilendbooks.public.contactPreference.CELL === borrowerUserProfile.contactPreference){
+		if (ilendbooks.public.contactPreference.PHONE === borrowerUserProfile.contactPreference){
 			contactParameters.phoneNumber = borrowerUserProfile.phoneNumber;
 			contactParameters.contactPreference = borrowerUserProfile.contactPreference;
 			contactParameters.smsMessage = lenderUserProfile.phoneNumber

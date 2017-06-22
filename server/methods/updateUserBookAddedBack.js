@@ -30,7 +30,7 @@ Meteor.methods({
 		    	+ "\n"
 		    	+ book.ItemAttributes[0].Title[0]; 
 
-		if (ilendbooks.public.contactPreference.CELL === userProfile.contactPreference){
+		if (ilendbooks.public.contactPreference.PHONE === userProfile.contactPreference){
 			contactParameters.phoneNumber = userProfile.phoneNumber;
 			contactParameters.contactPreference = userProfile.contactPreference;
 			contactParameters.smsMessage = "Would like let you know that the below book is added back to  your shelf:"

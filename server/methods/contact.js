@@ -39,20 +39,21 @@ Meteor.methods({
                     contactResultKey + "=" + contactParameters.contactResult[contactResultKey]);
             }
 
-         if (ilendbooks.public.contactPreference.CELL === contactParameters.contactPreference) {
+         if (ilendbooks.public.contactPreference.PHONE === contactParameters.contactPreference) {
             var smsParameters = {
                 to: contactParameters.phoneNumber,
                 message: contactParameters.smsMessage
             }
-            var smsResult = Method.call('sendSMS', appUUID, )
+            var smsResult = Meteor.call('sendSMS', appUUID, smsParameters);
             contactParameters.contactResult = smsResult;
             contactParameters.contactStatus = smsResult.status;
             contactParameters.status = ilendbooks.public.status.SUCCESS;
-        } else {
-            console.log(appUUID + ":contact: Fatal, no good, no contact preference...");
-            contactParameters.status = ilendbooks.public.status.FAILED;
-            contactParameters.contactResult = "No contact preference for this user " + contactParameters.borrowerUserId;
         }
+        // } else {
+        //     console.log(appUUID + ":contact: Fatal, no good, no contact preference...");
+        //     contactParameters.status = ilendbooks.public.status.FAILED;
+        //     contactParameters.contactResult = "No contact preference for this user " + contactParameters.borrowerUserId;
+        // }
         Meteor.call("insertCorrespondence", appUUID, contactParameters.toUserId, contactParameters.ilendbooksId, contactParameters);
         console.log(appUUID + ":contact:emailed successfully ");
     }
