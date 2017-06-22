@@ -147,6 +147,10 @@ Template.searchResult.helpers({
    getLargeImage: function (LargeImage){
       //console.log('getLargeImage:URL=' + LargeImage[0].URL[0]);
       return LargeImage[0].URL[0];
+   },
+   getProductGroup:function (ItemAttributes){
+      
+      return ItemAttributes[0].ProductGroup[0];
    }
    
 })
