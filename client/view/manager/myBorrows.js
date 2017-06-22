@@ -1,13 +1,18 @@
 Template.myBorrows.helpers({
 	getBorrowedBooks: function() {
-		console.log("getBorrowBooks is called");
-		var doc = UserBorrowShelf.findOne({userId: Meteor.userId()});
+
+		var doc = UserBorrowShelf.findOne({
+			userId: Meteor.userId(),
+			bookInfo:{$elemMatch:{status:{$ne: ilendbooks.public.status.WISH_LISTED_DELETED}}}
+		});
 		return doc.bookInfo;
 	},
 
 	hasBooks: function() {
-		console.log("hasBooks was called");
-		if( UserBorrowShelf.findOne({userId: Meteor.userId()})) {
+		if( UserBorrowShelf.findOne({
+			userId: Meteor.userId(),
+			bookInfo:{$elemMatch:{status:{$ne: ilendbooks.public.status.WISH_LISTED_DELETED}}}
+		})) {
 			return true;
 		}
 		return false;
