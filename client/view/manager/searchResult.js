@@ -1,30 +1,6 @@
 Template.searchResult.helpers({
    isInBorrowWishList: function() {
-      // if( BorrowWishList.findOne({
-      //    ilendbooksId:this.ilendbooksId
-      //    , title: this.ItemAttributes[0].Title[0]
-      //    , borrower: {$elemMatch:{userId: Meteor.userId() 
-      //          , status:{$in:[ilendbooks.public.status.WISH_LISTED]}}}
-
-      // })) {
-      //    return true;
-      // }else {
-      //    return false;
-      // }
-      // var inWishList = false;
-      // if(UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
-      //    var inWishListDoc = UserBorrowShelf.findOne({
-      //       "userId": Meteor.userId(),
-      //       "bookInfo.ilendbooksId": this.ilendbooksId,
-      //       "bookInfo.status": ilendbooks.public.status.WISH_LISTED
-      //    })
-      //    for(var inWishListDocKey in inWishListDoc) {
-      //       console.log("inWishListDocKey: " + inWishListDocKey + "value; " + inWishListDoc[inWishListDocKey]);
-      //    }
-      //   if(inWishListDoc != null) {
-      //       inWishList = true;
-      //   }
-      // }
+      
       var currentBook = false;
       if(UserBorrowShelf.findOne({userId: Meteor.userId()}) != null) {
          var wishListDoc = UserBorrowShelf.findOne({
@@ -43,12 +19,14 @@ Template.searchResult.helpers({
    },
 
    hasEnoughBookCoin: function() {
+     
       var user = UserProfile.findOne({userId: Meteor.userId()});
       console.log("bookcoin amt: " + user.bookcoin)
       return user.bookcoin >= 5;
    },
 
    hasLender: function() {
+      
       if( ToLend.findOne({
          ilendbooksId:this.ilendbooksId
          , title: this.ItemAttributes[0].Title[0]
