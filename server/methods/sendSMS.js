@@ -23,7 +23,7 @@ Meteor.methods({
         twilioClient.sendSMS({
             to: smsParameters.to,         
             from: twilioClient.from,      
-            body: smsParameters.message  
+            body: smsParameters.message  + ' - ilendbooks.com'
         }, function(err, responseData) { 
             smsResult.status = ilendbooks.public.status.SUCCESS
             smsResult.responseData = responseData;

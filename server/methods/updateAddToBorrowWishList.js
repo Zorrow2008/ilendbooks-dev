@@ -58,8 +58,8 @@ Meteor.methods({
                  bookInWishListRemoved = false;
                  if(currentBookFromUserBorrowShelfRemoved !=null) {
                 for(var key in currentBookFromUserBorrowShelf.bookInfo) {
-                    if(currentBookFromUserBorrowShelf.bookInfo[key].status
-                     == ilendbooks.public.status.WISH_LISTED_REMOVED) {
+                    if(currentBookFromUserBorrowShelf.bookInfo[key].status === ilendbooks.public.status.WISH_LISTED_REMOVED
+                        || currentBookFromUserBorrowShelf.bookInfo[key].status === ilendbooks.public.status.WISH_LISTED_DELETED) {
                         bookInWishListRemoved = true;
                     }
                 }

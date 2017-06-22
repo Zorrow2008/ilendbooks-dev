@@ -11,7 +11,7 @@ Meteor.startup(function() {
 
         /********************* start ****************************/
         var statusMeta = [{
-            "next-status": ilendbooks.public.status.REMOVED,
+            "nextStatus": ilendbooks.public.status.REMOVED,
             "prompt": "Remove from shelf?",
             "option": ilendbooks.public.option.ONE,
             "actionModalNext": true,
@@ -422,5 +422,48 @@ Meteor.startup(function() {
              statusMeta :   statusMeta
            }
         }); 
+
+        //*************** Wish List*******************************/
+        /********************* start ****************************/
+        var statusMeta = [{
+            "nextStatus": ilendbooks.public.status.WISH_LISTED_REMOVED,
+            "prompt": "Remove wishlist?",
+            "option": ilendbooks.public.option.ONE,
+            "actionModalNext": false
+        }]
+
+        ILendMetaData.upsert({
+            "status": ilendbooks.public.status.WISH_LISTED,
+            "forWho": ilendbooks.public.userType.BORROWER,
+            "action": true
+        }, {
+            $set: {
+                statusMeta: statusMeta
+            }
+        });
+
+        var statusMeta = [{
+            "nextStatus": ilendbooks.public.status.WISH_LISTED_DELETED,
+            "prompt": "Delete?",
+            "option": ilendbooks.public.option.ONE,
+            "actionModalNext": false
+        },
+        {
+            "nextStatus": ilendbooks.public.status.WISH_LISTED,
+            "prompt": "Add to wishlist?",
+            "option": ilendbooks.public.option.ONE,
+            "actionModalNext": false
+        }]
+
+        ILendMetaData.upsert({
+            "status": ilendbooks.public.status.WISH_LISTED_REMOVED,
+            "forWho": ilendbooks.public.userType.BORROWER,
+            "action": true
+        }, {
+            $set: {
+                statusMeta: statusMeta
+            }
+        });
+
     }
 });

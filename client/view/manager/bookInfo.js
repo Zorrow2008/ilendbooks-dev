@@ -146,6 +146,27 @@ Template.bookInfo.events({
 		    Modal.show('ilendActionModal');	
 		} else {
 	   		switch(this.nextStatus) {
+			case ilendbooks.public.status.WISH_LISTED_REMOVED:
+				var title= Books.findOne({_id: ilendbooksId}).ItemAttributes[0].ISBN[0];
+      			Meteor.call("updateRemoveFromBorrowWishList" 
+      				, Session.get('appUUID')
+					, {title:title, ilendbooksId :ilendbooksId}
+      			);
+				break;
+			case ilendbooks.public.status.WISH_LISTED:
+				var title= Books.findOne({_id: ilendbooksId}).ItemAttributes[0].ISBN[0];
+			    Meteor.call("updateAddToBorrowWishList" 
+			      	, Session.get('appUUID')
+			      	, {title:title, ilendbooksId : ilendbooksId}
+			     );
+				break;
+			case ilendbooks.public.status.WISH_LISTED_DELETED:
+				var title= Books.findOne({_id: ilendbooksId}).ItemAttributes[0].ISBN[0];
+			    Meteor.call("updateDeleteFromBorrowWishList" 
+			      	, Session.get('appUUID')
+			      	, {title:title, ilendbooksId : ilendbooksId}
+			     );
+				break;
 	   		case ilendbooks.public.status.AVAILABLE:
 	   			Meteor.call("updateUserBookAddedBack", appUUID, ilendbooksId);
 	   			break;
@@ -185,27 +206,6 @@ Template.bookInfo.events({
 			      Session.set('borrowerUserId', contactParameters.borrowerUserId);
 			      Modal.show("borrowerReview");		
 				break;
-
-	        // case ilendbooks.public.status.BORROWER_RETURN_DECLARED:
-	        // 	var appUUID = Session.get('appUUID');
-	        // 	var contactParameters = PendingTransactions.findOne({
-	        // 		lenderUserId: Meteor.userId(),
-	        // 		borrowerUserId: PendingTransactions.findOne({lenderUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.borrowerUserId,
-	        // 		ilendbooksId: ilendbooksId,
-	        // 		status: ilendbooks.public.status.BORROWER_RETURN_DECLARED
-	        // 	}).contactParameters;
-	        // 	Meteor.call('updateAvailable', appUUID, contactParameters);
-	        // 	Meteor.call('updateTransactionComplete', appUUID, contactParameters);
-        	// case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
-        	// 	var appUUID = Session.get('appUUID');
-	        // 	var contactParameters = PendingTransactions.findOne({
-	        // 		borrowerUserId: Meteor.userId(),
-	        // 		lenderUserId: PendingTransactions.findOne({borrowerUserId: Meteor.userId(), ilendbooksId: ilendbooksId}).contactParameters.lenderUserId,
-	        // 		ilendbooksId: ilendbooksId,
-	        // 		status: ilendbooks.public.status.BORROWER_RETURN_DECLARED
-	        // 	}).contactParameters;
-	        // 	Meteor.call('updateAvailable', appUUID, contactParameters);
-	        // 	Meteor.call('updateTransactionComplete', appUUID, contactParameters);
 			}
 		}
 	},
