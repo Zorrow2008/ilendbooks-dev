@@ -4,6 +4,7 @@ Template.searchResults.helpers({
       var searchResult = Session.get('SearchResult');
       return searchResult.results;    
    },
+<<<<<<< HEAD
 
    isVerifiedUser: function() {
       var userProfile = UserProfile.findOne({userId: Meteor.userId()});
@@ -23,4 +24,7 @@ Template.searchResults.events({
           }
        });
 	}
+=======
+   
+>>>>>>> ba210b31acc8a5965af80cbc84097d1e1c53de42
 })

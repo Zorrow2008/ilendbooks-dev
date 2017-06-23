@@ -33,7 +33,7 @@ Template.signup.events({
          password_no_match_error_message.removeClass("error-mesage-display-none");
          password_no_match_error_message.addClass("error-mesage-display");
          goodToCreateAccount = false;
-         alertMeassage.push('Entered password values didnt match, please make sure they match.');
+         alertMeassage.push("Entered password values didn't match, please make sure they match.");
       } else {
          $("#password-no-match-error-message").addClass("error-mesage-display-none");
          $('#password-one-text-div').removeClass("has-error has-feedback");

@@ -76,48 +76,11 @@ Template.bookInfo.helpers({
 		} else {
 			return;
 		}
-
-
-
-		
-
-     //  	switch(this.status) {
-     //      	case ilendbooks.public.status.AVAILABLE:
-     //          	nextStatus = ilendbooks.public.status.REMOVED;
-     //          	prompt= "Remove from shelf?";
-     //          	break;
-     //      	case ilendbooks.public.status.MATCHED_NOTIFIED:
-     //          	nextStatus = ilendbooks.public.status.MATCHED_ACCEPTED;
-     //          	prompt= "Remove from shelf?";
-     //          	break;
-     //      	case ilendbooks.public.status.MATCHED_ACCEPTED:
-     //          	nextStatus = ilendbooks.public.status.LENDER_LENT_DECLARED;
-     //          	prompt= "Handed over the book to borrower?";
-     //          	break;
-     //     	case ilendbooks.public.status.MATCHED_DECLINED:
-     //          	modalTitle = "Lender Declined the Borrow Request";
-     //          	modalBody =  "Lender  " + matchedUserName 
-     //          		+ " declined the borrower's request to borrow this book. Please search for another lender.";
-     //          	break;
-     //      	case ilendbooks.public.status.LENDER_LENT_DECLARED:
-     //          	nextStatus = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
-     //          	prompt= "Received the book back?";
-     //          	break;
-		  	// case ilendbooks.public.status.BORROWER_LENT_RECEIVED:
-		   //      modalTitle = "Borrower received the book";
-		   //      prompt= "Did you gave the book to borrower?";
-		   //      break;
-     //      	case ilendbooks.public.status.WITH_BORROWER:
-     //          	nextStatus = ilendbooks.public.status.LENDER_RETURN_RECEIVED;
-     //          	prompt= "Received the book back?";
-     //          	break;
-		  	// case ilendbooks.public.status.LENDER_RETURN_RECEIVED:
-			  // 	nextStatus = ilendbooks.public.status.LENDER_RETURN_REVIEW;
-			  // 	prompt= "Provide review, pretty please!!!";
-		   //    	break;
-
-     //   	}
-   }
+   },
+    getProductGroup:function (ilendbooksId){
+      
+      return Books.findOne({_id: ilendbooksId}).ItemAttributes[0].ProductGroup[0];
+   	}
 })
 
 Template.bookInfo.events({

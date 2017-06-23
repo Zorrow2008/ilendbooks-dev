@@ -1,3 +1,6 @@
+Meteor.publish('allowedAccounts', function(userId) {
+	return AllowedAccounts.find();
+});
 
 Meteor.publish('searchResults', function(appUUID, keywords) {
   return SearchResult.find({appUUID: appUUID, keyWords: keywords});

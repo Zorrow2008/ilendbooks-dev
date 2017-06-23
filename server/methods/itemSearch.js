@@ -104,7 +104,7 @@ Meteor.methods({
                keyWords: searchParameters.keywords
             },    
             { 
-               $set: {searchResult: searchResult }
+               $set: {error: err }
             }
             );
          });
