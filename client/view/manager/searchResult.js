@@ -1,4 +1,16 @@
 Template.searchResult.helpers({
+   isAllowedProductGroup: function(ItemAttributes) {
+         console.log('productGroup=' + ItemAttributes[0].ProductGroup[0]);
+         console.log('Meteor.settings.public.allowedProductGroup=' + Meteor.settings.public.allowedProductGroup);
+         for( var key in Meteor.settings.public.allowedProductGroup) { 
+             if(Meteor.settings.public.allowedProductGroup[key] === ItemAttributes[0].ProductGroup[0]) {
+               return true;
+             } else {
+               return false;
+             }
+      }
+   },
+
    isInBorrowWishList: function() {
       
       var currentBook = false;
