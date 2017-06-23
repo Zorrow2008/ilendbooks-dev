@@ -1,5 +1,5 @@
 <template name="searchResult">
-
+{{#if isAllowedProductGroup ItemAttributes}}
       <div class="row">&nbsp;<br>&nbsp;<br>&nbsp;</div>
       <div class="row">
          <div class="col-sm-3">
@@ -76,4 +76,5 @@
             {{/if}}
          </div>
    </div>
+   {{/if}}
 </template>
