@@ -3,12 +3,12 @@
         <div class="container margin-top-50px">
               <h2 class="intro-text text-center">Search results for "{{getSearchResult.keyWords}}"</h2>
                {{#unless currentUser.emails.[0].verified}}
-                  {{#unless isVerifiedUser}}
+                  {{#unless isUser}}
                      <p class="intro-text text-center">Hey! You're not a verified lender yet!. <a href="#" class="resend-verification-link">Resend verification link</a>.</p>
                    {{else}}
                       <p class="intro-text text-center">Hey! You're not a verified lender yet!. <a href="{{pathFor route='user'}}" >Tell us about yourself!</a>.</p>
                    {{/unless}}
-                 
+
                {{/unless}} 
                    
               <hr style="color: white">
