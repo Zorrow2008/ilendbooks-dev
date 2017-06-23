@@ -20,6 +20,19 @@ Template.userHome.events({
       Router.go('login');
    },
    
+   'click .resend-verification-link':function(event, template) {
+      console.log("clicking resend verification");
+       Meteor.call( 'sendVerificationLink', ( error, response ) => {
+          if ( error ) {
+             Router.go('login');
+             Bert.alert( error.reason, 'danger' );
+          } else {
+             Bert.alert( 'Welcome!', 'success' );
+             Router.go('verificationEmailSent');
+          }
+       });
+   }
+   
    // 'submit form'( event, template ) {
    //    event.preventDefault();
    //    var title = event.target.title.value;
@@ -42,4 +55,6 @@ Template.userHome.helpers({
       console.log("userProfile.fName: " + userProfile.fName);
       return userProfile.fName;
    },
+
+
 })

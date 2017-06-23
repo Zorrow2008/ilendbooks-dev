@@ -7,7 +7,13 @@ Template.mainNavSideBar.helpers({
 	},
 
   getBookCoin: function() {
-      return UserProfile.findOne({userId: Meteor.userId()}).bookcoin
+    var user = UserProfile.findOne({userId: Meteor.userId()});
+    if(user == null) {
+       return 0;   
+    }else{
+      return user.bookcoin;
+    }
+
   }
 })
 

@@ -18,6 +18,11 @@ Template.searchResult.helpers({
 
    },
 
+   isVerifiedUser: function() {
+      var userProfile = UserProfile.findOne({userId: Meteor.userId()});
+      return userProfile && Meteor.user().emails[ 0 ].verified;
+   },
+
    hasEnoughBookCoin: function() {
      
       var user = UserProfile.findOne({userId: Meteor.userId()});

@@ -40,7 +40,7 @@ Template.registerHelper('getTwitterUrl', function() {
 
 Template.registerHelper('getInstagramUrl', function() {
 	return Meteor.settings.public.socialMedia.instagramUrl;
-})
+});
 
 
 isAllowedAccount = function(email){
