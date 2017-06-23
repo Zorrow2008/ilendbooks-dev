@@ -70,11 +70,13 @@
                </div>
 
             {{else}}
-               <a class="btn btn-default btn-sm center-block ilend-disabled-btn " role="button"><i class="fa fa-heart" aria-hidden="true"></i> to borrow</a><br>
-               <a class="btn btn-default btn-sm center-block ilend-disabled-btn " role="button"><i class="fa fa-heart" aria-hidden="true"></i> to lend</a> <br>                     
+               <a class="btn btn-default btn-sm center-block  notVerifiedUser" role="button"><i class="fa fa-heart" aria-hidden="true"></i> to borrow</a><br>
+               <a class="btn btn-default btn-sm center-block  notVerifiedUser" role="button"><i class="fa fa-heart" aria-hidden="true"></i> to lend</a> <br>                     
                <a id="{{ilendbooksId}}" class="btn btn-outline btn-sm center-block toAmazon" href="{{DetailPageURL}}" role="button">Buy on <i class="fa fa-amazon" aria-hidden="true"></i></a>
             {{/if}}
          </div>
    </div>
    {{/if}}
 </template>
+<!-- ilend-disabled-btn
+ilend-disabled-btn -->

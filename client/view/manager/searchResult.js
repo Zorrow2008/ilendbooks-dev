@@ -262,6 +262,16 @@ Template.searchResult.events({
       Session.setAuth('specificBook-ilendbooksId' , element.ilendbooksId);
       Router.go("specificBookPage");
       
+   },
+
+   'click .notVerifiedUser': function(event) {
+      console.log("notVerifiedUser clicked");
+      var modalTitle = "Hold on!";
+      var title = "Title : " + this.ItemAttributes[0].Title[0];
+      var modalBodyArray = [title,"It seems that you are not a verified user. Either resend your verification email or fill out your user profile."];
+      Session.set(ilendbooks.public.modal.TITLE, modalTitle);
+      Session.set(ilendbooks.public.modal.BODY_ARRAY, modalBodyArray);
+      Modal.show('ilendInfoModal');
    }
 
 })
