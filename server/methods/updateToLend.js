@@ -108,10 +108,10 @@ Meteor.methods({
         currentlenderBookInfo.status = ilendbooks.public.status.AVILABLE;
         currentlenderBookInfo.statusLend = ilendbooks.public.status.AVAILABLE,
             currentlenderBookInfo.statusBorrow = "",
-            currentlenderBookInfo.bookCoin = ilendbooks.private.bitCoin.ADDONE_BOOK;
+           // currentlenderBookInfo.bookCoin = ilendbooks.private.bitCoin.ADDONE_BOOK;
         // update user lender shelf
         Meteor.call('updateUserLendShelf', appUUID, currentlenderBookInfo);
-        Meteor.call('addBookcoin', appUUID, currentlenderBookInfo.lenderUserId, currentlenderBookInfo.bookCoin);
+        //Meteor.call('addBookcoin', appUUID, currentlenderBookInfo.lenderUserId, currentlenderBookInfo.bookCoin);
         Meteor.call('contact', appUUID, currentlenderBookInfo);
         Meteor.call('insertHistory', appUUID, currentlenderBookInfo);
     }})
